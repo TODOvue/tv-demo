@@ -1,25 +1,26 @@
-@use 'global.scss' as *;
-@use 'variables.scss' as *;
+@use 'global.scss';
+@use 'mixins.scss';
+@use 'variables.scss';
 
 .dark-mode {
   & .tv-demo-select {
-    @include backgroundColorAndTextColor($light-card-bg, $dark-card-bg);
-    border: 1px solid $light-card-bg;
+    @include mixins.backgroundColorAndTextColor(variables.$light-card-bg, variables.$dark-card-bg);
+    border: 1px solid variables.$light-card-bg;
   }
 
   & .tv-demo-option {
-    background: $light-card-bg;
+    background: variables.$light-card-bg;
   }
 }
 
 .light-mode {
   & .tv-demo-select {
-    @include backgroundColorAndTextColor($dark-card-bg, $light-card-bg);
-    border: 1px solid $dark-card-bg;
+    @include mixins.backgroundColorAndTextColor(variables.$dark-card-bg, variables.$light-card-bg);
+    border: 1px solid variables.$dark-card-bg;
   }
 
   & .tv-demo-option {
-    background: $dark-card-bg;
+    background: variables.$dark-card-bg;
   }
 }
 
@@ -29,28 +30,28 @@
   width: 80%;
 
   &.dark-mode {
-    background-color: $dark-card-bg;
+    background-color: variables.$dark-card-bg;
 
     & .tv-demo-select {
-      @include backgroundColorAndTextColor($light-card-bg, $dark-card-bg);
-      border: 1px solid $light-card-bg;
+      @include mixins.backgroundColorAndTextColor(variables.$light-card-bg, variables.$dark-card-bg);
+      border: 1px solid variables.$light-card-bg;
     }
 
     & .tv-demo-option {
-      background: $light-card-bg;
+      background: variables.$light-card-bg;
     }
   }
 
   &.light-mode {
-    background-color: $light-card-bg;
+    background-color: variables.$light-card-bg;
 
     & .tv-demo-select {
-      @include backgroundColorAndTextColor($dark-card-bg, $light-card-bg);
-      border: 1px solid $dark-card-bg;
+      @include mixins.backgroundColorAndTextColor(variables.$dark-card-bg, variables.$light-card-bg);
+      border: 1px solid variables.$dark-card-bg;
     }
 
     & .tv-demo-option {
-      background: $dark-card-bg;
+      background: variables.$dark-card-bg;
     }
   }
 

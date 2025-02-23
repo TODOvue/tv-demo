@@ -1,15 +1,6 @@
+@use "variables";
+@use "mixins";
 @use "sass:color";
-@use "variables" as *;
-
-@mixin backgroundColorAndTextColor($background-color, $text-color) {
-  background-color: $background-color;
-  color: $text-color;
-}
-
-@mixin fontFamilyAndFontSize($font-family, $font-size) {
-  font-family: $font-family;
-  font-size: $font-size;
-}
 
 * {
   box-sizing: border-box;
@@ -18,45 +9,45 @@
 }
 
 body {
-  @include fontFamilyAndFontSize($font-text, 1rem);
+  @include mixins.fontFamilyAndFontSize(variables.$font-text, 1rem);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @include fontFamilyAndFontSize($font-title, 2rem);
+  @include mixins.fontFamilyAndFontSize(variables.$font-title, 2rem);
 }
 
 .dark-mode {
-  @include backgroundColorAndTextColor($dark-body-bg, $dark-text);
+  @include mixins.backgroundColorAndTextColor(variables.$dark-body-bg, variables.$dark-text);
 
   body {
-    @include backgroundColorAndTextColor($dark-body-bg, $dark-text);
+    @include mixins.backgroundColorAndTextColor(variables.$dark-body-bg, variables.$dark-text);
   }
 
   .tv-search-results {
     &::-webkit-scrollbar-thumb {
-      background-color: $dark-card-bg;
+      background-color: variables.$dark-card-bg;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background-color: color.adjust($dark-card-bg, $lightness: -10%);
+      background-color: color.adjust(variables.$dark-card-bg, $lightness: -10%);
     }
   }
 }
 
 .light-mode {
-  @include backgroundColorAndTextColor($light-body-bg, $light-text);
+  @include mixins.backgroundColorAndTextColor(variables.$light-body-bg, variables.$light-text);
 
   body {
-    @include backgroundColorAndTextColor($light-body-bg, $light-text);
+    @include mixins.backgroundColorAndTextColor(variables.$light-body-bg, variables.$light-text);
   }
 
   .tv-search-results {
     &::-webkit-scrollbar-thumb {
-      background-color: $light-card-bg;
+      background-color: variables.$light-card-bg;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background-color: color.adjust($light-card-bg, $lightness: -10%);
+      background-color: color.adjust(variables.$light-card-bg, $lightness: -10%);
     }
   }
 }
@@ -66,13 +57,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: $light-button-text;
+  background-color: variables.$light-button-text;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $light-card-bg;
+  background-color: variables.$light-card-bg;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color:  color.adjust($light-card-bg, $lightness: -10%);
+  background-color:  color.adjust(variables.$light-card-bg, $lightness: -10%);
 }

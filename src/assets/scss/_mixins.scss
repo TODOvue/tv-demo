@@ -1,0 +1,9 @@
+@mixin backgroundColorAndTextColor($background-color, $text-color) {
+  background-color: $background-color;
+  color: $text-color;
+}
+
+@mixin fontFamilyAndFontSize($font-family, $font-size) {
+  font-family: $font-family;
+  font-size: $font-size;
+}
