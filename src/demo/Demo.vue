@@ -1,9 +1,11 @@
 <script setup>
+import { defineAsyncComponent } from 'vue'
 
+const TvDemo = defineAsyncComponent(/* webpackChunkName: "TvDemo" */() => import('../components/TvDemo.vue'))
 </script>
 
 <template>
-  <h1>Demo TvDemo</h1>
+  <tv-demo></tv-demo>
 </template>
 
 <style scoped>
