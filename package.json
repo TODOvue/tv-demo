@@ -48,7 +48,8 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-highlight-code": "^0.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
