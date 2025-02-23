@@ -23,16 +23,16 @@
 ## Installation
 Install with npm or yarn as development dependency
 ```bash
-npm install todovue-demo --save-dev
+npm install @todovue/tvdemo --save-dev
 ```
 ```bash
-yarn add todovue-demo --dev
+yarn add @todovue/tvdemo --dev
 ```
 
 Import
 ```vue
 <script setup>
-import TvDemo from 'todovue-demo';
+import TvDemo from 'todovue/tvdemo';
 </script>
 ```
 In your **main.js** file
@@ -45,7 +45,7 @@ You can also import it directly in the **main.js** file, so you don't have to im
 import { createApp } from "vue";
 import App from "./App.vue";
 import "vue-highlight-code/dist/style.css"; // Styles are imported to display the code
-import TvDemo from "todovue-demo";
+import TvDemo from 'todovue/tvdemo';
 
 const app = createApp(App);
 app.component("TvDemo", TvDemo);
