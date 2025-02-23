@@ -1,0 +1,151 @@
+@use 'global.scss';
+@use 'mixins.scss';
+@use 'variables.scss';
+
+.dark-mode {
+  & .tv-demo-select {
+    @include mixins.backgroundColorAndTextColor(variables.$light-card-bg, variables.$dark-card-bg);
+    border: 1px solid variables.$light-card-bg;
+  }
+
+  & .tv-demo-option {
+    background: variables.$light-card-bg;
+  }
+}
+
+.light-mode {
+  & .tv-demo-select {
+    @include mixins.backgroundColorAndTextColor(variables.$dark-card-bg, variables.$light-card-bg);
+    border: 1px solid variables.$dark-card-bg;
+  }
+
+  & .tv-demo-option {
+    background: variables.$dark-card-bg;
+  }
+}
+
+.tv-demo-body {
+  margin: 0 auto;
+  min-height: 100vh;
+  width: 80%;
+
+  &.dark-mode {
+    background-color: variables.$dark-card-bg;
+
+    & .tv-demo-select {
+      @include mixins.backgroundColorAndTextColor(variables.$light-card-bg, variables.$dark-card-bg);
+      border: 1px solid variables.$light-card-bg;
+    }
+
+    & .tv-demo-option {
+      background: variables.$light-card-bg;
+    }
+  }
+
+  &.light-mode {
+    background-color: variables.$light-card-bg;
+
+    & .tv-demo-select {
+      @include mixins.backgroundColorAndTextColor(variables.$dark-card-bg, variables.$light-card-bg);
+      border: 1px solid variables.$dark-card-bg;
+    }
+
+    & .tv-demo-option {
+      background: variables.$dark-card-bg;
+    }
+  }
+
+  & .tv-demo {
+    &-theme {
+      display: inline-block;
+      min-height: 100%;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    &-case {
+      padding: 0 20px 20px 20px;
+
+      &-demo {
+        & .title {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+
+        & .demo {
+          margin-bottom: 20px;
+        }
+
+        & h2 {
+          font-size: 22px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    &-select {
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      height: 40px;
+      margin-bottom: 20px;
+      margin-top: 20px;
+      padding: 0 10px;
+      width: 100%;
+      &-theme {
+        width: 150px;
+      }
+    }
+
+    &-option {
+      font-size: 16px;
+    }
+
+    &-component {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    &-no-component {
+      color: inherit;
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    &-code {
+      margin-top: 20px;
+      width: 100% !important;
+      height: auto !important;
+      padding: 20px 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tv-demo {
+    &-case {
+      padding: 0 10px 10px 10px !important;
+    }
+    &-body {
+      width: 90%;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .tv-demo {
+    &-case {
+      padding: 0 !important;
+    }
+    &-body {
+      width: 100%;
+    }
+  }
+}
