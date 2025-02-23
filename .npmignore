@@ -1,0 +1,10 @@
+.github/
+.idea/
+coverage/
+public/
+src/
+tests/
+.eslintrc.js
+babel.config.js
+jest.config.js
+vite.config.js
