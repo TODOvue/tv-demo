@@ -9,16 +9,36 @@ const props = defineProps({
   },
   hideBackground: Boolean,
   component: Object,
-  variants: Array
+  variants: Array,
+  nameComponent: {
+    type: String,
+    default: 'Component Demo'
+  },
+  sourceLink: {
+    type: String,
+    default: ''
+  },
+  urlClone: {
+    type: String,
+    default: ''
+  },
+  npmInstall: {
+    type: String,
+    default: ''
+  },
 });
 
 const {
   customStyle,
+  isCopy,
+  messageCopy,
   selectedTheme,
   selectedVariantIndex,
   theme,
-  toggleTheme,
   variant,
+
+  setClickItem,
+  toggleTheme,
 } = useDemo(props);
 </script>
 
@@ -29,21 +49,47 @@ const {
       :class="{ [`${theme}-mode`]: !hideBackground }"
       :style="customStyle.content"
     >
-      <div class="tv-demo-theme">
-        <select
-          class="tv-demo-select tv-demo-select-theme"
-          v-model="selectedTheme"
-          @change="toggleTheme"
-        >
-          <option disabled value="">Select theme</option>
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
-        </select>
-      </div>
-
       <div class="tv-demo-case">
         <div class="tv-demo-case-demo">
           <template v-if="variants?.length">
+            <div class="tv-demo-header">
+              <div>
+                <h1 class="tv-demo-title">{{ nameComponent }}</h1>
+                <div class="tv-demo-links">
+                  <a :href="sourceLink" target="_blank" class="tv-demo-links-item">
+                    📂 Source
+                  </a>
+                  |
+                  <div
+                    class="tv-demo-links-item"
+                    @click="setClickItem('npm')"
+                  >
+                    📦 NPM Command
+                  </div>
+                  |
+                  <div
+                    class="tv-demo-links-item"
+                    @click="setClickItem('clone')"
+                  >
+                    📝 Clone Component
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="tv-demo-theme">
+                  <select
+                      class="tv-demo-select tv-demo-select-theme"
+                      v-model="selectedTheme"
+                      @change="toggleTheme"
+                  >
+                    <option disabled value="">Select theme</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <h3>Variations:</h3>
             <select
               class="tv-demo-select"
               v-model="selectedVariantIndex"
@@ -62,6 +108,7 @@ const {
               <component :is="component" v-bind="variant.propsData" />
             </div>
 
+            <h3>Code:</h3>
             <HighCode
               class="code tv-demo-code"
               :codeValue="variant.html"
@@ -71,6 +118,12 @@ const {
               :key="variant.title"
               height="auto"
             />
+            <div
+              v-if="isCopy"
+              class="tv-demo-copy"
+            >
+              {{ messageCopy }}
+            </div>
           </template>
           <template v-else>
             <h1 class="tv-demo-no-component">

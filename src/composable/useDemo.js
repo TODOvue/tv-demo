@@ -4,7 +4,9 @@ const useDemo = (props) => {
   const theme = ref('dark');
   const selectedVariantIndex = ref(0);
   const selectedTheme = ref('');
-  
+  const isCopy = ref(false);
+  const messageCopy = ref('');
+
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
@@ -36,13 +38,43 @@ const useDemo = (props) => {
     };
   });
   
+  const setClickItem = (item) => {
+    let commandToCopy = "";
+    
+    if (item === "npm") {
+      commandToCopy = `npm install ${props.npmInstall}`;
+    } else {
+      commandToCopy = `git clone ${props.urlClone}`;
+    }
+    
+    navigator.clipboard.writeText(commandToCopy)
+      .then(() => {
+        isCopy.value = true;
+        messageCopy.value = `✅ Copied: ${commandToCopy}`;
+      })
+      .catch(err => {
+        isCopy.value = true;
+        messageCopy.value = `❌ Failed to copy: ${err}`;
+      })
+      .finally(() => {
+        setTimeout(() => {
+          isCopy.value = false;
+          messageCopy.value = "";
+        }, 2000);
+      });
+  };
+  
   return {
+    customStyle,
+    isCopy,
+    messageCopy,
     selectedTheme,
     selectedVariantIndex,
     theme,
-    toggleTheme,
     variant,
-    customStyle,
+    
+    setClickItem,
+    toggleTheme,
   };
 };
 

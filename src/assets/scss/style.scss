@@ -40,6 +40,16 @@
     & .tv-demo-option {
       background: variables.$light-card-bg;
     }
+
+    & .tv-demo-copy {
+      background-color: variables.$light-card-bg;
+      color: variables.$dark-card-bg;
+      box-shadow: 0 0 10px variables.$light-card-bg;
+    }
+
+    & .tv-demo-links-item {
+      color: variables.$light-card-bg;
+    }
   }
 
   &.light-mode {
@@ -53,6 +63,16 @@
     & .tv-demo-option {
       background: variables.$dark-card-bg;
     }
+
+    & .tv-demo-copy {
+      background-color: variables.$dark-card-bg;
+      color: variables.$light-card-bg;
+      box-shadow: 0 0 10px variables.$dark-card-bg;
+    }
+
+    & .tv-demo-links-item {
+      color: variables.$dark-card-bg;
+    }
   }
 
   & .tv-demo {
@@ -63,8 +83,31 @@
       width: 100%;
     }
 
+    &-links {
+      display: flex;
+      gap: 10px;
+      align-content: center;
+      align-items: center;
+    }
+
+    &-copy {
+      border-radius: 4px;
+      font-size: 14px;
+      padding: 5px 10px;
+      position: absolute;
+      top: 40px;
+      width: auto;
+    }
+
+    &-header{
+      padding: 40px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
     &-case {
       padding: 0 20px 20px 20px;
+      position: relative;
 
       &-demo {
         & .title {
@@ -78,9 +121,19 @@
           margin-bottom: 20px;
         }
 
-        & h2 {
+        & h3 {
           font-size: 22px;
-          margin-bottom: 5px;
+          padding-top: 20px;
+        }
+
+        & a, .tv-demo-links-item {
+          font-weight: 500;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 3px;
+          cursor: pointer;
+          font-size: 1.1rem;
         }
       }
     }
@@ -91,7 +144,7 @@
       font-size: 16px;
       height: 40px;
       margin-bottom: 20px;
-      margin-top: 20px;
+      margin-top: 5px;
       padding: 0 10px;
       width: 100%;
       &-theme {
@@ -120,7 +173,7 @@
     }
 
     &-code {
-      margin-top: 20px;
+      margin-top: 5px;
       width: 100% !important;
       height: auto !important;
       padding: 20px 0;
