@@ -9,7 +9,10 @@ const useDemo = (props) => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       theme.value = storedTheme;
+      selectedTheme.value = storedTheme;
+      return;
     }
+    selectedTheme.value = theme.value;
   });
   
   const toggleTheme = () => {
