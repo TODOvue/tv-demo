@@ -4,8 +4,8 @@
 # TODOvue Demo
 ###### The TvDemo component is a useful tool for viewing and testing different variations of components on different themes.
 
-[![npm](https://img.shields.io/npm/v/todovue-demo.svg)](https://www.npmjs.com/package/todovue-demo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/todovue-demo/deploys) [![Pipeline](https://github.com/TODOvue/todovue-demo/actions/workflows/pipeline.yml/badge.svg?branch=master)](https://github.com/TODOvue/todovue-demo/actions/workflows/pipeline.yml) [![npm](https://img.shields.io/npm/dm/todovue-demo.svg)](https://www.npmjs.com/package/todovue-demo)
-[![npm](https://img.shields.io/npm/dt/todovue-demo.svg)](https://www.npmjs.com/package/todovue-demo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
+[![npm](https://img.shields.io/npm/v/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/todovue-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo)
+[![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
 
 <img width="600" src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/imagesGit%2Ftodovue-demo.png?alt=media&token=b408f7d7-e015-4ac4-a8a1-3d23d7d09279" alt="TODOvue Demo">
 
