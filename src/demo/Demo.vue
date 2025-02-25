@@ -5,7 +5,7 @@ import { demos } from "../utils/mocks.js";
 
 const TvDemo = defineAsyncComponent(/* webpackChunkName: "TvDemo" */() => import('../components/TvDemo.vue'));
 const Component = defineAsyncComponent(/* webpackChunkName: "Test" */() => import('../components/Test.vue'));
-console.log(Component)
+
 </script>
 
 <template>
