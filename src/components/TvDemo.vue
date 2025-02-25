@@ -5,26 +5,26 @@ import useDemo from '../composable/useDemo';
 const props = defineProps({
   demoStyle: {
     type: Object,
-    default: () => ({ body: {}, content: {} })
+    default: () => ({ body: {}, content: {} }),
   },
   hideBackground: Boolean,
   component: Object,
   variants: Array,
   nameComponent: {
     type: String,
-    default: 'Component Demo'
+    default: 'Component Demo',
   },
   sourceLink: {
     type: String,
-    default: ''
+    default: null,
   },
   urlClone: {
     type: String,
-    default: ''
+    default: null,
   },
   npmInstall: {
     type: String,
-    default: ''
+    default: null,
   },
 });
 
@@ -56,23 +56,32 @@ const {
               <div>
                 <h1 class="tv-demo-title">{{ nameComponent }}</h1>
                 <div class="tv-demo-links">
-                  <a :href="sourceLink" target="_blank" class="tv-demo-links-item">
-                    📂 Source
-                  </a>
-                  |
-                  <div
-                    class="tv-demo-links-item"
-                    @click="setClickItem('npm')"
-                  >
-                    📦 NPM Command
-                  </div>
-                  |
-                  <div
-                    class="tv-demo-links-item"
-                    @click="setClickItem('clone')"
-                  >
-                    📝 Clone Component
-                  </div>
+                  <template v-if="sourceLink || npmInstall || urlClone">
+                    <a
+                      v-if="sourceLink"
+                      :href="sourceLink"
+                      target="_blank"
+                      class="tv-demo-links-item"
+                    >
+                      📂 Source
+                    </a>
+                    <span v-if="sourceLink && (npmInstall || urlClone)"> | </span>
+                    <div
+                      v-if="npmInstall"
+                      class="tv-demo-links-item"
+                      @click="setClickItem('npm')"
+                    >
+                      📦 NPM Command
+                    </div>
+                    <span v-if="npmInstall && urlClone"> | </span>
+                    <div
+                      v-if="urlClone"
+                      class="tv-demo-links-item"
+                      @click="setClickItem('clone')"
+                    >
+                      📝 Clone Component
+                    </div>
+                  </template>
                 </div>
               </div>
               <div>
