@@ -1,7 +1,6 @@
 <script setup>
 import { HighCode } from 'vue-highlight-code';
 import useDemo from '../composable/useDemo';
-const version = __APP_VERSION__;
 
 const props = defineProps({
   demoStyle: {
@@ -41,6 +40,7 @@ const {
   selectedVariantIndex,
   theme,
   variant,
+  version,
 
   setClickItem,
   toggleTheme,
