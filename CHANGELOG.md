@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - xx/xx/xxxx
+
+### Added
+- `isDevComponent` property added to display installation command as development dependency
+- Added component version to the UI
+
 ## [1.1.0] - 24/02/2025
 
 ### Added
