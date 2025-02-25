@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
 const isDemo = process.env.VITE_BUILD_TARGET === "demo";
+import packageInfo from './package.json';
 
 export default defineConfig({
   plugins: [
@@ -13,6 +14,9 @@ export default defineConfig({
       outputDir: "dist",
       skipDiagnostics: false,
     })],
+  define: {
+    __APP_VERSION__: JSON.stringify(packageInfo.version),
+  },
   build: isDemo
     ? {
       outDir: "dist-demo",
