@@ -81,6 +81,7 @@ const component = shallowRef(TvButton);
     sourceLink="https://github.com/TODOvue/todovue-demo"
     urlClone="https://github.com/TODOvue/todovue-demo.git"
     is-dev-component
+    version="1.0.0"
   ></tv-demo>
 </template>
 ```
@@ -123,6 +124,7 @@ export const demos = [
 | sourceLink     | String  | `null`  | Link to the source code of the component                                    | `false`  |
 | urlClone       | String  | `null`  | Link to clone the repository of the component (without `git clone`)         | `false`  |
 | isDevComponent | Boolean | `false` | Indicates that the component is in development (to include `-D`) in command | `false`  |
+| version        | String  | `1.0.0` | Version of the component                                                    | `false`  |
 
 ## Customize
 You can customize the component by passing the `demoStyle` property
