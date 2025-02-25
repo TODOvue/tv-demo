@@ -1,6 +1,7 @@
 <script setup>
 import { HighCode } from 'vue-highlight-code';
 import useDemo from '../composable/useDemo';
+const version = __APP_VERSION__;
 
 const props = defineProps({
   demoStyle: {
@@ -25,6 +26,10 @@ const props = defineProps({
   npmInstall: {
     type: String,
     default: null,
+  },
+  isDevComponent: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -54,7 +59,7 @@ const {
           <template v-if="variants?.length">
             <div class="tv-demo-header">
               <div>
-                <h1 class="tv-demo-title">{{ nameComponent }}</h1>
+                <h1 class="tv-demo-title">{{ nameComponent }} <span>v{{ version }}</span></h1>
                 <div class="tv-demo-links">
                   <template v-if="sourceLink || npmInstall || urlClone">
                     <a
