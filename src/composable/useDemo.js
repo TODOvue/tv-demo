@@ -42,7 +42,7 @@ const useDemo = (props) => {
     let commandToCopy = "";
     
     if (item === "npm") {
-      commandToCopy = `npm install ${props.npmInstall}`;
+      commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
     } else {
       commandToCopy = `git clone ${props.urlClone}`;
     }

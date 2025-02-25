@@ -26,6 +26,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  isDevComponent: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const {
