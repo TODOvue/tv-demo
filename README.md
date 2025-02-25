@@ -7,7 +7,7 @@
 [![npm](https://img.shields.io/npm/v/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/todovue-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo)
 [![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
 
-<img width="600" src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/imagesGit%2Ftodovue-demo.png?alt=media&token=b408f7d7-e015-4ac4-a8a1-3d23d7d09279" alt="TODOvue Demo">
+---
 
 ## Table of Contents
 - [Demo](https://todovue-demo.netlify.app/)
@@ -32,7 +32,7 @@ yarn add @todovue/tvdemo --dev
 Import
 ```vue
 <script setup>
-import TvDemo from 'todovue/tvdemo';
+  import TvDemo from '@todovue/tvdemo';
 </script>
 ```
 In your **main.js** file
@@ -45,7 +45,7 @@ You can also import it directly in the **main.js** file, so you don't have to im
 import { createApp } from "vue";
 import App from "./App.vue";
 import "vue-highlight-code/dist/style.css"; // Styles are imported to display the code
-import TvDemo from 'todovue/tvdemo';
+import TvDemo from '@todovue/tvdemo';
 
 const app = createApp(App);
 app.component("TvDemo", TvDemo);
@@ -73,7 +73,14 @@ const component = shallowRef(TvButton);
 </script>
 
 <template>
-  <tv-demo :component="component" :variants="demos"></tv-demo>
+  <tv-demo
+    :component="component"
+    :variants="demos"
+    nameComponent="TvDemo"
+    npmInstall="@todovue/tvdemo"
+    sourceLink="https://github.com/TODOvue/todovue-demo"
+    urlClone="https://github.com/TODOvue/todovue-demo.git"
+  ></tv-demo>
 </template>
 ```
 It is important to wrap it in a `shallowRef` to update the component without throwing an error
@@ -104,13 +111,16 @@ export const demos = [
 ```
 
 ## Props
-| Name           | Type    | Default | Description                               | Required  |
-|----------------|---------|---------|-------------------------------------------|-----------|
-| component      | Object  |         | Component to display                      | `true`    |
-| variants       | Array   |         | Variations of the component               | `true`    |
-| hideBackground | Boolean | `false` | Hide the background of the component demo | `false`   |
-| demoStyle      | Object  |         | Style of the component                    | `false`   |
-| propsData      | Object  |         | Props of the component                    | `false`   |
+| Name           | Type    | Default | Description                                                         | Required |
+|----------------|---------|---------|---------------------------------------------------------------------|----------|
+| component      | Object  |         | Component to display                                                | `true`   |
+| variants       | Array   |         | Variations of the component                                         | `true`   |
+| hideBackground | Boolean | `false` | Hide the background of the component demo                           | `false`  |
+| demoStyle      | Object  |         | Style of the component                                              | `false`  |
+| nameComponent  | String  | `null`  | Name of the component to display in the demo                        | `false`  |
+| npmInstall     | String  | `null`  | Command to install the component (without `npm install`)            | `false`  |
+| sourceLink     | String  | `null`  | Link to the source code of the component                            | `false`  |
+| urlClone       | String  | `null`  | Link to clone the repository of the component (without `git clone`) | `false`  |
 
 ## Customize
 You can customize the component by passing the `demoStyle` property
@@ -148,7 +158,15 @@ const demoStyle = ref({
 </script>
 
 <template>
-  <tv-demo :component="component" :variants="demos" :demoStyle="demoStyle"></tv-demo>
+  <tv-demo
+    :component="component"
+    :variants="demos"
+    :demoStyle="demoStyle"
+    nameComponent="TvButton"
+    npmInstall="@todovue/tvdemo"
+    sourceLink="https://github.com/TODOvue/todovue-demo"
+    urlClone="https://github.com/TODOvue/todovue-demo.git"
+  ></tv-demo>
 </template>
 ```
 You can send the colors for both `dark` and `light`, these values are optional, so you can send only one or not send any, then it will take the default color
