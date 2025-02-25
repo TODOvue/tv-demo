@@ -80,6 +80,7 @@ const component = shallowRef(TvButton);
     npmInstall="@todovue/tvdemo"
     sourceLink="https://github.com/TODOvue/todovue-demo"
     urlClone="https://github.com/TODOvue/todovue-demo.git"
+    is-dev-component
   ></tv-demo>
 </template>
 ```
@@ -111,16 +112,17 @@ export const demos = [
 ```
 
 ## Props
-| Name           | Type    | Default | Description                                                         | Required |
-|----------------|---------|---------|---------------------------------------------------------------------|----------|
-| component      | Object  |         | Component to display                                                | `true`   |
-| variants       | Array   |         | Variations of the component                                         | `true`   |
-| hideBackground | Boolean | `false` | Hide the background of the component demo                           | `false`  |
-| demoStyle      | Object  |         | Style of the component                                              | `false`  |
-| nameComponent  | String  | `null`  | Name of the component to display in the demo                        | `false`  |
-| npmInstall     | String  | `null`  | Command to install the component (without `npm install`)            | `false`  |
-| sourceLink     | String  | `null`  | Link to the source code of the component                            | `false`  |
-| urlClone       | String  | `null`  | Link to clone the repository of the component (without `git clone`) | `false`  |
+| Name           | Type    | Default | Description                                                                 | Required |
+|----------------|---------|---------|-----------------------------------------------------------------------------|----------|
+| component      | Object  |         | Component to display                                                        | `true`   |
+| variants       | Array   |         | Variations of the component                                                 | `true`   |
+| hideBackground | Boolean | `false` | Hide the background of the component demo                                   | `false`  |
+| demoStyle      | Object  |         | Style of the component                                                      | `false`  |
+| nameComponent  | String  | `null`  | Name of the component to display in the demo                                | `false`  |
+| npmInstall     | String  | `null`  | Command to install the component (without `npm install`)                    | `false`  |
+| sourceLink     | String  | `null`  | Link to the source code of the component                                    | `false`  |
+| urlClone       | String  | `null`  | Link to clone the repository of the component (without `git clone`)         | `false`  |
+| isDevComponent | Boolean | `false` | Indicates that the component is in development (to include `-D`) in command | `false`  |
 
 ## Customize
 You can customize the component by passing the `demoStyle` property
