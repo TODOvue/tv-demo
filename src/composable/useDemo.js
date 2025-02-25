@@ -6,11 +6,9 @@ const useDemo = (props) => {
   const selectedTheme = ref('');
   const isCopy = ref(false);
   const messageCopy = ref('');
-  const version = ref('');
 
   onMounted(async () => {
     const storedTheme = localStorage.getItem('theme');
-    await fetchVersion()
     if (storedTheme) {
       theme.value = storedTheme;
       selectedTheme.value = storedTheme;
@@ -18,18 +16,7 @@ const useDemo = (props) => {
     }
     selectedTheme.value = theme.value;
   });
-  
-  const fetchVersion = async () => {
-    try {
-      const packagePath = `../../../node_modules/${props.npmInstall}/package.json`
-      const packageJson = await import(/* @vite-ignore */ packagePath)
-      version.value = packageJson.version || '0.0.0'
-    } catch (error) {
-      version.value = '0.0.0'
-      console.error(`No se pudo obtener la versión de ${props.npmInstall}:`, error)
-    }
-  }
-  
+
   const toggleTheme = () => {
     theme.value = selectedTheme.value;
     localStorage.setItem('theme', theme.value);
@@ -85,7 +72,6 @@ const useDemo = (props) => {
     selectedVariantIndex,
     theme,
     variant,
-    version,
     
     setClickItem,
     toggleTheme,

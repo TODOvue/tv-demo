@@ -30,6 +30,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  version: {
+    type: String,
+    default: '0.0.0',
+  },
 });
 
 const {
@@ -40,7 +44,6 @@ const {
   selectedVariantIndex,
   theme,
   variant,
-  version,
 
   setClickItem,
   toggleTheme,
