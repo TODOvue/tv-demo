@@ -95,9 +95,9 @@ const {
               <div>
                 <div class="tv-demo-theme">
                   <select
-                      class="tv-demo-select tv-demo-select-theme"
-                      v-model="selectedTheme"
-                      @change="toggleTheme"
+                    class="tv-demo-select tv-demo-select-theme"
+                    v-model="selectedTheme"
+                    @change="toggleTheme"
                   >
                     <option disabled value="">Select theme</option>
                     <option value="dark">Dark</option>

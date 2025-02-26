@@ -7,14 +7,12 @@ const useDemo = (props) => {
   const isCopy = ref(false);
   const messageCopy = ref('');
 
-  onMounted(async () => {
+  onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       theme.value = storedTheme;
-      selectedTheme.value = storedTheme;
-      return;
     }
-    selectedTheme.value = theme.value;
+    selectedTheme.value = theme.value || 'dark';
   });
 
   const toggleTheme = () => {
