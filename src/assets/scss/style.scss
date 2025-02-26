@@ -11,6 +11,12 @@
   & .tv-demo-option {
     background: variables.$light-card-bg;
   }
+
+  & .no-background {
+    background-color: variables.$dark-card-bg;
+    color: variables.$light-card-bg;
+    box-shadow: 0 0 10px variables.$dark-card-bg;
+  }
 }
 
 .light-mode {
@@ -21,6 +27,12 @@
 
   & .tv-demo-option {
     background: variables.$dark-card-bg;
+  }
+
+  & .no-background {
+    background-color: variables.$light-card-bg;
+    color: variables.$dark-card-bg;
+    box-shadow: 0 0 10px variables.$light-card-bg;
   }
 }
 
@@ -95,7 +107,7 @@
       font-size: 14px;
       padding: 5px 10px;
       position: absolute;
-      top: 40px;
+      top: 70px;
       width: auto;
     }
 

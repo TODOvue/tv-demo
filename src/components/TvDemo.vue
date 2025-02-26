@@ -137,7 +137,7 @@ const {
             />
             <div
               v-if="isCopy"
-              class="tv-demo-copy"
+              :class="hideBackground ? 'tv-demo-copy no-background' : 'tv-demo-copy'"
             >
               {{ messageCopy }}
             </div>
