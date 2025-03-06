@@ -7,6 +7,7 @@ const useDemo = (props) => {
   const isCopy = ref(false);
   const messageCopy = ref('');
   const readmeContent = ref('');
+  const selectedTab = ref('demo');
 
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -79,11 +80,12 @@ const useDemo = (props) => {
     customStyle,
     isCopy,
     messageCopy,
+    readmeContent,
+    selectedTab,
     selectedTheme,
     selectedVariantIndex,
     theme,
     variant,
-    readmeContent,
     
     setClickItem,
     toggleTheme,
