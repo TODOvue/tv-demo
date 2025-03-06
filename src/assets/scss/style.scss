@@ -100,6 +100,10 @@
       gap: 10px;
       align-content: center;
       align-items: center;
+
+      & a {
+        color: inherit;
+      }
     }
 
     &-copy {
