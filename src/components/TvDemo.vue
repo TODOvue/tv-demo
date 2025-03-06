@@ -1,5 +1,8 @@
 <script setup>
 import { HighCode } from 'vue-highlight-code';
+import 'vue-highlight-code/dist/style.css';
+import "github-markdown-css";
+import VueMarkdown from 'vue-markdown-render';
 import useDemo from '../composable/useDemo';
 
 const props = defineProps({
@@ -34,6 +37,10 @@ const props = defineProps({
     type: String,
     default: '0.0.0',
   },
+  readmePath: {
+    type: String,
+    default: "/README.md", // Siempre cargará desde `public/`
+  },
 });
 
 const {
@@ -44,6 +51,7 @@ const {
   selectedVariantIndex,
   theme,
   variant,
+  readmeContent,
 
   setClickItem,
   toggleTheme,
@@ -147,10 +155,34 @@ const {
               Here the different variations of the components will be shown.
             </h1>
           </template>
+          <div class="tv-demo-docs">
+            <h2>📖 Documentation</h2>
+            <div  class="markdown-body" v-if="readmeContent" >
+              <VueMarkdown :source="readmeContent" />
+            </div>
+            <div v-else>No documentation available.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss" src="../assets/scss/style.scss"></style>
+<style scoped lang="scss" src="../assets/scss/style.scss">
+.markdown-body {
+  padding: 20px;
+  background: #181818;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  color: #3b82f6; /* Azul bonito para los títulos */
+}
+.markdown-body pre {
+  background: #282c34;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+</style>
