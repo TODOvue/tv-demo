@@ -16,9 +16,9 @@
 - [Props](#props)
 - [Customize](#customize)
 - [Development](#development)
-- [Changelog](https://github.com/TODOvue/todovue-demo/blob/master/CHANGELOG.md)
-- [Contributing](https://github.com/TODOvue/todovue-demo/blob/master/CONTRIBUTING.md)
-- [License](https://github.com/TODOvue/todovue-demo/blob/master/LICENSE)
+- [Changelog](https://github.com/TODOvue/todovue-demo/blob/main/CHANGELOG.md)
+- [Contributing](https://github.com/TODOvue/todovue-demo/blob/main/CONTRIBUTING.md)
+- [License](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
 
 ## Installation
 Install with npm or yarn as development dependency
@@ -61,7 +61,7 @@ Basic use
 ```vue
 <script setup>
 import { shallowRef } from "vue";
-import TvButton from "@/component/TvButton.vue";
+import TvButton from "@todovue/tvbutton";
 import { demos } from "@/utils/mocks.js";
 
 const component = shallowRef(TvButton);
@@ -193,10 +193,10 @@ Run the linter
 ```bash
 yarn lint
 ```
-Run the build It is not necessary to generate build, since it is generated when you do PR to the master branch
+Run the build It is not necessary to generate build, since it is generated when you do PR to the main branch
 ```bash
 yarn build
 ```
 
 ## License
-[MIT](https://github.com/TODOvue/todovue-demo/blob/master/LICENSE)
+[MIT](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
