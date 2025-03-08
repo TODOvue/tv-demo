@@ -26,7 +26,7 @@ export default defineConfig({
         formats: ["es", "cjs"]
       },
       rollupOptions: {
-        external: ["vue", "vue-highlight-code"],
+        external: ["vue", "vue-highlight-code", "vue3-markdown-it", "github-markdown-css"],
         output: {
           globals: {
             vue: "Vue"
