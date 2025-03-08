@@ -45,7 +45,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:demo": "VITE_BUILD_TARGET=demo cp README.md public/ && vite build",
+    "build:demo": "cp README.md public/ && VITE_BUILD_TARGET=demo vite build",
     "preview": "vite preview"
   },
   "peerDependencies": {
