@@ -1,6 +1,53 @@
 @use 'global.scss';
 @use 'mixins.scss';
 @use 'variables.scss';
+@use "sass:color";
+
+.markdown-body {
+  padding: 50px 25px;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  color: #3b82f6;
+}
+.markdown-body pre {
+  background: #282c34;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+.tv-demo-tabs {
+  display: flex;
+  margin-bottom: 10px;
+
+  button {
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+  }
+}
+
+.tv-demo-content {
+  padding: 20px;
+  border: 1px solid #4a4a4a;
+  border-radius: 0 5px 5px 5px;
+}
+
+a, .tv-demo-links-item {
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
 
 .dark-mode {
   & .tv-demo-select {
@@ -16,6 +63,22 @@
     background-color: variables.$dark-card-bg;
     color: variables.$light-card-bg;
     box-shadow: 0 0 10px variables.$dark-card-bg;
+  }
+
+  .tv-demo-tabs {
+    button {
+      background-color: variables.$light-card-bg;
+      color: variables.$light-text;
+
+      &.active {
+        background: color.adjust(variables.$light-card-bg, $lightness: -15%);
+        font-weight: bold;
+      }
+
+      &:hover {
+        background: color.adjust(variables.$light-card-bg, $lightness: -10%);
+      }
+    }
   }
 }
 
@@ -33,6 +96,22 @@
     background-color: variables.$light-card-bg;
     color: variables.$dark-card-bg;
     box-shadow: 0 0 10px variables.$light-card-bg;
+  }
+
+  .tv-demo-tabs {
+    button {
+      background-color: variables.$dark-card-bg;
+      color: variables.$dark-text;
+
+      &.active {
+        background: color.adjust(variables.$dark-card-bg, $lightness: -15%);
+        font-weight: bold;
+      }
+
+      &:hover {
+        background: color.adjust(variables.$dark-card-bg, $lightness: -10%);
+      }
+    }
   }
 }
 
@@ -100,6 +179,10 @@
       gap: 10px;
       align-content: center;
       align-items: center;
+
+      & a {
+        color: inherit;
+      }
     }
 
     &-copy {
@@ -139,16 +222,6 @@
             font-size: 1rem;
             font-weight: 300;
           }
-        }
-
-        & a, .tv-demo-links-item {
-          font-weight: 500;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 3px;
-          cursor: pointer;
-          font-size: 1.1rem;
         }
       }
     }

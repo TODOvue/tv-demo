@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 
 const useDemo = (props) => {
   const theme = ref('dark');
@@ -6,6 +6,8 @@ const useDemo = (props) => {
   const selectedTheme = ref('');
   const isCopy = ref(false);
   const messageCopy = ref('');
+  const readmeContent = ref('');
+  const selectedTab = ref('demo');
 
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -14,6 +16,16 @@ const useDemo = (props) => {
     }
     selectedTheme.value = theme.value || 'dark';
   });
+  
+  const fetchReadme = async () => {
+    try {
+      const response = await fetch(props.readmePath);
+      if (!response.ok) throw new Error('README.md not found');
+      readmeContent.value = await response.text();
+    } catch (error) {
+      readmeContent.value = '⚠️ Documentation not found.';
+    }
+  };
 
   const toggleTheme = () => {
     theme.value = selectedTheme.value;
@@ -62,10 +74,14 @@ const useDemo = (props) => {
       });
   };
   
+  watchEffect(fetchReadme);
+  
   return {
     customStyle,
     isCopy,
     messageCopy,
+    readmeContent,
+    selectedTab,
     selectedTheme,
     selectedVariantIndex,
     theme,

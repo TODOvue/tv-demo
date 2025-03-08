@@ -45,12 +45,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:demo": "VITE_BUILD_TARGET=demo vite build",
+    "build:demo": "cp README.md public/ && VITE_BUILD_TARGET=demo vite build",
     "preview": "vite preview"
   },
   "peerDependencies": {
+    "github-markdown-css": "^5.8.1",
     "vue": "^3.4.21",
-    "vue-highlight-code": "^0.2.0"
+    "vue-highlight-code": "^0.2.0",
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

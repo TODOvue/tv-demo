@@ -8,7 +8,6 @@
 [![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
 
 ---
-
 ## Table of Contents
 - [Demo](https://todovue-demo.netlify.app/)
 - [Installation](#installation)
@@ -16,9 +15,9 @@
 - [Props](#props)
 - [Customize](#customize)
 - [Development](#development)
-- [Changelog](https://github.com/TODOvue/todovue-demo/blob/master/CHANGELOG.md)
-- [Contributing](https://github.com/TODOvue/todovue-demo/blob/master/CONTRIBUTING.md)
-- [License](https://github.com/TODOvue/todovue-demo/blob/master/LICENSE)
+- [Changelog](https://github.com/TODOvue/todovue-demo/blob/main/CHANGELOG.md)
+- [Contributing](https://github.com/TODOvue/todovue-demo/blob/main/CONTRIBUTING.md)
+- [License](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
 
 ## Installation
 Install with npm or yarn as development dependency
@@ -35,16 +34,11 @@ Import
   import TvDemo from '@todovue/tvdemo';
 </script>
 ```
-In your **main.js** file
-```js
-import "vue-highlight-code/dist/style.css"; // Styles are imported to display the code
-```
 
-You can also import it directly in the **main.js** file, so you don't have to import it in the pages
+Or import it globally in main.js:
 ```js
 import { createApp } from "vue";
 import App from "./App.vue";
-import "vue-highlight-code/dist/style.css"; // Styles are imported to display the code
 import TvDemo from '@todovue/tvdemo';
 
 const app = createApp(App);
@@ -62,11 +56,19 @@ Add the following styles to your **App.vue** file
 ```
 
 ## Usage
+## **Important**: Documentation File Placement
+To properly display the documentation within the demo, **the README file must be placed inside the `public/` folder** of your project. This ensures it is accessible when using `TvDemo`.
+
+### Correct Setup
+1. Move your `README.md` file to the `public/` folder:
+```sh
+  mv README.md public/
+```
 Basic use
 ```vue
 <script setup>
 import { shallowRef } from "vue";
-import TvButton from "@/component/TvButton.vue";
+import TvButton from "@todovue/tvbutton";
 import { demos } from "@/utils/mocks.js";
 
 const component = shallowRef(TvButton);
@@ -82,6 +84,7 @@ const component = shallowRef(TvButton);
     urlClone="https://github.com/TODOvue/todovue-demo.git"
     is-dev-component
     version="1.0.0"
+    readmePath="./README.md"
   ></tv-demo>
 </template>
 ```
@@ -113,18 +116,19 @@ export const demos = [
 ```
 
 ## Props
-| Name           | Type    | Default | Description                                                                 | Required |
-|----------------|---------|---------|-----------------------------------------------------------------------------|----------|
-| component      | Object  |         | Component to display                                                        | `true`   |
-| variants       | Array   |         | Variations of the component                                                 | `true`   |
-| hideBackground | Boolean | `false` | Hide the background of the component demo                                   | `false`  |
-| demoStyle      | Object  |         | Style of the component                                                      | `false`  |
-| nameComponent  | String  | `null`  | Name of the component to display in the demo                                | `false`  |
-| npmInstall     | String  | `null`  | Command to install the component (without `npm install`)                    | `false`  |
-| sourceLink     | String  | `null`  | Link to the source code of the component                                    | `false`  |
-| urlClone       | String  | `null`  | Link to clone the repository of the component (without `git clone`)         | `false`  |
-| isDevComponent | Boolean | `false` | Indicates that the component is in development (to include `-D`) in command | `false`  |
-| version        | String  | `1.0.0` | Version of the component                                                    | `false`  |
+| Name           | Type    | Default       | Description                                                         | Required |
+|----------------|---------|---------------|---------------------------------------------------------------------|----------|
+| component      | Object  |               | Component to display                                                | `true`   |
+| variants       | Array   |               | Variations of the component                                         | `true`   |
+| hideBackground | Boolean | `false`       | Hide the background of the component demo                           | `false`  |
+| demoStyle      | Object  |               | Style of the component                                              | `false`  |
+| nameComponent  | String  | `null`        | Name of the component to display in the demo                        | `false`  |
+| npmInstall     | String  | `null`        | Command to install the component (without `npm install`)            | `false`  |
+| sourceLink     | String  | `null`        | Link to the source code of the component                            | `false`  |
+| urlClone       | String  | `null`        | Link to clone the repository of the component (without `git clone`) | `false`  |
+| isDevComponent | Boolean | `false`       | Indicates that the component is in development (to include `-D`)    | `false`  |
+| version        | String  | `1.0.0`       | Version of the component                                            | `false`  |
+| readmePath     | String  | `./README.md` | Path to the README file of the component                            | `false`  |
 
 ## Customize
 You can customize the component by passing the `demoStyle` property
@@ -142,7 +146,7 @@ const demoStyle = ref({
   },
 });
 ```
-And you send that object to the component
+Use it in your component:
 ```vue
 <script setup>
 import { ref } from "vue";
@@ -176,30 +180,10 @@ const demoStyle = ref({
 You can send the colors for both `dark` and `light`, these values are optional, so you can send only one or not send any, then it will take the default color
 
 ## Development
-Clone the repository
-```bash
+```sh
 git clone git@github.com:TODOvue/todovue-demo.git
-```
-Install the dependencies
-```bash
 yarn install
-```
-Run the project
-```bash
 yarn demo
 ```
-Run the tests
-```bash
-yarn test:unit
-```
-Run the linter
-```bash
-yarn lint
-```
-Run the build It is not necessary to generate build, since it is generated when you do PR to the master branch
-```bash
-yarn build
-```
-
 ## License
-[MIT](https://github.com/TODOvue/todovue-demo/blob/master/LICENSE)
+[MIT](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
