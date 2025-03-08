@@ -8,8 +8,15 @@
 [![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
 
 ---
+## **Important**: Documentation File Placement
+To properly display the documentation within the demo, **the README file must be placed inside the `public/` folder** of your project. This ensures it is accessible when using `TvDemo`.
 
-## Table of Contents
+### Correct Setup
+1. Move your `README.md` file to the `public/` folder:
+   ```sh
+   mv README.md public/
+
+## 📖 Table of Contents
 - [Demo](https://todovue-demo.netlify.app/)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -36,7 +43,7 @@ Import
 </script>
 ```
 
-You can also import it directly in the **main.js** file, so you don't have to import it in the pages
+Or import it globally in main.js:
 ```js
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -109,19 +116,19 @@ export const demos = [
 ```
 
 ## Props
-| Name           | Type    | Default       | Description                                                                 | Required |
-|----------------|---------|---------------|-----------------------------------------------------------------------------|----------|
-| component      | Object  |               | Component to display                                                        | `true`   |
-| variants       | Array   |               | Variations of the component                                                 | `true`   |
-| hideBackground | Boolean | `false`       | Hide the background of the component demo                                   | `false`  |
-| demoStyle      | Object  |               | Style of the component                                                      | `false`  |
-| nameComponent  | String  | `null`        | Name of the component to display in the demo                                | `false`  |
-| npmInstall     | String  | `null`        | Command to install the component (without `npm install`)                    | `false`  |
-| sourceLink     | String  | `null`        | Link to the source code of the component                                    | `false`  |
-| urlClone       | String  | `null`        | Link to clone the repository of the component (without `git clone`)         | `false`  |
-| isDevComponent | Boolean | `false`       | Indicates that the component is in development (to include `-D`) in command | `false`  |
-| version        | String  | `1.0.0`       | Version of the component                                                    | `false`  |
-| readmePath     | String  | `./README.md` | Path to the README file of the component                                    | `false`  |
+| Name           | Type    | Default       | Description                                                         | Required |
+|----------------|---------|---------------|---------------------------------------------------------------------|----------|
+| component      | Object  |               | Component to display                                                | `true`   |
+| variants       | Array   |               | Variations of the component                                         | `true`   |
+| hideBackground | Boolean | `false`       | Hide the background of the component demo                           | `false`  |
+| demoStyle      | Object  |               | Style of the component                                              | `false`  |
+| nameComponent  | String  | `null`        | Name of the component to display in the demo                        | `false`  |
+| npmInstall     | String  | `null`        | Command to install the component (without `npm install`)            | `false`  |
+| sourceLink     | String  | `null`        | Link to the source code of the component                            | `false`  |
+| urlClone       | String  | `null`        | Link to clone the repository of the component (without `git clone`) | `false`  |
+| isDevComponent | Boolean | `false`       | Indicates that the component is in development (to include `-D`)    | `false`  |
+| version        | String  | `1.0.0`       | Version of the component                                            | `false`  |
+| readmePath     | String  | `./README.md` | Path to the README file of the component                            | `false`  |
 
 ## Customize
 You can customize the component by passing the `demoStyle` property
@@ -139,7 +146,7 @@ const demoStyle = ref({
   },
 });
 ```
-And you send that object to the component
+Use it in your component:
 ```vue
 <script setup>
 import { ref } from "vue";
