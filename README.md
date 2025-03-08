@@ -8,15 +8,7 @@
 [![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
 
 ---
-## **Important**: Documentation File Placement
-To properly display the documentation within the demo, **the README file must be placed inside the `public/` folder** of your project. This ensures it is accessible when using `TvDemo`.
-
-### Correct Setup
-1. Move your `README.md` file to the `public/` folder:
-   ```sh
-   mv README.md public/
-
-## 📖 Table of Contents
+## Table of Contents
 - [Demo](https://todovue-demo.netlify.app/)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -64,6 +56,14 @@ Add the following styles to your **App.vue** file
 ```
 
 ## Usage
+## **Important**: Documentation File Placement
+To properly display the documentation within the demo, **the README file must be placed inside the `public/` folder** of your project. This ensures it is accessible when using `TvDemo`.
+
+### Correct Setup
+1. Move your `README.md` file to the `public/` folder:
+```sh
+  mv README.md public/
+```
 Basic use
 ```vue
 <script setup>
@@ -180,30 +180,10 @@ const demoStyle = ref({
 You can send the colors for both `dark` and `light`, these values are optional, so you can send only one or not send any, then it will take the default color
 
 ## Development
-Clone the repository
-```bash
+```sh
 git clone git@github.com:TODOvue/todovue-demo.git
-```
-Install the dependencies
-```bash
 yarn install
-```
-Run the project
-```bash
 yarn demo
 ```
-Run the tests
-```bash
-yarn test:unit
-```
-Run the linter
-```bash
-yarn lint
-```
-Run the build It is not necessary to generate build, since it is generated when you do PR to the main branch
-```bash
-yarn build
-```
-
 ## License
 [MIT](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
