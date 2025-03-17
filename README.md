@@ -45,6 +45,11 @@ const app = createApp(App);
 app.component("TvDemo", TvDemo);
 app.mount("#app");
 ```
+To ensure the documentation tab displays correctly, you must import the following styles in your **Index.js** or entry file:
+```js
+import 'github-markdown-css';
+```
+This will apply the necessary styles for rendering markdown content properly.
 
 Add the following styles to your **App.vue** file
 ```css

@@ -45,8 +45,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:demo": "cp README.md public/ && VITE_BUILD_TARGET=demo vite build",
-    "preview": "vite preview"
+    "build:demo": "cp README.md public/ && VITE_BUILD_TARGET=demo vite build"
   },
   "peerDependencies": {
     "github-markdown-css": "^5.8.1",
