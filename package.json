@@ -2,7 +2,7 @@
   "name": "@todovue/tv-demo",
   "private": false,
   "author": "Cristhian Daza",
-  "description": "A demo for TodoVue",
+  "description": "This is a default demo display for TODOvue components. Use this area to showcase the component's usage, props, variants, and live behavior in isolation.",
   "license": "MIT",
   "version": "1.3.2",
   "type": "module",
