@@ -41,6 +41,13 @@
   & .tv-demo-description {
     font-size: 2rem;
   }
+
+  & .tv-demo-component-content {
+      display: flex;
+      margin: 0 auto;
+      padding: 20px;
+      justify-content: center;
+  }
 }
 
 a, .tv-demo-links-item {
