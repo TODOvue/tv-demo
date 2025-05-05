@@ -102,21 +102,40 @@ You can create the variations of the component in the same file or import them f
 **utils/mocks.js**
 ##### It is important that the information is sent by `propsData`, since currently it cannot be sent by slot
 ```js
+import Default from './demos/default.vue?raw'
+import IsDevComponent from './demos/isDevComponent.vue?raw';
+import HideBackground from './demos/hideBackground.vue?raw';
+import DemoStyle from './demos/demoStyle.vue?raw';
+
 export const demos = [
   {
     id: 1,
-    title: "TvButton Default",
-    propsData: { titletextButton: "Press me!" },
-    html: `<tv-button>
-  Press me!
-</tv-button>`, // It is necessary to create the html property, this will be displayed in the code
+    title: 'Default',
+    propsData: {},
+    description: 'This is a default demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: Default,
   },
   {
     id: 2,
-    title: "TvButton Default",
-    propsData: { titletextButton: "Press me!", isOutline: true },
-    html: "<tv-button titletextButton='Press me!' isOutline />",
+    title: 'IsDevComponent',
+    propsData: { isDevComponent: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: IsDevComponent
   },
+  {
+    id: 3,
+    title: 'HideBackground',
+    propsData: { hideBackground: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: HideBackground
+  },
+  {
+    id: 4,
+    title: 'DemoStyle',
+    propsData: { demoStyle: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: DemoStyle
+  }
 ];
 ```
 
