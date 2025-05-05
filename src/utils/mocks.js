@@ -19,14 +19,14 @@ export const demos = [
     html: IsDevComponent
   },
   {
-    id: 2,
+    id: 3,
     title: 'HideBackground',
     propsData: { hideBackground: true },
     description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
     html: HideBackground
   },
   {
-    id: 3,
+    id: 4,
     title: 'DemoStyle',
     propsData: { demoStyle: true },
     description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
