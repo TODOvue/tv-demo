@@ -86,8 +86,11 @@ const {
               {{ variant.title }}
             </option>
           </select>
-          {{ variant.description }}
-          <div class="tv-demo-description">
+          <span class="tv-demo-description">
+            {{ variant.description }}
+          </span>
+
+          <div class="tv-demo-component-content">
             <component :is="component" v-bind="variant.propsData" />
           </div>
 
