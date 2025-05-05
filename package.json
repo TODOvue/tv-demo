@@ -8,10 +8,10 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TODOvue/todovue-demo.git"
+    "url": "https://github.com/TODOvue/tv-demo.git"
   },
   "bugs": {
-    "url": "https://github.com/TODOvue/todovue-demo/issues"
+    "url": "https://github.com/TODOvue/tv-demo/issues"
   },
   "keywords": [
     "todovue",
@@ -27,13 +27,13 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/todovue-demo.es.js",
-      "require": "./dist/todovue-demo.cjs.js"
+      "import": "./dist/tv-demo.es.js",
+      "require": "./dist/tv-demo.cjs.js"
     }
   },
-  "main": "dist/todovue-demo.cjs.js",
-  "module": "dist/todovue-demo.es.js",
-  "types": "dist/todovue-demo.d.ts",
+  "main": "dist/tv-demo.cjs.js",
+  "module": "dist/tv-demo.es.js",
+  "types": "dist/tv-demo.d.ts",
   "files": [
     "dist",
     "LICENSE",

@@ -4,20 +4,20 @@
 # TODOvue Demo
 ###### The TvDemo component is a useful tool for viewing and testing different variations of components on different themes.
 
-[![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/todovue-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
-[![npm](https://img.shields.io/npm/d18m/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
+[![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/tv-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
+[![npm](https://img.shields.io/npm/d18m/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) ![GitHub](https://img.shields.io/github/license/TODOvue/tv-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/tv-demo)
 
 ---
 ## Table of Contents
-- [Demo](https://todovue-demo.netlify.app/)
+- [Demo](https://tv-demo.netlify.app/)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Props](#props)
 - [Customize](#customize)
 - [Development](#development)
-- [Changelog](https://github.com/TODOvue/todovue-demo/blob/main/CHANGELOG.md)
-- [Contributing](https://github.com/TODOvue/todovue-demo/blob/main/CONTRIBUTING.md)
-- [License](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
+- [Changelog](https://github.com/TODOvue/tv-demo/blob/main/CHANGELOG.md)
+- [Contributing](https://github.com/TODOvue/tv-demo/blob/main/CONTRIBUTING.md)
+- [License](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)
 
 ## Installation
 Install with npm or yarn as development dependency
@@ -85,8 +85,8 @@ const component = shallowRef(TvButton);
     :variants="demos"
     nameComponent="TvDemo"
     npmInstall="@todovue/tv-demo"
-    sourceLink="https://github.com/TODOvue/todovue-demo"
-    urlClone="https://github.com/TODOvue/todovue-demo.git"
+    sourceLink="https://github.com/TODOvue/tv-demo"
+    urlClone="https://github.com/TODOvue/tv-demo.git"
     is-dev-component
     version="1.0.0"
     readmePath="./README.md"
@@ -177,8 +177,8 @@ const demoStyle = ref({
     :demoStyle="demoStyle"
     nameComponent="TvButton"
     npmInstall="@todovue/tv-demo"
-    sourceLink="https://github.com/TODOvue/todovue-demo"
-    urlClone="https://github.com/TODOvue/todovue-demo.git"
+    sourceLink="https://github.com/TODOvue/tv-demo"
+    urlClone="https://github.com/TODOvue/tv-demo.git"
   ></tv-demo>
 </template>
 ```
@@ -186,9 +186,9 @@ You can send the colors for both `dark` and `light`, these values are optional, 
 
 ## Development
 ```sh
-git clone git@github.com:TODOvue/todovue-demo.git
+git clone git@github.com:TODOvue/tv-demo.git
 yarn install
 yarn demo
 ```
 ## License
-[MIT](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
+[MIT](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)
