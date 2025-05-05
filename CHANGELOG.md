@@ -6,7 +6,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [1.0.0] - 2024-05-05
+## [1.0.1] - 2025-05-05
+
+### 🐛 Fixed
+- Improved layout consistency by wrapping the component preview inside `.tv-demo-component-content` with centered `flex` alignment.
+- Moved variant description to a `<span>` with class `.tv-demo-description` for better semantic structure and styling.
+
+
+## [1.0.0] - 2025-05-05
 
 ### ✨ Added
 
@@ -22,4 +29,5 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.0.1]: https://github.com/TODOvue/tv-demo/pull/19
 [1.0.0]: https://github.com/TODOvue/tv-demo/pull/18
