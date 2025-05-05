@@ -4,34 +4,34 @@
 # TODOvue Demo
 ###### The TvDemo component is a useful tool for viewing and testing different variations of components on different themes.
 
-[![npm](https://img.shields.io/npm/v/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/todovue-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo)
-[![npm](https://img.shields.io/npm/d18m/@todovue/tvdemo.svg)](https://www.npmjs.com/package/@todovue/tvdemo) ![GitHub](https://img.shields.io/github/license/TODOvue/todovue-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/todovue-demo)
+[![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/tv-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
+[![npm](https://img.shields.io/npm/d18m/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) ![GitHub](https://img.shields.io/github/license/TODOvue/tv-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/tv-demo)
 
 ---
 ## Table of Contents
-- [Demo](https://todovue-demo.netlify.app/)
+- [Demo](https://tv-demo.netlify.app/)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Props](#props)
 - [Customize](#customize)
 - [Development](#development)
-- [Changelog](https://github.com/TODOvue/todovue-demo/blob/main/CHANGELOG.md)
-- [Contributing](https://github.com/TODOvue/todovue-demo/blob/main/CONTRIBUTING.md)
-- [License](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
+- [Changelog](https://github.com/TODOvue/tv-demo/blob/main/CHANGELOG.md)
+- [Contributing](https://github.com/TODOvue/tv-demo/blob/main/CONTRIBUTING.md)
+- [License](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)
 
 ## Installation
 Install with npm or yarn as development dependency
 ```bash
-npm install @todovue/tvdemo --save-dev
+npm install @todovue/tv-demo --save-dev
 ```
 ```bash
-yarn add @todovue/tvdemo --dev
+yarn add @todovue/tv-demo --dev
 ```
 
 Import
 ```vue
 <script setup>
-  import TvDemo from '@todovue/tvdemo';
+  import TvDemo from '@todovue/tv-demo';
 </script>
 ```
 
@@ -39,7 +39,7 @@ Or import it globally in main.js:
 ```js
 import { createApp } from "vue";
 import App from "./App.vue";
-import TvDemo from '@todovue/tvdemo';
+import TvDemo from '@todovue/tv-demo';
 
 const app = createApp(App);
 app.component("TvDemo", TvDemo);
@@ -84,9 +84,9 @@ const component = shallowRef(TvButton);
     :component="component"
     :variants="demos"
     nameComponent="TvDemo"
-    npmInstall="@todovue/tvdemo"
-    sourceLink="https://github.com/TODOvue/todovue-demo"
-    urlClone="https://github.com/TODOvue/todovue-demo.git"
+    npmInstall="@todovue/tv-demo"
+    sourceLink="https://github.com/TODOvue/tv-demo"
+    urlClone="https://github.com/TODOvue/tv-demo.git"
     is-dev-component
     version="1.0.0"
     readmePath="./README.md"
@@ -102,21 +102,40 @@ You can create the variations of the component in the same file or import them f
 **utils/mocks.js**
 ##### It is important that the information is sent by `propsData`, since currently it cannot be sent by slot
 ```js
+import Default from './demos/default.vue?raw'
+import IsDevComponent from './demos/isDevComponent.vue?raw';
+import HideBackground from './demos/hideBackground.vue?raw';
+import DemoStyle from './demos/demoStyle.vue?raw';
+
 export const demos = [
   {
     id: 1,
-    title: "TvButton Default",
-    propsData: { titletextButton: "Press me!" },
-    html: `<tv-button>
-  Press me!
-</tv-button>`, // It is necessary to create the html property, this will be displayed in the code
+    title: 'Default',
+    propsData: {},
+    description: 'This is a default demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: Default,
   },
   {
     id: 2,
-    title: "TvButton Default",
-    propsData: { titletextButton: "Press me!", isOutline: true },
-    html: "<tv-button titletextButton='Press me!' isOutline />",
+    title: 'IsDevComponent',
+    propsData: { isDevComponent: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: IsDevComponent
   },
+  {
+    id: 3,
+    title: 'HideBackground',
+    propsData: { hideBackground: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: HideBackground
+  },
+  {
+    id: 4,
+    title: 'DemoStyle',
+    propsData: { demoStyle: true },
+    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
+    html: DemoStyle
+  }
 ];
 ```
 
@@ -176,9 +195,9 @@ const demoStyle = ref({
     :variants="demos"
     :demoStyle="demoStyle"
     nameComponent="TvButton"
-    npmInstall="@todovue/tvdemo"
-    sourceLink="https://github.com/TODOvue/todovue-demo"
-    urlClone="https://github.com/TODOvue/todovue-demo.git"
+    npmInstall="@todovue/tv-demo"
+    sourceLink="https://github.com/TODOvue/tv-demo"
+    urlClone="https://github.com/TODOvue/tv-demo.git"
   ></tv-demo>
 </template>
 ```
@@ -186,9 +205,9 @@ You can send the colors for both `dark` and `light`, these values are optional, 
 
 ## Development
 ```sh
-git clone git@github.com:TODOvue/todovue-demo.git
+git clone git@github.com:TODOvue/tv-demo.git
 yarn install
 yarn demo
 ```
 ## License
-[MIT](https://github.com/TODOvue/todovue-demo/blob/main/LICENSE)
+[MIT](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)

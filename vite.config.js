@@ -22,7 +22,7 @@ export default defineConfig({
       lib: {
         entry: "src/components/TvDemo.vue",
         name: "TvDemo",
-        fileName: format => `todovue-demo.${format}.js`,
+        fileName: format => `tv-demo.${format}.js`,
         formats: ["es", "cjs"]
       },
       rollupOptions: {
