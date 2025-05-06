@@ -5,6 +5,13 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.0.2] - 2025-05-05
+
+### 🐛 Fixed
+- Adjusted font size for demo component description for better readability.
+
+### 📦 Dependencies
+- Updated `vite` to version `^6.0.0` in `devDependencies`.
 
 ## [1.0.1] - 2025-05-05
 
@@ -29,5 +36,6 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
-[1.0.1]: https://github.com/TODOvue/tv-demo/pull/19
-[1.0.0]: https://github.com/TODOvue/tv-demo/pull/18
+[1.0.2]: https://github.com/TODOvue/tv-demo/pull/20/files
+[1.0.1]: https://github.com/TODOvue/tv-demo/pull/19/files
+[1.0.0]: https://github.com/TODOvue/tv-demo/pull/18/files
