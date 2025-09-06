@@ -5,10 +5,10 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
-    ## [1.0.4] - 2025-09-05
-    
-    ### 🛠️ Changed
-    - Fixed the library entry point in `vite.config.js` to point to `src/entry.ts` instead of the `.vue` file. This resolves the default import error from Vue (`No matching export in "vue" for import "default"`) and ensures full compatibility with Vue 3 in both SPA and SSR (Nuxt 3).
+## [1.0.4] - 2025-09-05
+
+### 🛠️ Changed
+- Fixed the library entry point in `vite.config.js` to point to `src/entry.ts` instead of the `.vue` file. This resolves the default import error from Vue (`No matching export in "vue" for import "default"`) and ensures full compatibility with Vue 3 in both SPA and SSR (Nuxt 3).
 
 ---
 ## [1.0.3] - 2025-09-05
