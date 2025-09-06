@@ -20,7 +20,7 @@ export default defineConfig({
     }
     : {
       lib: {
-        entry: "src/components/TvDemo.vue",
+        entry: "src/entry.ts",
         name: "TvDemo",
         fileName: format => `tv-demo.${format}.js`,
         formats: ["es", "cjs"]
