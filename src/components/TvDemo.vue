@@ -1,9 +1,7 @@
 <script setup>
 import { HighCode } from 'vue-highlight-code';
-import 'vue-highlight-code/dist/style.css';
-import 'highlight.js/styles/monokai.css';
-import 'github-markdown-css';
 import VueMarkdownIt from 'vue3-markdown-it';
+import 'github-markdown-css';
 
 import useDemo from '../composable/useDemo';
 
@@ -114,4 +112,6 @@ const {
   </div>
 </template>
 
-<style scoped lang="scss" src="../assets/scss/style.scss"></style>
+<style scoped lang="scss">
+@use '../assets/scss/style.scss';
+</style>

@@ -1,144 +1,109 @@
 <p align="center"><img width="150" src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/logo.png?alt=media&token=d8eb592f-e4a9-4b02-8aff-62d337745f41" alt="TODOvue logo">
 </p>
 
-# TODOvue Demo
-###### The TvDemo component is a useful tool for viewing and testing different variations of components on different themes.
+# TODOvue Demo Catalog (TvDemo)
+A flexible, framework-agnostic Vue 3 component catalog for demos, documentation, and playgrounds. Compatible with both SPA and SSR (Nuxt 3), with automatic style injection and no DOM assumptions.
 
-[![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) [![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/sites/tv-demo/deploys) [![npm](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
-[![npm](https://img.shields.io/npm/d18m/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) ![GitHub](https://img.shields.io/github/license/TODOvue/tv-demo) ![GitHub Release Date](https://img.shields.io/github/release-date/TODOvue/tv-demo)
+[![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
+[![npm downloads](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
+![License](https://img.shields.io/github/license/TODOvue/tv-demo)
+
+> Demo: https://tv-demo.netlify.app/
 
 ---
 ## Table of Contents
-- [Demo](https://tv-demo.netlify.app/)
+- [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Quick Start (SPA)](#quick-start-spa)
+- [Nuxt 3 / SSR Usage](#nuxt-3--ssr-usage)
+- [Component Registration Options](#component-registration-options)
 - [Props](#props)
-- [Customize](#customize)
+- [Events](#events)
+- [Customization (Styles)](#customization-styles)
+- [SSR Notes](#ssr-notes)
+- [Roadmap](#roadmap)
 - [Development](#development)
-- [Changelog](https://github.com/TODOvue/tv-demo/blob/main/CHANGELOG.md)
-- [Contributing](https://github.com/TODOvue/tv-demo/blob/main/CONTRIBUTING.md)
-- [License](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)
+- [Contributing](#contributing)
+- [License](#license)
 
+---
+## Features
+- Visual catalog for Vue 3 components with live variants.
+- SPA and SSR (Nuxt 3) compatible.
+- Automatic import of global and highlight.js styles (no manual CSS import needed).
+- Interactive code highlighting and markdown documentation support.
+- Modular structure, easy to extend.
+- Tree-shake friendly and ready for modern bundlers.
+
+---
 ## Installation
-Install with npm or yarn as development dependency
+Using npm:
 ```bash
-npm install @todovue/tv-demo --save-dev
+npm install @todovue/tv-demo
 ```
+Using yarn:
 ```bash
-yarn add @todovue/tv-demo --dev
+yarn add @todovue/tv-demo
+```
+Using pnpm:
+```bash
+pnpm add @todovue/tv-demo
 ```
 
-Import
+---
+## Quick Start (SPA)
+Global registration (main.js / main.ts):
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+import TvDemo from '@todovue/tv-demo'
+
+createApp(App)
+  .component('TvDemo', TvDemo)
+  .mount('#app')
+```
+Local import inside a component:
 ```vue
 <script setup>
-  import TvDemo from '@todovue/tv-demo';
-</script>
-```
-
-Or import it globally in main.js:
-```js
-import { createApp } from "vue";
-import App from "./App.vue";
-import TvDemo from '@todovue/tv-demo';
-
-const app = createApp(App);
-app.component("TvDemo", TvDemo);
-app.mount("#app");
-```
-To ensure the documentation tab displays correctly, you must import the following styles in your **Index.js** or entry file:
-```js
-import 'github-markdown-css';
-```
-This will apply the necessary styles for rendering markdown content properly.
-
-Add the following styles to your **App.vue** file
-```css
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-```
-
-## Usage
-## **Important**: Documentation File Placement
-To properly display the documentation within the demo, **the README file must be placed inside the `public/` folder** of your project. This ensures it is accessible when using `TvDemo`.
-
-### Correct Setup
-1. Move your `README.md` file to the `public/` folder:
-```sh
-  mv README.md public/
-```
-Basic use
-```vue
-<script setup>
-import { shallowRef } from "vue";
-import TvButton from "@todovue/tvbutton";
-import { demos } from "@/utils/mocks.js";
-
-const component = shallowRef(TvButton);
+import { TvDemo } from '@todovue/tv-demo'
 </script>
 
 <template>
-  <tv-demo
-    :component="component"
-    :variants="demos"
-    nameComponent="TvDemo"
-    npmInstall="@todovue/tv-demo"
-    sourceLink="https://github.com/TODOvue/tv-demo"
-    urlClone="https://github.com/TODOvue/tv-demo.git"
-    is-dev-component
-    version="1.0.0"
-    readmePath="./README.md"
-  ></tv-demo>
+  <TvDemo />
 </template>
 ```
-It is important to wrap it in a `shallowRef` to update the component without throwing an error
-```js
-const component = shallowRef(TvButton);
+
+---
+## Nuxt 3 / SSR Usage
+Create a plugin file: `plugins/tv-demo.client.ts` (or without suffix for SSR, it's safe):
+```ts
+import { defineNuxtPlugin } from '#app'
+import TvDemo from '@todovue/tv-demo'
+
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.component('TvDemo', TvDemo)
+})
+```
+Use anywhere:
+```vue
+<TvDemo />
+```
+Direct import (no plugin):
+```vue
+<script setup>
+import { TvDemo } from '@todovue/tv-demo'
+</script>
 ```
 
-You can create the variations of the component in the same file or import them from another file
-**utils/mocks.js**
-##### It is important that the information is sent by `propsData`, since currently it cannot be sent by slot
-```js
-import Default from './demos/default.vue?raw'
-import IsDevComponent from './demos/isDevComponent.vue?raw';
-import HideBackground from './demos/hideBackground.vue?raw';
-import DemoStyle from './demos/demoStyle.vue?raw';
+---
+## Component Registration Options
+| Approach                                                    | When to use                                    |
+|-------------------------------------------------------------|------------------------------------------------|
+| Global via `app.component('TvDemo', TvDemo)`                | Frequent use across the app                    |
+| Local named import `{ TvDemo }`                             | Isolated/code-split contexts                   |
+| Direct default import `import TvDemo from ...`              | Single use or manual registration              |
 
-export const demos = [
-  {
-    id: 1,
-    title: 'Default',
-    propsData: {},
-    description: 'This is a default demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
-    html: Default,
-  },
-  {
-    id: 2,
-    title: 'IsDevComponent',
-    propsData: { isDevComponent: true },
-    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
-    html: IsDevComponent
-  },
-  {
-    id: 3,
-    title: 'HideBackground',
-    propsData: { hideBackground: true },
-    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
-    html: HideBackground
-  },
-  {
-    id: 4,
-    title: 'DemoStyle',
-    propsData: { demoStyle: true },
-    description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
-    html: DemoStyle
-  }
-];
-```
-
+---
 ## Props
 | Name           | Type    | Default       | Description                                                         | Required |
 |----------------|---------|---------------|---------------------------------------------------------------------|----------|
@@ -154,8 +119,21 @@ export const demos = [
 | version        | String  | `1.0.0`       | Version of the component                                            | `false`  |
 | readmePath     | String  | `./README.md` | Path to the README file of the component                            | `false`  |
 
-## Customize
-You can customize the component by passing the `demoStyle` property
+---
+## Events
+| Event name      | Description                                 |
+|-----------------|---------------------------------------------|
+| select-demo     | Emitted when a demo/variant is selected     |
+
+Usage:
+```vue
+<TvDemo @select-demo="onSelectDemo" />
+```
+
+---
+## Customization (Styles)
+- All global and highlight.js styles are injected automatically.
+- You can override styles by passing the `demoStyle` prop:
 ```js
 const demoStyle = ref({
   dark: {
@@ -170,44 +148,47 @@ const demoStyle = ref({
   },
 });
 ```
-Use it in your component:
+Use in your component:
 ```vue
-<script setup>
-import { ref } from "vue";
-
-const demoStyle = ref({
-  dark: {
-    backgroundBody: "#000000",
-    backgroundContent: "#1f1f1f",
-    color: "#ffffff",
-  },
-  light: {
-    backgroundBody: "#ffffff",
-    backgroundContent: "#f5f5f5",
-    color: "#000000",
-  },
-});
-</script>
-
-<template>
-  <tv-demo
-    :component="component"
-    :variants="demos"
-    :demoStyle="demoStyle"
-    nameComponent="TvButton"
-    npmInstall="@todovue/tv-demo"
-    sourceLink="https://github.com/TODOvue/tv-demo"
-    urlClone="https://github.com/TODOvue/tv-demo.git"
-  ></tv-demo>
-</template>
+<TvDemo :component="component" :variants="demos" :demoStyle="demoStyle" />
 ```
-You can send the colors for both `dark` and `light`, these values are optional, so you can send only one or not send any, then it will take the default color
+You can provide colors for both `dark` and `light` themes, or just one. Defaults are used if not provided.
 
+---
+## SSR Notes
+- No direct DOM (`window` / `document`) access in the source code—safe for SSR.
+- Styles are injected automatically when you import the library.
+- Code highlighting works in both Vite and Nuxt.
+- Markdown documentation is supported by placing your `README.md` in the `public/` folder and referencing it via the `readmePath` prop.
+
+---
+## Roadmap
+| Item                                 | Status      |
+|--------------------------------------|-------------|
+| More highlight.js themes              | Planned     |
+| Advanced integration examples         | Planned     |
+| Accessibility improvements            | Planned     |
+| Dark mode support                     | Considering |
+
+---
 ## Development
-```sh
-git clone git@github.com:TODOvue/tv-demo.git
+```bash
+git clone https://github.com/TODOvue/tv-demo.git
+cd tv-demo
 yarn install
-yarn demo
+yarn dev     # run local demo
+yarn build   # build library
 ```
+The local demo is served with Vite using `index.html` and examples in `src/demo`.
+
+---
+## Contributing
+PRs and issues are welcome. See [CONTRIBUTING.md](../CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md).
+
+---
 ## License
-[MIT](https://github.com/TODOvue/tv-demo/blob/main/LICENSE)
+MIT © TODOvue
+
+---
+### Attributions
+Crafted for the TODOvue component ecosystem
