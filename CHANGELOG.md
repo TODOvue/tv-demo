@@ -5,6 +5,18 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.0.5] - 2025-09-05
+
+### 🐛 Fixed
+- Eliminated unintended synthetic default import of Vue by:
+  - Switching library entry to `src/entry.ts` (already in 1.0.4) and
+  - Adding `output.exports = 'named'` plus externalizing `vue3-markdown-it` and `vue-highlight-code` to prevent Rollup from generating a default import pattern.
+- This definitively resolves: `No matching export in "vue" for import "default"` when consuming the ESM build in Vite/esbuild projects.
+
+### ✅ Compatibility
+- Confirmed proper usage with: `import { TvDemo } from '@todovue/tv-demo'` and `import TvDemo from '@todovue/tv-demo'` (default now maps correctly without forcing synthetic default of Vue).
+
+---
 ## [1.0.4] - 2025-09-05
 
 ### 🛠️ Changed
@@ -54,6 +66,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.0.5]: https://github.com/TODOvue/tv-demo/pull/23/files
 [1.0.4]: https://github.com/TODOvue/tv-demo/pull/22/files
 [1.0.3]: https://github.com/TODOvue/tv-demo/pull/21/files
 [1.0.2]: https://github.com/TODOvue/tv-demo/pull/20/files
