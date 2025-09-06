@@ -5,6 +5,16 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.0.6] - 2025-09-06
+
+### 🛠️ Changed
+- Moved `vue-highlight-code` and `vue3-markdown-it` to `peerDependencies` to avoid internal bundling that could trigger interop / synthetic default Vue imports in pre-bundling environments (esbuild / Vite optimizeDeps).
+- Added `verify:dist` script that ensures the bundle does not contain `import <default> from 'vue'` nor mixed default + named imports.
+
+### 🐛 Fixed
+- Additional mitigation for the error: `No matching export in "vue" for import "default"` in SPA consumers by guaranteeing only named imports and properly externalized dependencies.
+
+---
 ## [1.0.5] - 2025-09-05
 
 ### 🐛 Fixed
@@ -66,6 +76,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.0.6]: https://github.com/TODOvue/tv-demo/pull/24/files
 [1.0.5]: https://github.com/TODOvue/tv-demo/pull/23/files
 [1.0.4]: https://github.com/TODOvue/tv-demo/pull/22/files
 [1.0.3]: https://github.com/TODOvue/tv-demo/pull/21/files
