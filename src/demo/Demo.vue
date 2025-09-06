@@ -17,7 +17,7 @@ const Component = defineAsyncComponent(/* webpackChunkName: "Test" */() => impor
     sourceLink="https://github.com/TODOvue/tv-demo"
     urlClone="https://github.com/TODOvue/tv-demo.git"
     is-dev-component
-    version="1.0.4"
+    version="1.0.6"
   ></tv-demo>
 </template>
 
