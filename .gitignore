@@ -9,8 +9,12 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-demo
 dist-ssr
 *.local
+
+# Build artifacts
+public/README.md
 
 # Editor directories and files
 .vscode/*
