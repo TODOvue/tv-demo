@@ -5,6 +5,16 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.0] - 2025-10-01
+
+### 🛠️ Changed
+- Updated Node.js version requirement from `>=16.0.0` to `>=20.19.0` in `package.json` to meet Vite 7.x compatibility requirements.
+- Updated CI/CD workflow (`.github/workflows/release.yml`) to use Node.js 20 instead of Node.js 18.
+
+### 📦 Dependencies
+- Ensures compatibility with Vite `^7.0.0` which requires Node.js version 20.19+ or 22.12+.
+
+---
 ## [1.0.6] - 2025-09-06
 
 ### 🛠️ Changed
@@ -76,6 +86,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.1.0]: https://github.com/TODOvue/tv-demo/pull/28/files
 [1.0.6]: https://github.com/TODOvue/tv-demo/pull/24/files
 [1.0.5]: https://github.com/TODOvue/tv-demo/pull/23/files
 [1.0.4]: https://github.com/TODOvue/tv-demo/pull/22/files
