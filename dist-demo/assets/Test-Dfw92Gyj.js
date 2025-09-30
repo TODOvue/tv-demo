@@ -1,0 +1,1 @@
+import{a,b as r,d as s,Z as n,t as l,F as o}from"./index-CYwqGyTO.js";const p={__name:"Test",props:{variant:{type:String,default:"default"}},setup(e){return(t,u)=>(r(),a(o,null,[s("h1",null,"Test: "+l(e.variant),1),n(t.$slots,"default")],64))}};export{p as default};
