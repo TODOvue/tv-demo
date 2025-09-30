@@ -12,6 +12,7 @@ export default defineConfig({
       insertTypesEntry: true,
       outputDir: "dist",
       skipDiagnostics: false,
+      copyDtsFiles: false,
     })],
   build: isDemo
     ? {
@@ -33,7 +34,8 @@ export default defineConfig({
           },
           exports: 'named'
         }
-      }
+      },
+      copyPublicDir: false
     },
   css: {
     preprocessorOptions: {
