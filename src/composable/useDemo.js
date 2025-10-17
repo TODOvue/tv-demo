@@ -60,11 +60,11 @@ const useDemo = (props) => {
     navigator.clipboard.writeText(commandToCopy)
       .then(() => {
         isCopy.value = true;
-        messageCopy.value = `✅ Copied: ${commandToCopy}`;
+        messageCopy.value = `Copied to clipboard: ${commandToCopy}`;
       })
       .catch(err => {
         isCopy.value = true;
-        messageCopy.value = `❌ Failed to copy: ${err}`;
+        messageCopy.value = `Failed to copy: ${err}`;
       })
       .finally(() => {
         setTimeout(() => {
