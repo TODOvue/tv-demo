@@ -5,7 +5,13 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
-## [1.1.0] - 2025-10-01
+## [1.0.8] - 2025-10-17
+
+### 🛠️ Changed
+- Enhanced copy notification visual design with modern UI elements and animations for better user experience when copying code snippets.
+
+---
+## [1.0.7] - 2025-10-01
 
 ### 🛠️ Changed
 - Updated Node.js version requirement from `>=16.0.0` to `>=20.19.0` in `package.json` to meet Vite 7.x compatibility requirements.
@@ -86,7 +92,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
-[1.1.0]: https://github.com/TODOvue/tv-demo/pull/28/files
+[1.0.7]: https://github.com/TODOvue/tv-demo/pull/28/files
 [1.0.6]: https://github.com/TODOvue/tv-demo/pull/24/files
 [1.0.5]: https://github.com/TODOvue/tv-demo/pull/23/files
 [1.0.4]: https://github.com/TODOvue/tv-demo/pull/22/files
