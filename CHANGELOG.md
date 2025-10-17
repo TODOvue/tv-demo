@@ -92,6 +92,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.0.8]: https://github.com/TODOvue/tv-demo/pull/29/files
 [1.0.7]: https://github.com/TODOvue/tv-demo/pull/28/files
 [1.0.6]: https://github.com/TODOvue/tv-demo/pull/24/files
 [1.0.5]: https://github.com/TODOvue/tv-demo/pull/23/files
