@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import './style.css'
+import './style.scss'
 import TvDemo from './demo/Demo.vue'
 import 'highlight.js/styles/monokai.css';
 import 'vue-highlight-code/dist/style.css';

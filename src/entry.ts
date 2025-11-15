@@ -1,7 +1,15 @@
-import './style.css'
-import 'highlight.js/styles/monokai.css';
-import 'vue-highlight-code/dist/style.css';
 import TvDemo from './components/TvDemo.vue'
+import './style.scss'
+
+(TvDemo as any).install = (app: any) => {
+  app.component('TvDemo', TvDemo)
+}
+
+export const TvDemoPlugin = {
+  install(app: any) {
+    app.component('TvDemo', TvDemo)
+  }
+}
 
 export { TvDemo }
 export default TvDemo

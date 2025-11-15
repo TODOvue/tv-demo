@@ -110,8 +110,20 @@ const {
       </div>
     </div>
   </div>
+  <footer class="tv-demo-footer">
+    <p class="tv-demo-footer-text">
+      Design by
+      <a
+        href="https://cris-dev.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="tv-demo-footer-link"
+      >
+        Cristhian Daza
+      </a>
+      <span class="tv-demo-footer-heart">💙</span>
+    </p>
+  </footer>
 </template>
 
-<style scoped lang="scss">
-@use '../assets/scss/style.scss';
-</style>
+<style></style>
