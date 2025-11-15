@@ -36,7 +36,7 @@ const {
 </script>
 
 <template>
-  <div :class="`${theme}-mode`" :style="customStyle.body">
+  <div :class="`${theme}-mode tv-demo`" :style="customStyle.body">
     <div class="tv-demo-body" :class="{ [`${theme}-mode`]: !hideBackground }" :style="customStyle.content">
       <div class="tv-demo-case">
         <div class="tv-demo-header">
@@ -63,11 +63,11 @@ const {
 
           <div>
             <div class="tv-demo-theme">
-              <select class="tv-demo-select tv-demo-select-theme" v-model="selectedTheme" @change="toggleTheme">
-                <option disabled value="">Select theme</option>
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-              </select>
+              <span style="font-size: 0.9rem; opacity: 0.8;">Theme</span>
+              <label class="switch">
+                <input type="checkbox" :checked="theme === 'dark'" @change="toggleTheme" />
+                <span class="slider round"></span>
+              </label>
             </div>
           </div>
         </div>
@@ -110,8 +110,20 @@ const {
       </div>
     </div>
   </div>
+  <footer class="tv-demo-footer">
+    <p class="tv-demo-footer-text">
+      Design by
+      <a
+        href="https://cris-dev.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="tv-demo-footer-link"
+      >
+        Cristhian Daza
+      </a>
+      <span class="tv-demo-footer-heart">💙</span>
+    </p>
+  </footer>
 </template>
 
-<style scoped lang="scss">
-@use '../assets/scss/style.scss';
-</style>
+<style></style>

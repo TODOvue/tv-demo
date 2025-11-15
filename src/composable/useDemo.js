@@ -3,7 +3,6 @@ import { computed, onMounted, ref, watchEffect } from 'vue';
 const useDemo = (props) => {
   const theme = ref('dark');
   const selectedVariantIndex = ref(0);
-  const selectedTheme = ref('');
   const isCopy = ref(false);
   const messageCopy = ref('');
   const readmeContent = ref('');
@@ -14,7 +13,6 @@ const useDemo = (props) => {
     if (storedTheme) {
       theme.value = storedTheme;
     }
-    selectedTheme.value = theme.value || 'dark';
   });
   
   const fetchReadme = async () => {
@@ -28,7 +26,7 @@ const useDemo = (props) => {
   };
 
   const toggleTheme = () => {
-    theme.value = selectedTheme.value;
+    theme.value = theme.value === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', theme.value);
   };
   
@@ -82,11 +80,9 @@ const useDemo = (props) => {
     messageCopy,
     readmeContent,
     selectedTab,
-    selectedTheme,
     selectedVariantIndex,
     theme,
     variant,
-    
     setClickItem,
     toggleTheme,
   };
