@@ -4,7 +4,7 @@
   "author": "Cristhian Daza",
   "description": "This is a default demo display for TODOvue components. Use this area to showcase the component's usage, props, variants, and live behavior in isolation.",
   "license": "MIT",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "repository": {
     "type": "git",
