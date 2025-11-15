@@ -29,7 +29,8 @@
     ".": {
       "import": "./dist/tv-demo.es.js",
       "require": "./dist/tv-demo.cjs.js"
-    }
+    },
+    "./style.css": "./dist/tv-demo.css"
   },
   "main": "dist/tv-demo.cjs.js",
   "module": "dist/tv-demo.es.js",
