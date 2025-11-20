@@ -5,6 +5,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.1] - 2025-11-20
+### 🐛 Fixed
+- Fixed max height in sidebar to ensure it appears correctly on the screen.
+
+---
 ## [1.1.0] - 2025-11-20
 ### ✨ Added
 - Added sidebar listing component variations to improve navigation across demos.

@@ -889,6 +889,7 @@ input:checked + .slider:hover {
   padding: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
+  max-height: 550px;
 
   &.light-mode {
     border-color: rgba(0, 0, 0, 0.08);
