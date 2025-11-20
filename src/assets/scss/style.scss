@@ -132,6 +132,9 @@
   padding: 20px;
   border: 1px solid #4a4a4a;
   border-radius: 0 5px 5px 5px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 
   & .tv-demo-description {
     font-size: 1.1rem;
@@ -145,6 +148,10 @@
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+  }
+
+  > * {
+    max-width: 100%;
   }
 }
 
@@ -776,6 +783,8 @@ input:checked + .slider:hover {
   grid-template-columns: 320px 1fr;
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .tv-demo-sidebar {
