@@ -1,20 +1,105 @@
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue';
+
+const ITEM_HEIGHT = 72;
+const OVERSCAN_COUNT = 6;
+
+const getVariantKey = (variant, index) => variant?.id ?? variant?.title ?? `variant-${index}`;
+const getSearchableText = (variant = {}) => `${variant.title ?? ''} ${variant.description ?? ''}`.toLowerCase();
 
 const useDemo = (props) => {
   const theme = ref('dark');
-  const selectedVariantIndex = ref(0);
-  const isCopy = ref(false);
-  const messageCopy = ref('');
+  const toasts = ref([]);
   const readmeContent = ref('');
   const selectedTab = ref('demo');
+  const searchQuery = ref('');
+  const selectedVariantKey = ref(null);
+  const variantsListRef = ref(null);
+  const viewportHeight = ref(360);
+  const scrollTop = ref(0);
+  let resizeObserver = null;
+  let fallbackResizeListenerAttached = false;
+
+  const variantEntries = computed(() =>
+    (props.variants || []).map((variant, index) => ({
+      variant,
+      index,
+      key: getVariantKey(variant, index),
+      searchableText: getSearchableText(variant),
+    }))
+  );
+
+  const totalVariantsCount = computed(() => variantEntries.value.length);
+
+  const filteredEntries = computed(() => {
+    const term = searchQuery.value.trim().toLowerCase();
+    if (!term) return variantEntries.value;
+    return variantEntries.value.filter((entry) => entry.searchableText.includes(term));
+  });
+
+  const filteredVariantsCount = computed(() => filteredEntries.value.length);
+  const emptySearchState = computed(
+    () => Boolean(searchQuery.value.trim()) && filteredEntries.value.length === 0
+  );
+
+  const updateViewportHeight = () => {
+    viewportHeight.value = variantsListRef.value?.clientHeight || viewportHeight.value;
+  };
+
+  const detachFallbackResizeListener = () => {
+    if (fallbackResizeListenerAttached) {
+      window.removeEventListener('resize', updateViewportHeight);
+      fallbackResizeListenerAttached = false;
+    }
+  };
+
+  watch(
+    () => variantsListRef.value,
+    (el) => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+
+      if (!el) {
+        detachFallbackResizeListener();
+        return;
+      }
+
+      nextTick(() => {
+        updateViewportHeight();
+        if (typeof ResizeObserver !== 'undefined') {
+          resizeObserver = new ResizeObserver((entries) => {
+            const entry = entries?.[0];
+            if (entry) {
+              viewportHeight.value = entry.contentRect.height;
+            }
+          });
+          resizeObserver.observe(el);
+        } else if (!fallbackResizeListenerAttached) {
+          window.addEventListener('resize', updateViewportHeight);
+          fallbackResizeListenerAttached = true;
+        }
+      });
+    }
+  );
 
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       theme.value = storedTheme;
     }
+
+    nextTick(updateViewportHeight);
   });
-  
+
+  onBeforeUnmount(() => {
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
+    }
+    detachFallbackResizeListener();
+  });
+
   const fetchReadme = async () => {
     try {
       const response = await fetch(props.readmePath);
@@ -29,9 +114,144 @@ const useDemo = (props) => {
     theme.value = theme.value === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', theme.value);
   };
-  
-  const variant = computed(() => props.variants?.[selectedVariantIndex.value] || {});
-  
+
+  watch(
+    () => variantEntries.value,
+    (entries) => {
+      if (!entries.length) {
+        selectedVariantKey.value = null;
+        return;
+      }
+
+      if (!entries.some((entry) => entry.key === selectedVariantKey.value)) {
+        selectedVariantKey.value = entries[0].key;
+      }
+    },
+    { immediate: true }
+  );
+
+  watch(
+    () => filteredEntries.value,
+    (entries) => {
+      if (!entries.length) {
+        selectedVariantKey.value = null;
+        return;
+      }
+
+      if (!entries.some((entry) => entry.key === selectedVariantKey.value)) {
+        selectedVariantKey.value = entries[0].key;
+      }
+    }
+  );
+
+  const setScrollPosition = (value) => {
+    if (!variantsListRef.value) return;
+    variantsListRef.value.scrollTop = value;
+    scrollTop.value = value;
+  };
+
+  watch(searchQuery, () => {
+    setScrollPosition(0);
+  });
+
+  const selectedVariantIndex = computed(() =>
+    filteredEntries.value.findIndex((entry) => entry.key === selectedVariantKey.value)
+  );
+
+  const visibleCount = computed(() => Math.max(1, Math.ceil(viewportHeight.value / ITEM_HEIGHT)));
+  const virtualStartIndex = computed(() =>
+    Math.max(0, Math.floor(scrollTop.value / ITEM_HEIGHT) - OVERSCAN_COUNT)
+  );
+  const virtualEndIndex = computed(() =>
+    Math.min(
+      filteredEntries.value.length,
+      virtualStartIndex.value + visibleCount.value + OVERSCAN_COUNT * 2,
+    )
+  );
+  const virtualizedVariants = computed(() =>
+    filteredEntries.value.slice(virtualStartIndex.value, virtualEndIndex.value)
+  );
+  const virtualPaddingTop = computed(() => virtualStartIndex.value * ITEM_HEIGHT);
+  const virtualPaddingBottom = computed(() =>
+    Math.max(0, (filteredEntries.value.length - virtualEndIndex.value) * ITEM_HEIGHT)
+  );
+
+  const ensureActiveVisible = () => {
+    if (!variantsListRef.value) return;
+    const index = selectedVariantIndex.value;
+    if (index < 0) return;
+
+    const start = virtualStartIndex.value + 2;
+    const end = virtualEndIndex.value - 3;
+
+    if (index < start) {
+      setScrollPosition(Math.max(0, index * ITEM_HEIGHT));
+    } else if (index > end) {
+      const offset = Math.max(0, index - visibleCount.value + 1);
+      setScrollPosition(offset * ITEM_HEIGHT);
+    }
+  };
+
+  watch(selectedVariantKey, ensureActiveVisible);
+
+  const variant = computed(() => {
+    if (emptySearchState.value) {
+      return {};
+    }
+
+    const entry =
+      filteredEntries.value.find((item) => item.key === selectedVariantKey.value) ||
+      variantEntries.value.find((item) => item.key === selectedVariantKey.value) ||
+      filteredEntries.value[0] ||
+      variantEntries.value[0];
+
+    return entry?.variant || {};
+  });
+
+  const handleVariantsScroll = (event) => {
+    scrollTop.value = event.target.scrollTop;
+  };
+
+  const moveSelectionBy = (delta) => {
+    const entries = filteredEntries.value;
+    if (!entries.length) return;
+
+    const baseIndex = selectedVariantIndex.value < 0 ? 0 : selectedVariantIndex.value;
+    const nextIndex = Math.min(entries.length - 1, Math.max(0, baseIndex + delta));
+    selectedVariantKey.value = entries[nextIndex].key;
+  };
+
+  const handleVariantsKeydown = (event) => {
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        moveSelectionBy(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        moveSelectionBy(-1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        if (filteredEntries.value.length) {
+          selectedVariantKey.value = filteredEntries.value[0].key;
+        }
+        break;
+      case 'End':
+        event.preventDefault();
+        if (filteredEntries.value.length) {
+          selectedVariantKey.value = filteredEntries.value[filteredEntries.value.length - 1].key;
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const selectVariant = (key) => {
+    selectedVariantKey.value = key;
+  };
+
   const customStyle = computed(() => {
     const style = theme.value === 'dark' ? props.demoStyle?.dark : props.demoStyle?.light;
     return {
@@ -45,46 +265,62 @@ const useDemo = (props) => {
       },
     };
   });
-  
+
   const setClickItem = (item) => {
-    let commandToCopy = "";
-    
-    if (item === "npm") {
+    let commandToCopy = '';
+
+    if (item === 'npm') {
       commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
     } else {
       commandToCopy = `git clone ${props.urlClone}`;
     }
-    
+
     navigator.clipboard.writeText(commandToCopy)
       .then(() => {
-        isCopy.value = true;
-        messageCopy.value = `Copied to clipboard: ${commandToCopy}`;
+        addToast(`Copied to clipboard: ${commandToCopy}`, 'success', 3000);
       })
       .catch(err => {
-        isCopy.value = true;
-        messageCopy.value = `Failed to copy: ${err}`;
-      })
-      .finally(() => {
-        setTimeout(() => {
-          isCopy.value = false;
-          messageCopy.value = "";
-        }, 2000);
+        addToast(`Failed to copy: ${err}`, 'error', 3000);
       });
   };
-  
+
+  const addToast = (message, type = 'success', duration = 3000) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    toasts.value.push({ id, message, type, duration });
+  };
+
+  const removeToast = (id) => {
+    const index = toasts.value.findIndex(toast => toast.id === id);
+    if (index > -1) {
+      toasts.value.splice(index, 1);
+    }
+  };
+
   watchEffect(fetchReadme);
-  
+
   return {
     customStyle,
-    isCopy,
-    messageCopy,
+    toasts,
     readmeContent,
     selectedTab,
-    selectedVariantIndex,
+    searchQuery,
+    selectedVariantKey,
+    totalVariantsCount,
+    filteredVariantsCount,
+    variantsListRef,
+    virtualizedVariants,
+    virtualPaddingTop,
+    virtualPaddingBottom,
+    emptySearchState,
     theme,
     variant,
+    addToast,
+    removeToast,
+    selectVariant,
     setClickItem,
     toggleTheme,
+    handleVariantsScroll,
+    handleVariantsKeydown,
   };
 };
 
