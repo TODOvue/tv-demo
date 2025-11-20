@@ -41,9 +41,6 @@ const {
       <div class="tv-demo-case">
         <div class="tv-demo-header">
           <div>
-            <h1 class="tv-demo-title">
-              {{ nameComponent }} <span>v{{ version }}</span>
-            </h1>
             <div class="tv-demo-links">
               <template v-if="sourceLink || npmInstall || urlClone">
                 <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-links-item">
@@ -110,19 +107,42 @@ const {
       </div>
     </div>
   </div>
-  <footer class="tv-demo-footer">
-    <p class="tv-demo-footer-text">
-      Design by
-      <a
-        href="https://cris-dev.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="tv-demo-footer-link"
-      >
-        Cristhian Daza
-      </a>
-      <span class="tv-demo-footer-heart">💙</span>
-    </p>
+  <footer class="tv-demo-footer" :class="`${theme}-mode`">
+    <div class="tv-demo-footer-content">
+      <div class="tv-demo-footer-main">
+        <div class="tv-demo-footer-brand">
+          <span class="tv-demo-footer-logo">
+            <img src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/icono_git.png?alt=media&token=86270c30-8235-4424-b72b-7a585f228685" alt="">
+          </span>
+          <span class="tv-demo-footer-brand-text">{{ nameComponent }}</span>
+          <span class="tv-demo-footer-brand-version">v{{ version }}</span>
+        </div>
+        <div class="tv-demo-footer-info">
+          <p class="tv-demo-footer-text">
+            Designed & Developed by
+            <a
+              href="https://cris-dev.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tv-demo-footer-link"
+            >
+              cris-dev.com
+            </a>
+          </p>
+          <div class="tv-demo-footer-divider"></div>
+          <p class="tv-demo-footer-text">
+            Made with
+            <span class="tv-demo-footer-heart">💙</span>
+            using Vue.js
+          </p>
+        </div>
+      </div>
+      <div class="tv-demo-footer-bottom">
+        <p class="tv-demo-footer-copyright">
+          © {{ new Date().getFullYear() }} {{ nameComponent }}. All rights reserved.
+        </p>
+      </div>
+    </div>
   </footer>
 </template>
 

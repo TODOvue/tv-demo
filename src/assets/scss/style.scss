@@ -338,50 +338,220 @@ a, .tv-demo-links-item {
 }
 
 .tv-demo-footer {
-  padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: center;
-  font-family: inherit;
-  opacity: 0.85;
-  transition: opacity 0.2s ease-in-out;
+  position: relative;
+  padding: 0;
+  font-family: variables.$font-text;
+  transition: all 0.3s ease;
+  overflow: hidden;
 
-  &:hover {
-    opacity: 1;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.5) 50%,
+      transparent 100%);
   }
 
-  &-text {
-    font-size: 0.95rem;
-    color: variables.$light-text;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+  &.dark-mode {
+    background: linear-gradient(135deg,
+      color.adjust(variables.$dark-card-bg, $lightness: 2%) 0%,
+      variables.$dark-card-bg 50%,
+      color.adjust(variables.$dark-card-bg, $lightness: 3%) 100%);
+    color: variables.$dark-text;
 
-  &-link {
-    color: variables.$dark-card-bg;
-    text-decoration: underline;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 600;
-    transition: color 0.25s ease-in-out;
+    .tv-demo-footer-text,
+    .tv-demo-footer-copyright {
+      color: color.adjust(variables.$dark-text, $lightness: -20%);
+    }
 
-    &:hover {
-      color: var(--tv-primary-hover, #a4c8ff);
+    .tv-demo-footer-link {
+      color: #3b82f6;
+
+      &:hover {
+        color: #60a5fa;
+        text-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+      }
+    }
+
+    .tv-demo-footer-brand-text {
+      color: variables.$dark-text;
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .tv-demo-footer-divider {
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
-  &-icon {
-    width: 16px;
-    height: 16px;
+  &.light-mode {
+    background: linear-gradient(135deg,
+      color.adjust(variables.$light-card-bg, $lightness: 5%) 0%,
+      variables.$light-card-bg 50%,
+      color.adjust(variables.$light-card-bg, $lightness: 3%) 100%);
+    color: variables.$light-text;
+
+    .tv-demo-footer-text,
+    .tv-demo-footer-copyright {
+      color: color.adjust(variables.$light-text, $lightness: 10%);
+    }
+
+    .tv-demo-footer-link {
+      color: #1e40af;
+
+      &:hover {
+        color: #3b82f6;
+        text-shadow: 0 0 8px rgba(30, 64, 175, 0.2);
+      }
+    }
+
+    .tv-demo-footer-brand-text {
+      color: variables.$light-text;
+      text-shadow: 0 0 20px rgba(30, 64, 175, 0.2);
+    }
+
+    .tv-demo-footer-divider {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &-content {
+    margin: 0 auto;
+    padding: 40px 20px 20px;
+  }
+
+  &-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  &-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: variables.$font-title;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  &-logo {
+    max-width: 25px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+
+    & img {
+      width: 100%
+    }
+  }
+
+  &-brand-text {
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &-brand-version {
+    letter-spacing: 0.3px;
+    font-size: 1rem;
+    background-clip: text;
+  }
+
+  &-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  &-text {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    opacity: 0.85;
+    transition: all 0.3s ease;
+    font-weight: 400;
+
+    &:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  }
+
+  &-divider {
+    width: 1px;
+    height: 20px;
+    opacity: 0.3;
+  }
+
+  &-link {
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
+    padding-bottom: 2px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
   }
 
   &-heart {
-    font-size: 1.1rem;
-    margin-left: 3px;
-    animation: pulse 1.8s infinite ease-in-out;
+    font-size: 1.2rem;
+    display: inline-block;
+    animation: pulse 2s infinite ease-in-out;
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.4));
+  }
+
+  &-bottom {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+
+  &-copyright {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.6;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(2deg);
   }
 }
 
@@ -389,11 +559,11 @@ a, .tv-demo-links-item {
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.75;
+    opacity: 1;
   }
   50% {
-    transform: scale(1.25);
-    opacity: 1;
+    transform: scale(1.15);
+    opacity: 0.8;
   }
 }
 
@@ -482,6 +652,35 @@ input:checked + .slider:before {
       width: 100%;
     }
   }
+
+  .tv-demo-footer {
+    &-content {
+      padding: 30px 15px 15px;
+    }
+
+    &-brand {
+      font-size: 1.5rem;
+      gap: 10px;
+    }
+
+    &-logo {
+      font-size: 2rem;
+    }
+
+    &-info {
+      gap: 15px;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    &-text {
+      font-size: 0.9rem;
+    }
+
+    &-divider {
+      display: none;
+    }
+  }
 }
 
 @media (max-width: 640px) {
@@ -491,6 +690,25 @@ input:checked + .slider:before {
     }
     &-body {
       width: 100%;
+    }
+  }
+
+  .tv-demo-footer {
+    &-brand {
+      font-size: 1.3rem;
+    }
+
+    &-logo {
+      font-size: 1.8rem;
+    }
+
+    &-text {
+      font-size: 0.85rem;
+      gap: 6px;
+    }
+
+    &-copyright {
+      font-size: 0.75rem;
     }
   }
 }
