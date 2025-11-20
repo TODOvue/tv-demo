@@ -188,7 +188,6 @@ const {
         </div>
 
         <div v-if="selectedTab === 'docs'" class="tv-demo-content">
-          <h2>📖 Documentation</h2>
           <div class="markdown-body" v-if="readmeContent" >
             <VueMarkdownIt :source="readmeContent" html />
           </div>
@@ -235,8 +234,10 @@ const {
     </div>
   </footer>
 
-  <!-- Toast Notifications -->
-  <ToastContainer :toasts="toasts" @removeToast="removeToast" />
+  <ToastContainer
+    :toasts="toasts"
+    @removeToast="removeToast"
+  />
 </template>
 
 <style></style>

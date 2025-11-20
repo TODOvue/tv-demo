@@ -5,6 +5,22 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [1.1.0] - 2025-11-20
+### ✨ Added
+- Added sidebar listing component variations to improve navigation across demos.
+- Added Toast component for copy code notifications, providing visual feedback to the user.
+
+### 🛠️ Changed
+- Updated `TvDemo` footer styles for improved visual consistency with the overall app design.
+- Updated copy code button styles to improve usability and aesthetics.
+- Refined global `TvDemo` styles for better user experience and visual appearance.
+- Updated documentation markdown to improve content readability and presentation.
+
+### 🐛 Fixed
+- Corrected property typing from `nameComponent` to `componentName` for consistency and clarity.
+- Fixed demos and their documentation to accurately reflect `TvDemo` features and functionality.
+
+---
 ## [1.0.10] - 2025-11-15
 ### 🐛 Fixed
 - Fixed: updated `package.json` style export from `./dist/style.css` to `./dist/tv-demo.css`; updated documentation.
@@ -106,6 +122,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Responsive layout for desktop and mobile screens.
 
 ---
+[1.1.0]: https://github.com/TODOvue/tv-demo/pull/32/files
 [1.0.10]: https://github.com/TODOvue/tv-demo/pull/31/files
 [1.0.9]: https://github.com/TODOvue/tv-demo/pull/30/files
 [1.0.8]: https://github.com/TODOvue/tv-demo/pull/29/files
