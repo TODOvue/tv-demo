@@ -25,13 +25,24 @@ const {
   toasts,
   readmeContent,
   selectedTab,
-  selectedVariantIndex,
+  searchQuery,
+  selectedVariantKey,
+  totalVariantsCount,
+  filteredVariantsCount,
+  variantsListRef,
+  virtualizedVariants,
+  virtualPaddingTop,
+  virtualPaddingBottom,
+  emptySearchState,
   theme,
   variant,
 
   removeToast,
   setClickItem,
   toggleTheme,
+  selectVariant,
+  handleVariantsScroll,
+  handleVariantsKeydown,
 } = useDemo(props);
 </script>
 
@@ -74,23 +85,105 @@ const {
           <button :class="{ active: selectedTab === 'docs' }" @click="selectedTab = 'docs'">📖 Documentation</button>
         </div>
 
-        <div v-if="selectedTab === 'demo'" class="tv-demo-content">
-          <h3>Variations:</h3>
-          <select class="tv-demo-select" v-model="selectedVariantIndex" v-if="variants.length > 1">
-            <option v-for="(variant, index) in variants" :key="variant.title" :value="index">
-              {{ variant.title }}
-            </option>
-          </select>
-          <span class="tv-demo-description">
-            {{ variant.description }}
-          </span>
+        <div v-if="selectedTab === 'demo'" class="tv-demo-layout">
+          <aside class="tv-demo-sidebar" :class="`${theme}-mode`">
+            <div class="tv-demo-sidebar-header">
+              <div>
+                <p class="tv-demo-sidebar-meta">{{ filteredVariantsCount }} / {{ totalVariantsCount }} variants</p>
+                <h3>Variants</h3>
+              </div>
+              <button class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
+                ⬆️
+              </button>
+            </div>
+            <label class="tv-demo-search" :class="`${theme}-mode`">
+              <span class="tv-demo-search-icon">🔍</span>
+              <input
+                v-model="searchQuery"
+                type="search"
+                placeholder="Search variants..."
+                class="tv-demo-search-input"
+                aria-label="Search variants"
+                @keydown.down.prevent="handleVariantsKeydown($event)"
+              />
+              <button
+                v-if="searchQuery"
+                type="button"
+                class="tv-demo-search-clear"
+                aria-label="Clear search"
+                @click="searchQuery = ''"
+              >✕</button>
+            </label>
 
-          <div class="tv-demo-component-content">
-            <component :is="component" v-bind="variant.propsData" />
-          </div>
+            <div
+              class="tv-demo-variants"
+              :class="`${theme}-mode`
+              "
+              role="listbox"
+              tabindex="0"
+              aria-label="Available variants"
+              :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
+              @keydown="handleVariantsKeydown"
+              ref="variantsListRef"
+              @scroll="handleVariantsScroll"
+            >
+              <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
+                <template v-if="!emptySearchState">
+                  <button
+                    v-for="entry in virtualizedVariants"
+                    :key="entry.key"
+                    :id="`variant-${entry.key}`"
+                    type="button"
+                    class="tv-demo-variant-card"
+                    :class="{ active: entry.key === selectedVariantKey }"
+                    role="option"
+                    :aria-selected="entry.key === selectedVariantKey"
+                    @click="selectVariant(entry.key)"
+                  >
+                    <div class="tv-demo-variant-card-content">
+                      <div class="tv-demo-variant-card-title">{{ entry.variant.title }}</div>
+                      <p class="tv-demo-variant-card-description">{{ entry.variant.description }}</p>
+                    </div>
+                    <span class="tv-demo-variant-card-icon">→</span>
+                  </button>
+                </template>
+                <div v-else class="tv-demo-empty-state">
+                  <p>No matches for "{{ searchQuery }}".</p>
+                  <button class="tv-demo-reset" type="button" @click="searchQuery = ''">Clear filter</button>
+                </div>
+              </div>
+            </div>
+          </aside>
 
-          <h3>Code:</h3>
-          <HighCode class="tv-demo-code" :codeValue="variant.html" :theme="theme" lang="html" codeLines :key="variant.title" height="auto" />
+          <section class="tv-demo-content" aria-live="polite">
+            <div class="tv-demo-content-header">
+              <div>
+                <p class="tv-demo-content-label">Preview</p>
+                <h3>{{ variant.title || 'Select a variant' }}</h3>
+              </div>
+            </div>
+            <p class="tv-demo-description">
+              {{ variant.description || 'Select a variant from the list to view its details.' }}
+            </p>
+
+            <div class="tv-demo-component-content">
+              <component v-if="variant && component" :is="component" v-bind="variant.propsData" />
+              <p v-else class="tv-demo-empty-component">No component to render.</p>
+            </div>
+
+            <h3>Code:</h3>
+            <HighCode
+              v-if="variant?.html"
+              class="tv-demo-code"
+              :codeValue="variant.html"
+              :theme="theme"
+              lang="html"
+              codeLines
+              :key="variant.title"
+              height="auto"
+            />
+            <p v-else class="tv-demo-empty-code">No snippet available.</p>
+          </section>
         </div>
 
         <div v-if="selectedTab === 'docs'" class="tv-demo-content">
