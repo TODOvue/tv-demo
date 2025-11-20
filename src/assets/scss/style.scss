@@ -259,10 +259,7 @@ a, .tv-demo-links-item {
 
   & .tv-demo-links-item,
   & a.tv-demo-links-item {
-    background: rgba(30, 64, 175, 0.1);
-    border: 1px solid rgba(30, 64, 175, 0.25);
     color: #1e40af;
-    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.08);
 
     &:hover {
       background: rgba(30, 64, 175, 0.18);
@@ -290,11 +287,6 @@ a, .tv-demo-links-item {
       background: variables.$light-card-bg;
     }
 
-    & .tv-demo-copy {
-      background-color: variables.$light-card-bg;
-      color: variables.$dark-card-bg;
-      box-shadow: 0 0 10px variables.$light-card-bg;
-    }
 
     & .tv-demo-links-item {
       color: variables.$light-card-bg;
@@ -313,11 +305,6 @@ a, .tv-demo-links-item {
       background: variables.$dark-card-bg;
     }
 
-    & .tv-demo-copy {
-      background-color: variables.$dark-card-bg;
-      color: variables.$light-card-bg;
-      box-shadow: 0 0 10px variables.$dark-card-bg;
-    }
 
     & .tv-demo-links-item {
       color: variables.$dark-card-bg;
@@ -351,39 +338,6 @@ a, .tv-demo-links-item {
       }
     }
 
-    &-copy {
-      border-radius: 8px;
-      font-size: 14px;
-      padding: 12px 20px;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: auto;
-      max-width: 400px;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 1.7s forwards;
-
-      &::before {
-        content: '✓';
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: rgba(34, 197, 94, 0.2);
-        color: #22c55e;
-        font-weight: bold;
-        font-size: 16px;
-      }
-    }
 
     &-header{
       padding: 40px 0;

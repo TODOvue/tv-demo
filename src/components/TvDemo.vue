@@ -4,6 +4,7 @@ import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
 
 import useDemo from '../composable/useDemo';
+import ToastContainer from './ToastContainer.vue';
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -21,15 +22,14 @@ const props = defineProps({
 
 const {
   customStyle,
-  isCopy,
-  messageCopy,
+  toasts,
   readmeContent,
   selectedTab,
-  selectedTheme,
   selectedVariantIndex,
   theme,
   variant,
 
+  removeToast,
   setClickItem,
   toggleTheme,
 } = useDemo(props);
@@ -91,10 +91,6 @@ const {
 
           <h3>Code:</h3>
           <HighCode class="tv-demo-code" :codeValue="variant.html" :theme="theme" lang="html" codeLines :key="variant.title" height="auto" />
-
-          <div v-if="isCopy" :class="hideBackground ? 'tv-demo-copy no-background' : 'tv-demo-copy'">
-            {{ messageCopy }}
-          </div>
         </div>
 
         <div v-if="selectedTab === 'docs'" class="tv-demo-content">
@@ -144,6 +140,9 @@ const {
       </div>
     </div>
   </footer>
+
+  <!-- Toast Notifications -->
+  <ToastContainer :toasts="toasts" @removeToast="removeToast" />
 </template>
 
 <style></style>

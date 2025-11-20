@@ -3,8 +3,7 @@ import { computed, onMounted, ref, watchEffect } from 'vue';
 const useDemo = (props) => {
   const theme = ref('dark');
   const selectedVariantIndex = ref(0);
-  const isCopy = ref(false);
-  const messageCopy = ref('');
+  const toasts = ref([]);
   const readmeContent = ref('');
   const selectedTab = ref('demo');
 
@@ -57,32 +56,37 @@ const useDemo = (props) => {
     
     navigator.clipboard.writeText(commandToCopy)
       .then(() => {
-        isCopy.value = true;
-        messageCopy.value = `Copied to clipboard: ${commandToCopy}`;
+        addToast(`Copied to clipboard: ${commandToCopy}`, 'success', 3000);
       })
       .catch(err => {
-        isCopy.value = true;
-        messageCopy.value = `Failed to copy: ${err}`;
-      })
-      .finally(() => {
-        setTimeout(() => {
-          isCopy.value = false;
-          messageCopy.value = "";
-        }, 2000);
+        addToast(`Failed to copy: ${err}`, 'error', 3000);
       });
+  };
+  
+  const addToast = (message, type = 'success', duration = 3000) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    toasts.value.push({ id, message, type, duration });
+  };
+  
+  const removeToast = (id) => {
+    const index = toasts.value.findIndex(toast => toast.id === id);
+    if (index > -1) {
+      toasts.value.splice(index, 1);
+    }
   };
   
   watchEffect(fetchReadme);
   
   return {
     customStyle,
-    isCopy,
-    messageCopy,
+    toasts,
     readmeContent,
     selectedTab,
     selectedVariantIndex,
     theme,
     variant,
+    addToast,
+    removeToast,
     setClickItem,
     toggleTheme,
   };
