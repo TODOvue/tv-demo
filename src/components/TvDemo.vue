@@ -1,10 +1,11 @@
 <script setup>
+import { defineAsyncComponent } from 'vue';
 import { HighCode } from 'vue-highlight-code';
 import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
 
 import useDemo from '../composable/useDemo';
-import ToastContainer from './ToastContainer.vue';
+const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -140,10 +141,10 @@ const {
                     :aria-selected="entry.key === selectedVariantKey"
                     @click="selectVariant(entry.key)"
                   >
-                    <div class="tv-demo-variant-card-content">
-                      <div class="tv-demo-variant-card-title">{{ entry.variant.title }}</div>
-                      <p class="tv-demo-variant-card-description">{{ entry.variant.description }}</p>
-                    </div>
+                    <span class="tv-demo-variant-card-content">
+                      <span class="tv-demo-variant-card-title">{{ entry.variant.title }}</span>
+                      <span class="tv-demo-variant-card-description">{{ entry.variant.description }}</span>
+                    </span>
                     <span class="tv-demo-variant-card-icon">→</span>
                   </button>
                 </template>
@@ -228,7 +229,7 @@ const {
       </div>
       <div class="tv-demo-footer-bottom">
         <p class="tv-demo-footer-copyright">
-          © {{ new Date().getFullYear() }} {{ nameComponent }}. All rights reserved.
+          © {{ new Date().getFullYear() }} TODOvue. All rights reserved.
         </p>
       </div>
     </div>
