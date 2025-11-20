@@ -225,6 +225,7 @@ a, .tv-demo-links-item {
   & .tv-demo-links-item,
   & a.tv-demo-links-item {
     color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.5);
 
     &:hover {
       background: rgba(59, 130, 246, 0.25);
@@ -270,6 +271,7 @@ a, .tv-demo-links-item {
   & .tv-demo-links-item,
   & a.tv-demo-links-item {
     color: #1e40af;
+    border-color: rgba(30, 64, 175, 0.4);
 
     &:hover {
       background: rgba(30, 64, 175, 0.18);
@@ -350,13 +352,13 @@ a, .tv-demo-links-item {
 
 
     &-header{
-      padding: 40px 0;
+      padding: 25px 0;
       display: flex;
       justify-content: space-between;
     }
 
     &-case {
-      padding: 30px 40px 40px 40px;
+      padding: 0 40px 40px 40px;
       position: relative;
 
       &-demo {
@@ -795,6 +797,7 @@ input:checked + .slider:hover {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(12px);
+  height: 100%;
 
   &.light-mode {
     border-color: rgba(0, 0, 0, 0.08);
@@ -886,7 +889,6 @@ input:checked + .slider:hover {
   padding: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
-  max-height: 480px;
 
   &.light-mode {
     border-color: rgba(0, 0, 0, 0.08);

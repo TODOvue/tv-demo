@@ -145,7 +145,7 @@ import { TvDemo } from '@todovue/tv-demo'
 | variants       | Array   |               | Variations of the component                                         | `true`   |
 | hideBackground | Boolean | `false`       | Hide the background of the component demo                           | `false`  |
 | demoStyle      | Object  |               | Style of the component                                              | `false`  |
-| nameComponent  | String  | `null`        | Name of the component to display in the demo                        | `false`  |
+| componentName  | String  | `null`        | Name of the component to display in the demo                        | `false`  |
 | npmInstall     | String  | `null`        | Command to install the component (without `npm install`)            | `false`  |
 | sourceLink     | String  | `null`        | Link to the source code of the component                            | `false`  |
 | urlClone       | String  | `null`        | Link to clone the repository of the component (without `git clone`) | `false`  |

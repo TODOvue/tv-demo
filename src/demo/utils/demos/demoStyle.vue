@@ -3,10 +3,10 @@
     :conponent="TvSearch"
     :demoStyle="demoStyle"
     :variants="demos"
-    nameComponent="TvSearch"
-    npmInstall="@todovue/tv-search"
-    sourceLink="https://github.com/TODOvue/tv-search"
-    urlClone="https://github.com/TODOvue/tv-search.git"
+    component-name="TvSearch"
+    npm-install="@todovue/tv-search"
+    source-link="https://github.com/TODOvue/tv-search"
+    url-clone="https://github.com/TODOvue/tv-search.git"
     version="1.1.0"
   ></tv-demo>
 </template>
@@ -17,7 +17,10 @@ import TvDemo from '@todovue/tv-demo'
 
 import { demos } from "../utils/mocks.js";
 
-const TvSearch = defineAsyncComponent(/* webpackChunkName: "TvDemo" */() => import('../components/TvSearch.vue'));
+const TvSearch = defineAsyncComponent(
+  /* webpackChunkName: "TvSearch" */
+  () => import('../components/TvSearch.vue')
+);
 
 const demoStyle = ref({
   dark: {

@@ -12,7 +12,7 @@ const props = defineProps({
   hideBackground: Boolean,
   component: Object,
   variants: Array,
-  nameComponent: { type: String, default: 'Component Demo' },
+  componentName: { type: String, default: 'Component Demo' },
   sourceLink: { type: String, default: null },
   urlClone: { type: String, default: null },
   npmInstall: { type: String, default: null },
@@ -204,7 +204,7 @@ const {
           <span class="tv-demo-footer-logo">
             <img src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/icono_git.png?alt=media&token=86270c30-8235-4424-b72b-7a585f228685" alt="">
           </span>
-          <span class="tv-demo-footer-brand-text">{{ nameComponent }}</span>
+          <span class="tv-demo-footer-brand-text">{{ componentName }}</span>
           <span class="tv-demo-footer-brand-version">v{{ version }}</span>
         </div>
         <div class="tv-demo-footer-info">
