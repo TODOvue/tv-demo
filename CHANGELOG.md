@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2025-11-21
+
+### Fixed
+- Fixed links color when the component use `hide-background` demo style.
+
 ## [1.2.0] - 2025-11-20
 
 ### Added
@@ -130,6 +135,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.2.1]: https://github.com/TODOvue/tv-demo/pull/35/files
 [1.2.0]: https://github.com/TODOvue/tv-demo/pull/34/files
 [1.1.1]: https://github.com/TODOvue/tv-demo/pull/33/files
 [1.1.0]: https://github.com/TODOvue/tv-demo/pull/32/files
