@@ -60,15 +60,15 @@ const {
             <div class="tv-demo-links">
               <template v-if="sourceLink || npmInstall || urlClone">
                 <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-links-item">
-                  📂 Source
+                  View source code
                 </a>
                 <span v-if="sourceLink && (npmInstall || urlClone)"> | </span>
                 <div v-if="npmInstall" class="tv-demo-links-item" @click="setClickItem('npm')">
-                  📦 NPM Command
+                  Copy install command
                 </div>
                 <span v-if="npmInstall && urlClone"> | </span>
                 <div v-if="urlClone" class="tv-demo-links-item" @click="setClickItem('clone')">
-                  📝 Clone Component
+                  Copy repository clone URL
                 </div>
               </template>
             </div>
