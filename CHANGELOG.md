@@ -10,10 +10,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Added `CHANGELOG.md` to tab navigation for easy access to version history.
 - Added prop `showChangelog` to toggle visibility of the changelog tab.
 - Added prop `showDocumentation` to toggle visibility of the documentation tab.
+- Added `ToUp` component for quick navigation to the top of the demo page.
 
 ### Changed
 - Removed emojis from the component and changelog to maintain a more professional and consistent style.
 - Updated header link styles, removing emojis and redundant text.
+- Changed `conponent` to `component` prop name for correct spelling.
 
 ## [1.1.1] - 2025-11-20
 

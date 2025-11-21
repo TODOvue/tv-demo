@@ -1,6 +1,6 @@
 <template>
   <tv-demo
-    :conponent="TvRelativeTime"
+    :component="TvRelativeTime"
     :variants="demos"
     hide-background
     component-name="TvRelativeTime"

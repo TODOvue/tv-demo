@@ -6,6 +6,7 @@ import 'github-markdown-css';
 
 import useDemo from '../composable/useDemo';
 const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
+const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */() => import('./ToUp.vue'));
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -249,6 +250,12 @@ const {
   <ToastContainer
     :toasts="toasts"
     @removeToast="removeToast"
+  />
+
+  <ToUp
+    :theme="theme"
+    scroll-target=".tv-demo-body"
+    aria-label="Back to top"
   />
 </template>
 

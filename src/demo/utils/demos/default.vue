@@ -1,6 +1,6 @@
 <template>
   <tv-demo
-    :conponent="TvButton"
+    :component="TvButton"
     :variants="demos"
     component-name="TvButton"
     npm-install="@todovue/tv-button"
