@@ -170,37 +170,51 @@
 }
 
 .tv-demo-links-item {
-  text-decoration: none;
-  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 10px 20px;
-  border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  color: inherit;
+  font-weight: 600;
+  background: none;
+  border: none;
+  text-decoration: none;
   position: relative;
-  overflow: hidden;
-  letter-spacing: 0.3px;
+  padding: 2px 0;
+  letter-spacing: 0.02em;
+  transition: color 0.25s ease, transform 0.25s ease;
+  isolation: isolate;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
+    left: 0;
+    bottom: -2px;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.25;
+    transform-origin: left;
+    transform: scaleX(0.3);
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
-  &:hover::before {
-    left: 100%;
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-1px);
   }
 
-  &:active {
-    transform: translateY(1px);
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 0.85;
+    transform: scaleX(1);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px currentColor;
+    border-radius: 4px;
   }
 }
 
@@ -239,13 +253,12 @@
   & .tv-demo-links-item,
   & a.tv-demo-links-item {
     color: #60a5fa;
-    border-color: rgba(59, 130, 246, 0.5);
+    text-decoration-color: rgba(96, 165, 250, 0.6);
+    text-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
 
     &:hover {
-      background: rgba(59, 130, 246, 0.25);
-      border-color: rgba(59, 130, 246, 0.5);
-      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
-      transform: translateY(-2px);
+      color: #93c5fd;
+      text-decoration-color: rgba(147, 197, 253, 0.9);
     }
   }
 }
@@ -285,13 +298,12 @@
   & .tv-demo-links-item,
   & a.tv-demo-links-item {
     color: #1e40af;
-    border-color: rgba(30, 64, 175, 0.4);
+    text-decoration-color: rgba(30, 64, 175, 0.6);
+    text-shadow: 0 0 12px rgba(30, 64, 175, 0.25);
 
     &:hover {
-      background: rgba(30, 64, 175, 0.18);
-      border-color: rgba(30, 64, 175, 0.4);
-      box-shadow: 0 4px 16px rgba(30, 64, 175, 0.15);
-      transform: translateY(-2px);
+      color: #1d4ed8;
+      text-decoration-color: rgba(29, 78, 216, 0.9);
     }
   }
 }
@@ -316,6 +328,7 @@
 
     & .tv-demo-links-item {
       color: variables.$light-card-bg;
+      text-decoration-color: rgba(variables.$light-card-bg, 0.6);
     }
   }
 
@@ -334,6 +347,7 @@
 
     & .tv-demo-links-item {
       color: variables.$dark-card-bg;
+      text-decoration-color: rgba(variables.$dark-card-bg, 0.6);
     }
   }
 
@@ -1114,7 +1128,7 @@ input:checked + .slider:hover {
   }
 
   .tv-demo-links-item {
-    padding: 5px 10px;
+    padding: 0;
     font-size: 0.85rem;
     gap: 4px;
   }

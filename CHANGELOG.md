@@ -11,8 +11,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Added prop `showChangelog` to toggle visibility of the changelog tab.
 - Added prop `showDocumentation` to toggle visibility of the documentation tab.
 
-### Removed
-- Deleted emojis.
+### Changed
+- Removed emojis from the component and changelog to maintain a more professional and consistent style.
+- Updated header link styles, removing emojis and redundant text.
 
 ## [1.1.1] - 2025-11-20
 
