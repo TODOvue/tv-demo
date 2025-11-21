@@ -1,6 +1,6 @@
 <template>
   <tv-demo
-    :conponent="TvSearch"
+    :component="TvSearch"
     :demoStyle="demoStyle"
     :variants="demos"
     component-name="TvSearch"

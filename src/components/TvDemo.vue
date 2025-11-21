@@ -6,6 +6,7 @@ import 'github-markdown-css';
 
 import useDemo from '../composable/useDemo';
 const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
+const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */() => import('./ToUp.vue'));
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -19,12 +20,16 @@ const props = defineProps({
   isDevComponent: { type: Boolean, default: false },
   version: { type: String, default: '0.0.0' },
   readmePath: { type: String, default: "/README.md" },
+  changelogPath: { type: String, default: "/CHANGELOG.md" },
+  showDocumentation: { type: Boolean, default: true },
+  showChangelog: { type: Boolean, default: true },
 });
 
 const {
   customStyle,
   toasts,
   readmeContent,
+  changelogContent,
   selectedTab,
   searchQuery,
   selectedVariantKey,
@@ -56,15 +61,15 @@ const {
             <div class="tv-demo-links">
               <template v-if="sourceLink || npmInstall || urlClone">
                 <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-links-item">
-                  📂 Source
+                  View source code
                 </a>
                 <span v-if="sourceLink && (npmInstall || urlClone)"> | </span>
                 <div v-if="npmInstall" class="tv-demo-links-item" @click="setClickItem('npm')">
-                  📦 NPM Command
+                  Copy install command
                 </div>
                 <span v-if="npmInstall && urlClone"> | </span>
                 <div v-if="urlClone" class="tv-demo-links-item" @click="setClickItem('clone')">
-                  📝 Clone Component
+                  Copy repository clone URL
                 </div>
               </template>
             </div>
@@ -82,8 +87,9 @@ const {
         </div>
 
         <div class="tv-demo-tabs">
-          <button :class="{ active: selectedTab === 'demo' }" @click="selectedTab = 'demo'">📌 Demo</button>
-          <button :class="{ active: selectedTab === 'docs' }" @click="selectedTab = 'docs'">📖 Documentation</button>
+          <button :class="{ active: selectedTab === 'demo' }" @click="selectedTab = 'demo'">Demo</button>
+          <button v-if="showDocumentation" :class="{ active: selectedTab === 'docs' }" @click="selectedTab = 'docs'">Documentation</button>
+          <button v-if="showChangelog" :class="{ active: selectedTab === 'changelog' }" @click="selectedTab = 'changelog'">Changelog</button>
         </div>
 
         <div v-if="selectedTab === 'demo'" class="tv-demo-layout">
@@ -187,11 +193,18 @@ const {
           </section>
         </div>
 
-        <div v-if="selectedTab === 'docs'" class="tv-demo-content">
+        <div v-if="selectedTab === 'docs' && showDocumentation" class="tv-demo-content">
           <div class="markdown-body" v-if="readmeContent" >
             <VueMarkdownIt :source="readmeContent" html />
           </div>
           <div v-else>No documentation available.</div>
+        </div>
+
+        <div v-if="selectedTab === 'changelog' && showChangelog" class="tv-demo-content">
+          <div class="markdown-body" v-if="changelogContent" >
+            <VueMarkdownIt :source="changelogContent" html />
+          </div>
+          <div v-else>No changelog available.</div>
         </div>
       </div>
     </div>
@@ -237,6 +250,12 @@ const {
   <ToastContainer
     :toasts="toasts"
     @removeToast="removeToast"
+  />
+
+  <ToUp
+    :theme="theme"
+    scroll-target=".tv-demo-body"
+    aria-label="Back to top"
   />
 </template>
 

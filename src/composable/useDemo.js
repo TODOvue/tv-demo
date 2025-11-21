@@ -10,6 +10,7 @@ const useDemo = (props) => {
   const theme = ref('dark');
   const toasts = ref([]);
   const readmeContent = ref('');
+  const changelogContent = ref('');
   const selectedTab = ref('demo');
   const searchQuery = ref('');
   const selectedVariantKey = ref(null);
@@ -106,7 +107,17 @@ const useDemo = (props) => {
       if (!response.ok) throw new Error('README.md not found');
       readmeContent.value = await response.text();
     } catch (error) {
-      readmeContent.value = '⚠️ Documentation not found.';
+      readmeContent.value = 'Documentation not found.';
+    }
+  };
+
+  const fetchChangelog = async () => {
+    try {
+      const response = await fetch(props.changelogPath);
+      if (!response.ok) throw new Error('CHANGELOG.md not found');
+      changelogContent.value = await response.text();
+    } catch (error) {
+      changelogContent.value = 'Changelog not found.';
     }
   };
 
@@ -296,12 +307,16 @@ const useDemo = (props) => {
     }
   };
 
-  watchEffect(fetchReadme);
+  watchEffect(async () => {
+    await fetchReadme();
+    await fetchChangelog();
+  });
 
   return {
     customStyle,
     toasts,
     readmeContent,
+    changelogContent,
     selectedTab,
     searchQuery,
     selectedVariantKey,

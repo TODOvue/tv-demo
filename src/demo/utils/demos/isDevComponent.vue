@@ -1,6 +1,6 @@
 <template>
   <tv-demo
-    :conponent="TvLabel"
+    :component="TvLabel"
     :variants="demos"
     is-dev-component
     component-name="TvLabel"
