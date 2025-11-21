@@ -139,19 +139,21 @@ import { TvDemo } from '@todovue/tv-demo'
 
 ---
 ## Props
-| Name           | Type    | Default       | Description                                                         | Required |
-|----------------|---------|---------------|---------------------------------------------------------------------|----------|
-| component      | Object  |               | Component to display                                                | `true`   |
-| variants       | Array   |               | Variations of the component                                         | `true`   |
-| hideBackground | Boolean | `false`       | Hide the background of the component demo                           | `false`  |
-| demoStyle      | Object  |               | Style of the component                                              | `false`  |
-| componentName  | String  | `null`        | Name of the component to display in the demo                        | `false`  |
-| npmInstall     | String  | `null`        | Command to install the component (without `npm install`)            | `false`  |
-| sourceLink     | String  | `null`        | Link to the source code of the component                            | `false`  |
-| urlClone       | String  | `null`        | Link to clone the repository of the component (without `git clone`) | `false`  |
-| isDevComponent | Boolean | `false`       | Indicates that the component is in development (to include `-D`)    | `false`  |
-| version        | String  | `1.0.0`       | Version of the component                                            | `false`  |
-| readmePath     | String  | `./README.md` | Path to the README file of the component                            | `false`  |
+| Name              | Type    | Default       | Description                                                         | Required |
+|-------------------|---------|---------------|---------------------------------------------------------------------|----------|
+| component         | Object  |               | Component to display                                                | `true`   |
+| variants          | Array   |               | Variations of the component                                         | `true`   |
+| hideBackground    | Boolean | `false`       | Hide the background of the component demo                           | `false`  |
+| demoStyle         | Object  |               | Style of the component                                              | `false`  |
+| componentName     | String  | `null`        | Name of the component to display in the demo                        | `false`  |
+| npmInstall        | String  | `null`        | Command to install the component (without `npm install`)            | `false`  |
+| sourceLink        | String  | `null`        | Link to the source code of the component                            | `false`  |
+| urlClone          | String  | `null`        | Link to clone the repository of the component (without `git clone`) | `false`  |
+| isDevComponent    | Boolean | `false`       | Indicates that the component is in development (to include `-D`)    | `false`  |
+| version           | String  | `1.0.0`       | Version of the component                                            | `false`  |
+| readmePath        | String  | `./README.md` | Path to the README file of the component                            | `false`  |
+| showDocumentation | Boolean | `true`        | Show or hide the documentation tab                                  | `false`  |
+| showChangelog     | Boolean | `true`        | Show or hide the changelog tab                                      | `false`  |
 
 ---
 ## Events

@@ -19,12 +19,16 @@ const props = defineProps({
   isDevComponent: { type: Boolean, default: false },
   version: { type: String, default: '0.0.0' },
   readmePath: { type: String, default: "/README.md" },
+  changelogPath: { type: String, default: "/CHANGELOG.md" },
+  showDocumentation: { type: Boolean, default: true },
+  showChangelog: { type: Boolean, default: true },
 });
 
 const {
   customStyle,
   toasts,
   readmeContent,
+  changelogContent,
   selectedTab,
   searchQuery,
   selectedVariantKey,
@@ -82,8 +86,9 @@ const {
         </div>
 
         <div class="tv-demo-tabs">
-          <button :class="{ active: selectedTab === 'demo' }" @click="selectedTab = 'demo'">📌 Demo</button>
-          <button :class="{ active: selectedTab === 'docs' }" @click="selectedTab = 'docs'">📖 Documentation</button>
+          <button :class="{ active: selectedTab === 'demo' }" @click="selectedTab = 'demo'">Demo</button>
+          <button v-if="showDocumentation" :class="{ active: selectedTab === 'docs' }" @click="selectedTab = 'docs'">Documentation</button>
+          <button v-if="showChangelog" :class="{ active: selectedTab === 'changelog' }" @click="selectedTab = 'changelog'">Changelog</button>
         </div>
 
         <div v-if="selectedTab === 'demo'" class="tv-demo-layout">
@@ -187,11 +192,18 @@ const {
           </section>
         </div>
 
-        <div v-if="selectedTab === 'docs'" class="tv-demo-content">
+        <div v-if="selectedTab === 'docs' && showDocumentation" class="tv-demo-content">
           <div class="markdown-body" v-if="readmeContent" >
             <VueMarkdownIt :source="readmeContent" html />
           </div>
           <div v-else>No documentation available.</div>
+        </div>
+
+        <div v-if="selectedTab === 'changelog' && showChangelog" class="tv-demo-content">
+          <div class="markdown-body" v-if="changelogContent" >
+            <VueMarkdownIt :source="changelogContent" html />
+          </div>
+          <div v-else>No changelog available.</div>
         </div>
       </div>
     </div>
