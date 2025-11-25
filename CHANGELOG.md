@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.2] - 2025-11-24
+
+### Changed
+- Updated background and text colors for dark and light themes to improve readability and visual comfort.
+
 ## [1.2.1] - 2025-11-21
 
 ### Fixed
