@@ -4,6 +4,15 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.3] - 2025-12-16
+
+### Added
+- Added automatic publishing to the Todovue cPanel in `release.yml` for each release, simplifying package distribution and updates.
+- Added `package-lock.json` to the repository to ensure dependency consistency and facilitate version management across development and production environments.
+
+### Changed
+- Updated dependency versions in `package.json` to maintain compatibility and benefit from improvements and bug fixes in the used libraries.
+
 ## [1.2.2] - 2025-11-24
 
 ### Changed
@@ -140,6 +149,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.2.3]: https://github.com/TODOvue/tv-demo/pull/37/files
+[1.2.2]: https://github.com/TODOvue/tv-demo/pull/36/files
 [1.2.1]: https://github.com/TODOvue/tv-demo/pull/35/files
 [1.2.0]: https://github.com/TODOvue/tv-demo/pull/34/files
 [1.1.1]: https://github.com/TODOvue/tv-demo/pull/33/files
