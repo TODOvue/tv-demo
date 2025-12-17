@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.6] - 2025-12-16
+
+### Changed
+- Changed the `base` option in `vite.config.js` for website deployment to `/tv-demo/`.
+
 ## [1.2.5] - 2025-12-16
 
 ### Fixed
@@ -160,6 +165,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.2.6]: https://github.com/TODOvue/tv-demo/pull/40/files
 [1.2.5]: https://github.com/TODOvue/tv-demo/pull/39/files
 [1.2.4]: https://github.com/TODOvue/tv-demo/pull/38/files
 [1.2.3]: https://github.com/TODOvue/tv-demo/pull/37/files
