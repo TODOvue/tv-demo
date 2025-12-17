@@ -5,7 +5,6 @@
 A flexible, framework-agnostic Vue 3 component catalog for demos, documentation, and playgrounds. Compatible with both SPA and SSR (Nuxt 3), with automatic style injection and no DOM assumptions.
 
 [![npm](https://img.shields.io/npm/v/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8c4e2401-fefe-4f40-ae83-40681ecc36a5/deploy-status)](https://app.netlify.com/projects/tv-demo/deploys)
 [![npm downloads](https://img.shields.io/npm/dm/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo)
 [![npm total downloads](https://img.shields.io/npm/dt/@todovue/tv-demo.svg)](https://www.npmjs.com/package/@todovue/tv-demo) 
 ![License](https://img.shields.io/github/license/TODOvue/tv-demo)
