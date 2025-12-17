@@ -25,5 +25,3 @@ public/README.md
 *.njsproj
 *.sln
 *.sw?
-
-package-lock.json
