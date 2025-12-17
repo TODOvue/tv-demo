@@ -7,10 +7,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## [1.2.7] - 2025-12-16
 
 ### Changed
-- Se cambia el valor por defecto del `readmePath` y `changelogPath` a `'./'` para facilitar la configuración en proyectos monorepo.
-
-### Changed
-- Changed the `base` option in `vite.config.js` for website deployment to `/tv-demo/`.
+- Changed the default value of `readmePath` and `changelogPath` to `./` to simplify configuration in monorepo projects.
 
 ## [1.2.6] - 2025-12-16
 
