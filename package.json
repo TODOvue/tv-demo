@@ -55,19 +55,19 @@
     "dist/*.css"
   ],
   "peerDependencies": {
-    "vue": "^3.0.0",
+    "vue": "^3.5.25",
     "vue-highlight-code": "^0.2.0",
-    "vue3-markdown-it": "^1.0.0"
+    "vue3-markdown-it": "^1.0.10"
   },
   "dependencies": {
-    "github-markdown-css": "^5.0.0"
+    "github-markdown-css": "^5.8.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.0",
-    "sass": "^1.0.0",
-    "vite": "^7.0.0",
-    "vite-plugin-dts": "^4.0.0",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "sass": "^1.97.0",
+    "vite": "^7.3.0",
+    "vite-plugin-dts": "^4.5.4",
     "vue-highlight-code": "^0.2.0",
-    "vue3-markdown-it": "^1.0.0"
+    "vue3-markdown-it": "^1.0.10"
   }
 }

@@ -58,3 +58,16 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Demo Website
+        run: npm run build:demo
+
+      - name: Deploy Demo to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist-demo/
+          server-dir:  ${{ secrets.FTP_DIR }}
+          dangerous-clean-slate: true
