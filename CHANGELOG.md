@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.2.7] - 2025-12-16
+
+### Changed
+- Changed the default value of `readmePath` and `changelogPath` to `./` to simplify configuration in monorepo projects.
+
 ## [1.2.6] - 2025-12-16
 
 ### Changed
@@ -165,6 +170,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.2.7]: https://github.com/TODOvue/tv-demo/pull/41/files
 [1.2.6]: https://github.com/TODOvue/tv-demo/pull/40/files
 [1.2.5]: https://github.com/TODOvue/tv-demo/pull/39/files
 [1.2.4]: https://github.com/TODOvue/tv-demo/pull/38/files

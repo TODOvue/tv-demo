@@ -19,8 +19,8 @@ const props = defineProps({
   npmInstall: { type: String, default: null },
   isDevComponent: { type: Boolean, default: false },
   version: { type: String, default: '0.0.0' },
-  readmePath: { type: String, default: "/README.md" },
-  changelogPath: { type: String, default: "/CHANGELOG.md" },
+  readmePath: { type: String, default: "./README.md" },
+  changelogPath: { type: String, default: "./CHANGELOG.md" },
   showDocumentation: { type: Boolean, default: true },
   showChangelog: { type: Boolean, default: true },
 });
