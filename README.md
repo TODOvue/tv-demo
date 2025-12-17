@@ -14,7 +14,7 @@ A flexible, framework-agnostic Vue 3 component catalog for demos, documentation,
 ![Last Commit](https://img.shields.io/github/last-commit/TODOvue/tv-demo)
 ![Stars](https://img.shields.io/github/stars/TODOvue/tv-demo?style=social)
 
-> Demo: https://tv-demo.netlify.app/
+> Demo: https://ui.todovue.blog/demo/
 
 ---
 ## Table of Contents

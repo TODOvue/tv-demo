@@ -6,6 +6,7 @@
   "license": "MIT",
   "version": "1.2.5",
   "type": "module",
+  "homepage": "https://ui.todovue.blog/demo",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TODOvue/tv-demo.git"
