@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, onMounted, ref, computed } from 'vue';
 import { HighCode } from 'vue-highlight-code';
 import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
@@ -25,6 +25,19 @@ const props = defineProps({
   showChangelog: { type: Boolean, default: true },
 });
 
+const canGoBack = ref(false);
+
+const goBack = () => {
+  if (typeof window === 'undefined') return;
+  window.history.back();
+};
+
+onMounted(() => {
+  const hasHistory = window.history.length > 1;
+  const hasReferrer = typeof document !== 'undefined' && !!document.referrer;
+  canGoBack.value = hasHistory || hasReferrer;
+});
+
 const {
   customStyle,
   toasts,
@@ -47,14 +60,37 @@ const {
   setClickItem,
   toggleTheme,
   selectVariant,
-  handleVariantsScroll,
   handleVariantsKeydown,
+  reactiveProps,
+  eventLogs,
+  addLog,
+  clearLogs,
+  viewportWidth,
 } = useDemo(props);
+
+const autoEventListeners = computed(() => {
+  const listeners = {};
+  if (props.component && props.component.emits) {
+    const emits = Array.isArray(props.component.emits)
+      ? props.component.emits
+      : Object.keys(props.component.emits);
+
+    emits.forEach(event => {
+      listeners[`on${event.charAt(0).toUpperCase() + event.slice(1)}`] = (payload) => {
+        addLog(event, payload);
+      };
+    });
+  }
+  return listeners;
+});
 </script>
 
 <template>
   <div :class="`${theme}-mode tv-demo`" :style="customStyle.body">
     <div class="tv-demo-body" :class="{ [`${theme}-mode`]: !hideBackground }" :style="customStyle.content">
+      <div v-if="canGoBack" class="tv-demo-back-row">
+        <button type="button" class="tv-demo-back-button" aria-label="Back" @click="goBack">← Back</button>
+      </div>
       <div class="tv-demo-case">
         <div class="tv-demo-header">
           <div>
@@ -124,15 +160,13 @@ const {
 
             <div
               class="tv-demo-variants"
-              :class="`${theme}-mode`
-              "
+              :class="`${theme}-mode`"
               role="listbox"
               tabindex="0"
               aria-label="Available variants"
               :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
               @keydown="handleVariantsKeydown"
               ref="variantsListRef"
-              @scroll="handleVariantsScroll"
             >
               <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
                 <template v-if="!emptySearchState">
@@ -168,14 +202,103 @@ const {
                 <p class="tv-demo-content-label">Preview</p>
                 <h3>{{ variant.title || 'Select a variant' }}</h3>
               </div>
+              <div class="tv-demo-viewport-controls">
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '375px' }"
+                  @click="viewportWidth = '375px'"
+                  aria-label="Mobile view (375px)"
+                  title="Mobile (375px)"
+                >
+                  Mobile
+                </button>
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '768px' }"
+                  @click="viewportWidth = '768px'"
+                  aria-label="Tablet view (768px)"
+                  title="Tablet (768px)"
+                >
+                  Tablet
+                </button>
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '100%' }"
+                  @click="viewportWidth = '100%'"
+                  aria-label="Desktop view (100%)"
+                  title="Desktop (100%)"
+                >
+                  Desktop
+                </button>
+              </div>
             </div>
             <p class="tv-demo-description">
               {{ variant.description || 'Select a variant from the list to view its details.' }}
             </p>
 
-            <div class="tv-demo-component-content">
-              <component v-if="variant && component" :is="component" v-bind="variant.propsData" />
+            <div class="tv-demo-component-content" :style="{ width: viewportWidth }">
+              <component v-if="variant && component" :is="component" v-bind="{ ...reactiveProps, ...autoEventListeners }" />
               <p v-else class="tv-demo-empty-component">No component to render.</p>
+            </div>
+
+            <div v-if="Object.keys(reactiveProps).length > 0" class="tv-demo-controls-section">
+              <h3>Playground</h3>
+              <div class="tv-demo-controls-grid">
+                <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item">
+                  <span class="tv-demo-control-label" :title="key">{{ key }}</span>
+
+                  <div class="tv-demo-control-input-wrapper">
+                    <label v-if="typeof value === 'boolean'" class="switch small">
+                      <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
+                      <span class="slider round"></span>
+                    </label>
+                    <input
+                      v-else-if="typeof value === 'number'"
+                      v-model.number="reactiveProps[key]"
+                      type="number"
+                      class="tv-demo-input"
+                      :id="`control-${key}`"
+                    />
+                    <input
+                      v-else-if="typeof value === 'string'"
+                      v-model="reactiveProps[key]"
+                      type="text"
+                      class="tv-demo-input"
+                      :id="`control-${key}`"
+                    />
+                    <textarea
+                      v-else
+                      :value="JSON.stringify(value)"
+                      @change="e => { try { reactiveProps[key] = JSON.parse(e.target.value) } catch {} }"
+                      class="tv-demo-textarea"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tv-demo-controls-section">
+              <div class="tv-demo-logs-header">
+                <h3>Event Logger</h3>
+                <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-reset is-small">Clear</button>
+              </div>
+
+              <div class="tv-demo-logs-container">
+                <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
+                  Listening for events...
+                </div>
+                <div v-else v-for="log in eventLogs" :key="log.id" class="tv-demo-log-item">
+                  <span class="tv-demo-log-time">{{ log.timestamp }}</span>
+                  <span class="tv-demo-log-name">{{ log.eventName }}</span>
+                  <span class="tv-demo-log-payload" v-if="log.payload !== undefined">
+                    {{ JSON.stringify(log.payload) }}
+                  </span>
+                </div>
+              </div>
             </div>
 
             <h3>Code:</h3>
@@ -214,7 +337,7 @@ const {
       <div class="tv-demo-footer-main">
         <div class="tv-demo-footer-brand">
           <span class="tv-demo-footer-logo">
-            <img src="https://firebasestorage.googleapis.com/v0/b/todovue-blog.appspot.com/o/icono_git.png?alt=media&token=86270c30-8235-4424-b72b-7a585f228685" alt="">
+            <img src="https://res.cloudinary.com/denj4fg7f/image/upload/v1766183906/icono_git_bvxian.png" alt="Icon TODOvue">
           </span>
           <span class="tv-demo-footer-brand-text">{{ componentName }}</span>
           <span class="tv-demo-footer-brand-version">v{{ version }}</span>
