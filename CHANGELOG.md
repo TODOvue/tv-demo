@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Updated
+- Update logo image source in footer.
+
 ## [1.2.7] - 2025-12-16
 
 ### Changed
