@@ -237,6 +237,29 @@ const useDemo = (props) => {
     { immediate: true }
   );
 
+  const eventLogs = ref([]);
+
+  const addLog = (eventName, payload) => {
+    const timestamp = new Date().toLocaleTimeString();
+    eventLogs.value.unshift({
+      id: Date.now() + Math.random(),
+      timestamp,
+      eventName,
+      payload
+    });
+    if (eventLogs.value.length > 50) {
+      eventLogs.value = eventLogs.value.slice(0, 50);
+    }
+  };
+
+  const clearLogs = () => {
+    eventLogs.value = [];
+  };
+
+  watch(selectedVariantKey, () => {
+    clearLogs();
+  });
+
   const handleVariantsScroll = (event) => {
     scrollTop.value = event.target.scrollTop;
   };
@@ -355,6 +378,9 @@ const useDemo = (props) => {
     handleVariantsScroll,
     handleVariantsKeydown,
     reactiveProps,
+    eventLogs,
+    addLog,
+    clearLogs,
   };
 };
 

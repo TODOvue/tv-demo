@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, onMounted, ref } from 'vue';
+import { defineAsyncComponent, onMounted, ref, computed } from 'vue';
 import { HighCode } from 'vue-highlight-code';
 import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
@@ -60,10 +60,28 @@ const {
   setClickItem,
   toggleTheme,
   selectVariant,
-  handleVariantsScroll,
   handleVariantsKeydown,
   reactiveProps,
+  eventLogs,
+  addLog,
+  clearLogs,
 } = useDemo(props);
+
+const autoEventListeners = computed(() => {
+  const listeners = {};
+  if (props.component && props.component.emits) {
+    const emits = Array.isArray(props.component.emits) 
+      ? props.component.emits 
+      : Object.keys(props.component.emits);
+      
+    emits.forEach(event => {
+      listeners[`on${event.charAt(0).toUpperCase() + event.slice(1)}`] = (payload) => {
+        addLog(event, payload);
+      };
+    });
+  }
+  return listeners;
+});
 </script>
 
 <template>
@@ -191,7 +209,7 @@ const {
             </p>
 
             <div class="tv-demo-component-content">
-              <component v-if="variant && component" :is="component" v-bind="reactiveProps" />
+              <component v-if="variant && component" :is="component" v-bind="{ ...reactiveProps, ...autoEventListeners }" />
               <p v-else class="tv-demo-empty-component">No component to render.</p>
             </div>
 
@@ -228,6 +246,26 @@ const {
                       rows="1"
                     ></textarea>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tv-demo-controls-section">
+              <div class="tv-demo-logs-header">
+                <h3>Event Logger</h3>
+                <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-reset is-small">Clear</button>
+              </div>
+              
+              <div class="tv-demo-logs-container">
+                <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
+                  Listening for events...
+                </div>
+                <div v-else v-for="log in eventLogs" :key="log.id" class="tv-demo-log-item">
+                  <span class="tv-demo-log-time">{{ log.timestamp }}</span>
+                  <span class="tv-demo-log-name">{{ log.eventName }}</span>
+                  <span class="tv-demo-log-payload" v-if="log.payload !== undefined">
+                    {{ JSON.stringify(log.payload) }}
+                  </span>
                 </div>
               </div>
             </div>
