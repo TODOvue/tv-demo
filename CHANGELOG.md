@@ -4,17 +4,16 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.3.0] - 2026-01-13
 
 ### Updated
-- Update logo image source in footer.
+- Updated footer logo image source.
 
 ### Added
-- Add back navigation button and styling.
-- Add implement reactive controls for dynamic property manipulation
-- Add event logging functionality with clear logs option
-- Add implement URL parameter synchronization for selected tab, search query, and variant
-  viewportWidth,
+- Added back navigation button and styling.
+- Implemented reactive controls for dynamic property manipulation.
+- Added event logging functionality with clear logs option.
+- Implemented URL parameter synchronization for selected tab, search query, variant, and viewport width.
 
 ## [1.2.7] - 2025-12-16
 
@@ -182,6 +181,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.3.0]: https://github.com/TODOvue/tv-demo/pull/42/files
 [1.2.7]: https://github.com/TODOvue/tv-demo/pull/41/files
 [1.2.6]: https://github.com/TODOvue/tv-demo/pull/40/files
 [1.2.5]: https://github.com/TODOvue/tv-demo/pull/39/files
