@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Updated
 - Update logo image source in footer.
 
+### Added
+- Add back navigation button and styling.
+
 ## [1.2.7] - 2025-12-16
 
 ### Changed

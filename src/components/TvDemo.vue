@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, onMounted, ref } from 'vue';
 import { HighCode } from 'vue-highlight-code';
 import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
@@ -23,6 +23,19 @@ const props = defineProps({
   changelogPath: { type: String, default: "./CHANGELOG.md" },
   showDocumentation: { type: Boolean, default: true },
   showChangelog: { type: Boolean, default: true },
+});
+
+const canGoBack = ref(false);
+
+const goBack = () => {
+  if (typeof window === 'undefined') return;
+  window.history.back();
+};
+
+onMounted(() => {
+  const hasHistory = window.history.length > 1;
+  const hasReferrer = typeof document !== 'undefined' && !!document.referrer;
+  canGoBack.value = hasHistory || hasReferrer;
 });
 
 const {
@@ -55,6 +68,9 @@ const {
 <template>
   <div :class="`${theme}-mode tv-demo`" :style="customStyle.body">
     <div class="tv-demo-body" :class="{ [`${theme}-mode`]: !hideBackground }" :style="customStyle.content">
+      <div v-if="canGoBack" class="tv-demo-back-row">
+        <button type="button" class="tv-demo-back-button" aria-label="Back" @click="goBack">← Back</button>
+      </div>
       <div class="tv-demo-case">
         <div class="tv-demo-header">
           <div>
