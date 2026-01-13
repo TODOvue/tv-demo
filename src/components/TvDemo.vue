@@ -62,6 +62,7 @@ const {
   selectVariant,
   handleVariantsScroll,
   handleVariantsKeydown,
+  reactiveProps,
 } = useDemo(props);
 </script>
 
@@ -190,8 +191,45 @@ const {
             </p>
 
             <div class="tv-demo-component-content">
-              <component v-if="variant && component" :is="component" v-bind="variant.propsData" />
+              <component v-if="variant && component" :is="component" v-bind="reactiveProps" />
               <p v-else class="tv-demo-empty-component">No component to render.</p>
+            </div>
+
+            <div v-if="Object.keys(reactiveProps).length > 0" class="tv-demo-controls-section">
+              <h3>Playground</h3>
+              <div class="tv-demo-controls-grid">
+                <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item">
+                  <span class="tv-demo-control-label" :title="key">{{ key }}</span>
+
+                  <div class="tv-demo-control-input-wrapper">
+                    <label v-if="typeof value === 'boolean'" class="switch small">
+                      <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
+                      <span class="slider round"></span>
+                    </label>
+                    <input
+                      v-else-if="typeof value === 'number'"
+                      v-model.number="reactiveProps[key]"
+                      type="number"
+                      class="tv-demo-input"
+                      :id="`control-${key}`"
+                    />
+                    <input
+                      v-else-if="typeof value === 'string'"
+                      v-model="reactiveProps[key]"
+                      type="text"
+                      class="tv-demo-input"
+                      :id="`control-${key}`"
+                    />
+                    <textarea
+                      v-else
+                      :value="JSON.stringify(value)"
+                      @change="e => { try { reactiveProps[key] = JSON.parse(e.target.value) } catch {} }"
+                      class="tv-demo-textarea"
+                      rows="1"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <h3>Code:</h3>

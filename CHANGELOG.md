@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Add back navigation button and styling.
+- Add implement reactive controls for dynamic property manipulation
 
 ## [1.2.7] - 2025-12-16
 

@@ -219,6 +219,24 @@ const useDemo = (props) => {
     return entry?.variant || {};
   });
 
+  const reactiveProps = ref({});
+
+  watch(
+    () => variant.value,
+    (newVariant) => {
+      if (newVariant?.propsData) {
+        try {
+          reactiveProps.value = JSON.parse(JSON.stringify(newVariant.propsData));
+        } catch (e) {
+          reactiveProps.value = { ...newVariant.propsData };
+        }
+      } else {
+        reactiveProps.value = {};
+      }
+    },
+    { immediate: true }
+  );
+
   const handleVariantsScroll = (event) => {
     scrollTop.value = event.target.scrollTop;
   };
@@ -336,6 +354,7 @@ const useDemo = (props) => {
     toggleTheme,
     handleVariantsScroll,
     handleVariantsKeydown,
+    reactiveProps,
   };
 };
 
