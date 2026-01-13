@@ -23,6 +23,7 @@ const props = defineProps({
   changelogPath: { type: String, default: "./CHANGELOG.md" },
   showDocumentation: { type: Boolean, default: true },
   showChangelog: { type: Boolean, default: true },
+  manualEmits: { type: Array, default: () => [] },
 });
 
 const canGoBack = ref(false);
@@ -70,12 +71,16 @@ const {
 
 const autoEventListeners = computed(() => {
   const listeners = {};
-  if (props.component && props.component.emits) {
-    const emits = Array.isArray(props.component.emits)
+  const componentEmits = props.component && props.component.emits
+    ? (Array.isArray(props.component.emits)
       ? props.component.emits
-      : Object.keys(props.component.emits);
+      : Object.keys(props.component.emits))
+    : [];
 
-    emits.forEach(event => {
+  const allEmits = [...new Set([...componentEmits, ...props.manualEmits])];
+
+  if (allEmits.length > 0) {
+    allEmits.forEach(event => {
       listeners[`on${event.charAt(0).toUpperCase() + event.slice(1)}`] = (payload) => {
         addLog(event, payload);
       };

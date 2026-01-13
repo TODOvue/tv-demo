@@ -153,6 +153,7 @@ import { TvDemo } from '@todovue/tv-demo'
 | readmePath        | String  | `./README.md` | Path to the README file of the component                            | `false`  |
 | showDocumentation | Boolean | `true`        | Show or hide the documentation tab                                  | `false`  |
 | showChangelog     | Boolean | `true`        | Show or hide the changelog tab                                      | `false`  |
+| manualEmits       | Array   | `[]`          | List of event names to listen relative to the component             | `false`  |
 
 ---
 ## Events
@@ -163,6 +164,15 @@ import { TvDemo } from '@todovue/tv-demo'
 Usage:
 ```vue
 <TvDemo @select-demo="onSelectDemo" />
+```
+
+Manual Emits (for async components):
+```vue
+<TvDemo
+  :component="AsyncComponent"
+  :manual-emits="['click', 'submit']"
+  :variants="demos"
+/>
 ```
 
 ---

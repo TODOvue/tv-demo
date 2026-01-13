@@ -910,6 +910,7 @@ input:checked + .slider:hover {
   border-radius: 8px;
   height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.85rem;

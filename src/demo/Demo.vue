@@ -11,6 +11,7 @@ const Component = defineAsyncComponent(/* webpackChunkName: "Test" */() => impor
 <template>
   <TvDemo
     :component="Component"
+    :manual-emits="['clickButton', 'clickLabel', 'clickSecondaryButton']"
     :variants="demos"
     component-name="TvDemo"
     npm-install="@todovue/tv-demo"

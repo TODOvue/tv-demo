@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- Add manual emits support for custom event handling
+
 ## [1.3.0] - 2026-01-13
 
 ### Updated
