@@ -84,10 +84,64 @@ const useDemo = (props) => {
     }
   );
 
+  const isMounted = ref(false);
+  let debounceTimer = null;
+
+  const updateUrl = () => {
+    if (typeof window === 'undefined') return;
+
+    const url = new URL(window.location.href);
+
+    if (selectedTab.value && selectedTab.value !== 'demo') {
+      url.searchParams.set('tab', selectedTab.value);
+    } else {
+      url.searchParams.delete('tab');
+    }
+
+    if (searchQuery.value) {
+      url.searchParams.set('search', searchQuery.value);
+    } else {
+      url.searchParams.delete('search');
+    }
+
+    if (selectedVariantKey.value) {
+      url.searchParams.set('variant', selectedVariantKey.value);
+    } else {
+      url.searchParams.delete('variant');
+    }
+
+    if (url.href !== window.location.href) {
+      window.history.replaceState(window.history.state, '', url.href);
+    }
+  };
+
+  watch([selectedTab, searchQuery, selectedVariantKey], () => {
+    if (!isMounted.value) return;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updateUrl, 300);
+  });
+
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       theme.value = storedTheme;
+    }
+
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get('tab');
+      if (tabParam) selectedTab.value = tabParam;
+
+      const searchParam = params.get('search');
+      if (searchParam) searchQuery.value = searchParam;
+
+      const variantParam = params.get('variant');
+      if (variantParam) {
+        const match = variantEntries.value.find((entry) => String(entry.key) === variantParam);
+        selectedVariantKey.value = match ? match.key : variantParam;
+      }
+
+      isMounted.value = true;
     }
 
     nextTick(updateViewportHeight);
