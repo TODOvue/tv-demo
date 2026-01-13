@@ -16,6 +16,7 @@ const useDemo = (props) => {
   const selectedVariantKey = ref(null);
   const variantsListRef = ref(null);
   const viewportHeight = ref(360);
+  const viewportWidth = ref('100%');
   const scrollTop = ref(0);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
@@ -435,6 +436,7 @@ const useDemo = (props) => {
     eventLogs,
     addLog,
     clearLogs,
+    viewportWidth,
   };
 };
 

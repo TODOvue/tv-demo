@@ -65,15 +65,16 @@ const {
   eventLogs,
   addLog,
   clearLogs,
+  viewportWidth,
 } = useDemo(props);
 
 const autoEventListeners = computed(() => {
   const listeners = {};
   if (props.component && props.component.emits) {
-    const emits = Array.isArray(props.component.emits) 
-      ? props.component.emits 
+    const emits = Array.isArray(props.component.emits)
+      ? props.component.emits
       : Object.keys(props.component.emits);
-      
+
     emits.forEach(event => {
       listeners[`on${event.charAt(0).toUpperCase() + event.slice(1)}`] = (payload) => {
         addLog(event, payload);
@@ -159,15 +160,13 @@ const autoEventListeners = computed(() => {
 
             <div
               class="tv-demo-variants"
-              :class="`${theme}-mode`
-              "
+              :class="`${theme}-mode`"
               role="listbox"
               tabindex="0"
               aria-label="Available variants"
               :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
               @keydown="handleVariantsKeydown"
               ref="variantsListRef"
-              @scroll="handleVariantsScroll"
             >
               <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
                 <template v-if="!emptySearchState">
@@ -203,12 +202,44 @@ const autoEventListeners = computed(() => {
                 <p class="tv-demo-content-label">Preview</p>
                 <h3>{{ variant.title || 'Select a variant' }}</h3>
               </div>
+              <div class="tv-demo-viewport-controls">
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '375px' }"
+                  @click="viewportWidth = '375px'"
+                  aria-label="Mobile view (375px)"
+                  title="Mobile (375px)"
+                >
+                  Mobile
+                </button>
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '768px' }"
+                  @click="viewportWidth = '768px'"
+                  aria-label="Tablet view (768px)"
+                  title="Tablet (768px)"
+                >
+                  Tablet
+                </button>
+                <button
+                  type="button"
+                  class="tv-demo-viewport-btn"
+                  :class="{ active: viewportWidth === '100%' }"
+                  @click="viewportWidth = '100%'"
+                  aria-label="Desktop view (100%)"
+                  title="Desktop (100%)"
+                >
+                  Desktop
+                </button>
+              </div>
             </div>
             <p class="tv-demo-description">
               {{ variant.description || 'Select a variant from the list to view its details.' }}
             </p>
 
-            <div class="tv-demo-component-content">
+            <div class="tv-demo-component-content" :style="{ width: viewportWidth }">
               <component v-if="variant && component" :is="component" v-bind="{ ...reactiveProps, ...autoEventListeners }" />
               <p v-else class="tv-demo-empty-component">No component to render.</p>
             </div>
@@ -255,7 +286,7 @@ const autoEventListeners = computed(() => {
                 <h3>Event Logger</h3>
                 <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-reset is-small">Clear</button>
               </div>
-              
+
               <div class="tv-demo-logs-container">
                 <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
                   Listening for events...

@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add implement reactive controls for dynamic property manipulation
 - Add event logging functionality with clear logs option
 - Add implement URL parameter synchronization for selected tab, search query, and variant
+  viewportWidth,
 
 ## [1.2.7] - 2025-12-16
 
