@@ -27,7 +27,6 @@ A flexible, framework-agnostic Vue 3 component catalog for demos, documentation,
 - [Events](#events)
 - [Customization (Styles)](#customization-styles)
 - [SSR Notes](#ssr-notes)
-- [Roadmap](#roadmap)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -205,15 +204,6 @@ You can provide colors for both `dark` and `light` themes, or just one. Defaults
 - Styles are injected automatically when you import the library.
 - Code highlighting works in both Vite and Nuxt.
 - Markdown documentation is supported by placing your `README.md` in the `public/` folder and referencing it via the `readmePath` prop.
-
----
-## Roadmap
-| Item                                 | Status      |
-|--------------------------------------|-------------|
-| More highlight.js themes              | Planned     |
-| Advanced integration examples         | Planned     |
-| Accessibility improvements            | Planned     |
-| Dark mode support                     | Considering |
 
 ---
 ## Development
