@@ -7,6 +7,7 @@ import 'github-markdown-css';
 import useDemo from '../composable/useDemo';
 const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
 const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */() => import('./ToUp.vue'));
+const TvPreviewFrame = defineAsyncComponent(/* webpackChunkName: "tvPreviewFrame" */() => import('./TvPreviewFrame.vue'));
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -245,7 +246,14 @@ const autoEventListeners = computed(() => {
             </p>
 
             <div class="tv-demo-component-content" :style="{ width: viewportWidth }">
-              <component v-if="variant && component" :is="component" v-bind="{ ...reactiveProps, ...autoEventListeners }" />
+              <TvPreviewFrame
+                v-if="variant && component"
+                :component="component"
+                :component-props="{ ...reactiveProps, ...autoEventListeners }"
+                :viewport-width="viewportWidth"
+                :body-class="`${theme}-mode`"
+                :body-style="hideBackground ? {} : customStyle.content"
+              />
               <p v-else class="tv-demo-empty-component">No component to render.</p>
             </div>
 

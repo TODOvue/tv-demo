@@ -53,4 +53,20 @@ h1 {
 .test-btn.secondary:hover {
   background-color: #475569;
 }
+
+@media (max-width: 600px) {
+  .test-actions {
+    flex-direction: column;
+  }
+
+  .test-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 {
+    color: #ef4444;
+    font-size: 1.2rem;
+  }
+}
 </style>
