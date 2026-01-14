@@ -87,10 +87,9 @@ const syncBody = (doc) => {
 
   doc.body.style.display = 'flex';
   doc.body.style.flexDirection = 'column';
-  doc.body.style.justifyContent = 'center';
   doc.body.style.alignItems = 'stretch';
-  doc.body.style.minHeight = '100vh';
   doc.body.style.boxSizing = 'border-box';
+  doc.body.style.padding = '0';
 };
 
 const syncApp = (doc) => {
@@ -98,7 +97,6 @@ const syncApp = (doc) => {
   const appEl = doc.getElementById('app');
   if (appEl) {
     appEl.style.display = 'grid';
-    appEl.style.justifyItems = 'center';
     appEl.style.width = '100%';
   }
 };
@@ -109,25 +107,23 @@ const updateHeight = () => {
   if (!doc || !doc.body) return;
 
   const appEl = doc.getElementById('app');
-  const height = Math.max(
-    appEl ? appEl.scrollHeight : 0,
-    appEl ? appEl.offsetHeight : 0,
-    doc.body.scrollHeight,
-    doc.body.offsetHeight,
-    doc.documentElement.scrollHeight
-  );
+  let contentHeight = 0;
 
-  iframeRef.value.style.height = `${height}px`;
+  if (appEl) {
+     contentHeight = appEl.getBoundingClientRect().height;
+  }
+
+  const totalHeight = contentHeight + 40;
+  iframeRef.value.style.height = `${totalHeight + 50}px`;
 };
 
 const setupResizeObserver = (doc) => {
   if (resizeObserver) resizeObserver.disconnect();
   resizeObserver = new ResizeObserver(() => { updateHeight(); });
   if (doc.body) {
-    resizeObserver.observe(doc.body);
-    resizeObserver.observe(doc.documentElement);
+    resizeObserver.observe(doc.body); // Observe body for padding/layout changes
     const appEl = doc.getElementById('app');
-    if (appEl) resizeObserver.observe(appEl);
+    if (appEl) resizeObserver.observe(appEl); // Observe app content changes
   }
 };
 
