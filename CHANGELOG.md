@@ -11,6 +11,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add TvPreviewFrame component for enhanced component preview functionality
 - Add enhance tool tab functionality and improve event logging UI
 
+### Changed
+- Refactor tab structure and improve layout for better usability
+
 ## [1.3.0] - 2026-01-13
 
 ### Updated
