@@ -307,12 +307,15 @@ const useDemo = (props) => {
     }
   };
 
-  const clearLogs = () => {
+  const clearLogs = (showToast = true) => {
     eventLogs.value = [];
+    if (showToast) {
+      addToast('Event logs cleared', 'success', 2000);
+    }
   };
 
   watch(selectedVariantKey, () => {
-    clearLogs();
+    clearLogs(false);
   });
 
   const handleVariantsScroll = (event) => {
@@ -384,10 +387,10 @@ const useDemo = (props) => {
 
     navigator.clipboard.writeText(commandToCopy)
       .then(() => {
-        addToast(`Copied to clipboard: ${commandToCopy}`, 'success', 3000);
+        addToast(`Copied to clipboard: ${commandToCopy}`, 'success', 2000);
       })
       .catch(err => {
-        addToast(`Failed to copy: ${err}`, 'error', 3000);
+        addToast(`Failed to copy: ${err}`, 'error', 2000);
       });
   };
 
@@ -407,6 +410,31 @@ const useDemo = (props) => {
     await fetchReadme();
     await fetchChangelog();
   });
+  
+  const activeToolTab = ref('playground');
+
+  const resetProps = () => {
+    if (variant.value?.propsData) {
+      try {
+        reactiveProps.value = JSON.parse(JSON.stringify(variant.value.propsData));
+      } catch (e) {
+        reactiveProps.value = { ...variant.value.propsData };
+      }
+    } else {
+      reactiveProps.value = {};
+    }
+    addToast('Props reset to default', 'success', 2000);
+  };
+
+  const copyCode = (code) => {
+    navigator.clipboard.writeText(code)
+      .then(() => {
+        addToast('Code copied to clipboard', 'success', 2000);
+      })
+      .catch((err) => {
+        addToast(`Failed to copy: ${err}`, 'error', 2000);
+      });
+  };
 
   return {
     customStyle,
@@ -437,6 +465,9 @@ const useDemo = (props) => {
     addLog,
     clearLogs,
     viewportWidth,
+    activeToolTab,
+    resetProps,
+    copyCode,
   };
 };
 

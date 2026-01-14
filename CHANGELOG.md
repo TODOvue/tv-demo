@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - Add manual emits support for custom event handling
 - Add TvPreviewFrame component for enhanced component preview functionality
+- Add enhance tool tab functionality and improve event logging UI
 
 ## [1.3.0] - 2026-01-13
 

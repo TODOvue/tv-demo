@@ -68,6 +68,9 @@ const {
   addLog,
   clearLogs,
   viewportWidth,
+  activeToolTab,
+  resetProps,
+  copyCode,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -277,75 +280,116 @@ const autoEventListeners = computed(() => {
               <p v-else class="tv-demo-empty-component">No component to render.</p>
             </div>
 
-            <div v-if="Object.keys(reactiveProps).length > 0" class="tv-demo-controls-section">
-              <h3>Playground</h3>
-              <div class="tv-demo-controls-grid">
-                <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item">
-                  <span class="tv-demo-control-label" :title="key">{{ key }}</span>
+            <div class="tv-demo-tools">
+              <div class="tv-demo-tools-tabs">
+                <button
+                  class="tv-demo-tools-tab"
+                  :class="{ active: activeToolTab === 'playground' }"
+                  @click="activeToolTab = 'playground'"
+                >
+                  Playground
+                </button>
+                <button
+                  class="tv-demo-tools-tab"
+                  :class="{ active: activeToolTab === 'events' }"
+                  @click="activeToolTab = 'events'"
+                >
+                  Events
+                  <span v-if="eventLogs.length > 0" class="tv-demo-badge">{{ eventLogs.length }}</span>
+                </button>
+                <button
+                  class="tv-demo-tools-tab"
+                  :class="{ active: activeToolTab === 'code' }"
+                  @click="activeToolTab = 'code'"
+                >
+                  Code
+                </button>
+              </div>
 
-                  <div class="tv-demo-control-input-wrapper">
-                    <label v-if="typeof value === 'boolean'" class="switch small">
-                      <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
-                      <span class="slider round"></span>
-                    </label>
-                    <input
-                      v-else-if="typeof value === 'number'"
-                      v-model.number="reactiveProps[key]"
-                      type="number"
-                      class="tv-demo-input"
-                      :id="`control-${key}`"
-                    />
-                    <input
-                      v-else-if="typeof value === 'string'"
-                      v-model="reactiveProps[key]"
-                      type="text"
-                      class="tv-demo-input"
-                      :id="`control-${key}`"
-                    />
-                    <textarea
-                      v-else
-                      :value="JSON.stringify(value)"
-                      @change="e => { try { reactiveProps[key] = JSON.parse(e.target.value) } catch {} }"
-                      class="tv-demo-textarea"
-                      rows="1"
-                    ></textarea>
+              <div class="tv-demo-tools-content">
+                <div v-show="activeToolTab === 'playground'" class="tv-demo-tool-pane">
+                  <div class="tv-demo-toolbar">
+                    <h3 class="tv-demo-tool-title">Props</h3>
+                    <button class="tv-demo-btn-secondary is-small" @click="resetProps">
+                      Reset Props
+                    </button>
+                  </div>
+
+                  <div v-if="Object.keys(reactiveProps).length > 0" class="tv-demo-controls-grid">
+                    <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item">
+                      <span class="tv-demo-control-label" :title="key">{{ key }}</span>
+                      <div class="tv-demo-control-input-wrapper">
+                        <label v-if="typeof value === 'boolean'" class="switch small">
+                          <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
+                          <span class="slider round"></span>
+                        </label>
+                        <input
+                          v-else-if="typeof value === 'number'"
+                          v-model.number="reactiveProps[key]"
+                          type="number"
+                          class="tv-demo-input"
+                          :id="`control-${key}`"
+                        />
+                        <input
+                          v-else-if="typeof value === 'string'"
+                          v-model="reactiveProps[key]"
+                          type="text"
+                          class="tv-demo-input"
+                          :id="`control-${key}`"
+                        />
+                        <textarea
+                          v-else
+                          :value="JSON.stringify(value)"
+                          @change="e => { try { reactiveProps[key] = JSON.parse(e.target.value) } catch {} }"
+                          class="tv-demo-textarea"
+                          rows="1"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else class="tv-demo-empty-state small">
+                    No props available for this component.
                   </div>
                 </div>
+
+                <div v-show="activeToolTab === 'events'" class="tv-demo-tool-pane">
+                  <div class="tv-demo-toolbar">
+                    <h3 class="tv-demo-tool-title">Event Logger</h3>
+                    <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-btn-secondary is-small">Clear</button>
+                  </div>
+                  <div class="tv-demo-logs-container">
+                    <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
+                      Listening for events...
+                    </div>
+                    <div v-else v-for="log in eventLogs" :key="log.id" class="tv-demo-log-item">
+                      <span class="tv-demo-log-time">{{ log.timestamp }}</span>
+                      <span class="tv-demo-log-name">{{ log.eventName }}</span>
+                      <span class="tv-demo-log-payload" v-if="log.payload !== undefined">
+                        {{ JSON.stringify(log.payload) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-show="activeToolTab === 'code'" class="tv-demo-tool-pane">
+                  <div class="tv-demo-toolbar">
+                    <h3 class="tv-demo-tool-title">Generated Code</h3>
+                    <button class="tv-demo-btn-secondary is-small" @click="copyCode(variant.html)">
+                      Copy Code
+                    </button>
+                  </div>
+                  <HighCode
+                    class="tv-demo-code"
+                    :codeValue="variant.html"
+                    :theme="theme"
+                    lang="html"
+                    codeLines
+                    height="auto"
+                    :copy="false"
+                  />
+                </div>
               </div>
             </div>
-
-            <div class="tv-demo-controls-section">
-              <div class="tv-demo-logs-header">
-                <h3>Event Logger</h3>
-                <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-reset is-small">Clear</button>
-              </div>
-
-              <div class="tv-demo-logs-container">
-                <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
-                  Listening for events...
-                </div>
-                <div v-else v-for="log in eventLogs" :key="log.id" class="tv-demo-log-item">
-                  <span class="tv-demo-log-time">{{ log.timestamp }}</span>
-                  <span class="tv-demo-log-name">{{ log.eventName }}</span>
-                  <span class="tv-demo-log-payload" v-if="log.payload !== undefined">
-                    {{ JSON.stringify(log.payload) }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <h3>Code:</h3>
-            <HighCode
-              v-if="variant?.html"
-              class="tv-demo-code"
-              :codeValue="variant.html"
-              :theme="theme"
-              lang="html"
-              codeLines
-              :key="variant.title"
-              height="auto"
-            />
-            <p v-else class="tv-demo-empty-code">No snippet available.</p>
           </section>
         </div>
 

@@ -3,6 +3,10 @@ defineProps({
   variant: {
     type: String,
     default: 'default',
+  },
+  isDevComponent: {
+    type: Boolean,
+    default: false,
   }
 })
 
@@ -10,13 +14,15 @@ const emit = defineEmits(["clickButton", "clickLabel", "clickSecondaryButton"]);
 </script>
 
 <template>
-  <h1>Test: {{ variant }}</h1>
-  <div class="test-actions">
-    <button class="test-btn" @click="emit('clickButton', { test: 1 })">Click Button</button>
-    <button class="test-btn" @click="emit('clickLabel', 'label')">Click Label</button>
-    <button class="test-btn secondary" @click="emit('clickSecondaryButton')">Click Secondary</button>
+  <div class="test-component">
+    <h1>Test: {{ variant }}</h1>
+    <div class="test-actions">
+      <button class="test-btn" @click="emit('clickButton', { test: 1 })">Click Button</button>
+      <button class="test-btn" @click="emit('clickLabel', 'label')">Click Label</button>
+      <button class="test-btn secondary" @click="emit('clickSecondaryButton')">Click Secondary</button>
+    </div>
+    <slot></slot>
   </div>
-  <slot></slot>
 </template>
 
 <style scoped>
