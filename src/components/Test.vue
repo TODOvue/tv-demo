@@ -26,6 +26,11 @@ const emit = defineEmits(["clickButton", "clickLabel", "clickSecondaryButton"]);
 </template>
 
 <style scoped>
+.test-component {
+  border: #1d4ed8 solid 1px;
+  width: 100%;
+  height: 100%;
+}
 h1 {
   margin-bottom: 1rem;
   font-family: sans-serif;
@@ -60,6 +65,19 @@ h1 {
   background-color: #475569;
 }
 
+@media (min-width: 1024px) {
+  .test-component {
+    background-color: rgba(59, 130, 246, 0.05);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+  .test-component {
+    background-color: rgba(16, 185, 129, 0.05);
+    border-color: #10b981;
+  }
+}
+
 @media (max-width: 600px) {
   .test-actions {
     flex-direction: column;
@@ -73,6 +91,11 @@ h1 {
   h1 {
     color: #ef4444;
     font-size: 1.2rem;
+  }
+
+  .test-component {
+     background-color: rgba(239, 68, 68, 0.05);
+     border-color: #ef4444;
   }
 }
 </style>

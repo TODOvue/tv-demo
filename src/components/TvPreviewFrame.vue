@@ -58,7 +58,6 @@ const cloneNodeIntoDoc = (node, doc) => {
 const setupHeadObserver = (iframeDoc) => {
   if (headObserver) headObserver.disconnect();
 
-  // Initial copy
   const copyAll = () => {
      Array.from(document.querySelectorAll('link[rel="stylesheet"], link[href*=".css"], style')).forEach(node => {
        const clone = cloneNodeIntoDoc(node, iframeDoc);
@@ -76,7 +75,7 @@ const setupHeadObserver = (iframeDoc) => {
     });
   });
 
-  headObserver.observe(document.head, { childList: true, subtree: false }); // usually styles are direct children of head
+  headObserver.observe(document.head, { childList: true, subtree: false });
 };
 
 const syncBody = (doc) => {
@@ -84,7 +83,21 @@ const syncBody = (doc) => {
   doc.body.className = props.bodyClass;
   Object.assign(doc.body.style, props.bodyStyle);
   doc.body.style.margin = '0';
-  doc.body.style.overflow = 'hidden';
+
+  doc.body.style.display = 'flex';
+  doc.body.style.flexDirection = 'column';
+  doc.body.style.alignItems = 'stretch';
+  doc.body.style.boxSizing = 'border-box';
+  doc.body.style.padding = '0';
+};
+
+const syncApp = (doc) => {
+  if (!doc) return;
+  const appEl = doc.getElementById('app');
+  if (appEl) {
+    appEl.style.display = 'grid';
+    appEl.style.width = '100%';
+  }
 };
 
 const updateHeight = () => {
@@ -93,9 +106,14 @@ const updateHeight = () => {
   if (!doc || !doc.body) return;
 
   const appEl = doc.getElementById('app');
-  const height = appEl ? appEl.scrollHeight : doc.body.scrollHeight;
+  let contentHeight = 0;
 
-  iframeRef.value.style.height = `${height}px`;
+  if (appEl) {
+     contentHeight = appEl.getBoundingClientRect().height;
+  }
+
+  const totalHeight = contentHeight + 40;
+  iframeRef.value.style.height = `${totalHeight + 50}px`;
 };
 
 const setupResizeObserver = (doc) => {
@@ -118,6 +136,7 @@ const mountApp = () => {
 
   setupHeadObserver(iframeDoc);
   syncBody(iframeDoc);
+  syncApp(iframeDoc);
 
   const container = iframeDoc.getElementById('app');
 
@@ -145,6 +164,7 @@ const updateApp = () => {
   if (!iframeDoc) return;
 
   syncBody(iframeDoc);
+  syncApp(iframeDoc);
 
   let container = iframeDoc.getElementById('app');
 
