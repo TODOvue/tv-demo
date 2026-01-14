@@ -4,20 +4,20 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.4.0] - 2026-01-13
 
 ### Added
-- Add manual emits support for custom event handling
-- Add TvPreviewFrame component for enhanced component preview functionality
-- Add enhance tool tab functionality and improve event logging UI
-- Add TvNestedEditor component for handling complex reactive properties
+- Add manual emits support for custom event handling in component previews.
+- Add TvPreviewFrame component for enhanced component preview functionality.
+- Add enhanced tool tab functionality with improved event logging UI.
+- Add TvNestedEditor component for editing complex reactive properties.
 
 ### Changed
-- Refactor tab structure and improve layout for better usability
+- Refactor tab structure and improve layout for better usability.
 
 ### Dependencies
-- Update `sass` to `^1.97.2`
-- Update `vite` to `^7.3.1`
+- Update `sass` to `^1.97.2`.
+- Update `vite` to `^7.3.1`.
 
 ## [1.3.0] - 2026-01-13
 
@@ -196,6 +196,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.0]: https://github.com/TODOvue/tv-demo/pull/43/files
 [1.3.0]: https://github.com/TODOvue/tv-demo/pull/42/files
 [1.2.7]: https://github.com/TODOvue/tv-demo/pull/41/files
 [1.2.6]: https://github.com/TODOvue/tv-demo/pull/40/files
