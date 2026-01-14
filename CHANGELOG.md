@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.2] - 2026-01-14
+
+### Fixed
+- Fixed and improved styling and layout for better responsiveness.
+
 ## [1.3.1] - 2026-01-13
 
 ### Added
@@ -196,6 +201,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.3.2]: https://github.com/TODOvue/tv-demo/pull/44/files
 [1.3.1]: https://github.com/TODOvue/tv-demo/pull/43/files
 [1.3.0]: https://github.com/TODOvue/tv-demo/pull/42/files
 [1.2.7]: https://github.com/TODOvue/tv-demo/pull/41/files

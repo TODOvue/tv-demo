@@ -84,7 +84,23 @@ const syncBody = (doc) => {
   doc.body.className = props.bodyClass;
   Object.assign(doc.body.style, props.bodyStyle);
   doc.body.style.margin = '0';
-  doc.body.style.overflow = 'hidden';
+
+  doc.body.style.display = 'flex';
+  doc.body.style.flexDirection = 'column';
+  doc.body.style.justifyContent = 'center';
+  doc.body.style.alignItems = 'stretch';
+  doc.body.style.minHeight = '100vh';
+  doc.body.style.boxSizing = 'border-box';
+};
+
+const syncApp = (doc) => {
+  if (!doc) return;
+  const appEl = doc.getElementById('app');
+  if (appEl) {
+    appEl.style.display = 'grid';
+    appEl.style.justifyItems = 'center';
+    appEl.style.width = '100%';
+  }
 };
 
 const updateHeight = () => {
@@ -93,7 +109,13 @@ const updateHeight = () => {
   if (!doc || !doc.body) return;
 
   const appEl = doc.getElementById('app');
-  const height = appEl ? appEl.scrollHeight : doc.body.scrollHeight;
+  const height = Math.max(
+    appEl ? appEl.scrollHeight : 0,
+    appEl ? appEl.offsetHeight : 0,
+    doc.body.scrollHeight,
+    doc.body.offsetHeight,
+    doc.documentElement.scrollHeight
+  );
 
   iframeRef.value.style.height = `${height}px`;
 };
@@ -103,6 +125,7 @@ const setupResizeObserver = (doc) => {
   resizeObserver = new ResizeObserver(() => { updateHeight(); });
   if (doc.body) {
     resizeObserver.observe(doc.body);
+    resizeObserver.observe(doc.documentElement);
     const appEl = doc.getElementById('app');
     if (appEl) resizeObserver.observe(appEl);
   }
@@ -118,6 +141,7 @@ const mountApp = () => {
 
   setupHeadObserver(iframeDoc);
   syncBody(iframeDoc);
+  syncApp(iframeDoc);
 
   const container = iframeDoc.getElementById('app');
 
@@ -145,6 +169,7 @@ const updateApp = () => {
   if (!iframeDoc) return;
 
   syncBody(iframeDoc);
+  syncApp(iframeDoc);
 
   let container = iframeDoc.getElementById('app');
 
