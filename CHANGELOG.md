@@ -15,6 +15,10 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Refactor tab structure and improve layout for better usability
 
+### Dependencies
+- Update `sass` to `^1.97.2`
+- Update `vite` to `^7.3.1`
+
 ## [1.3.0] - 2026-01-13
 
 ### Updated
