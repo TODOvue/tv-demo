@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, onMounted, ref, computed } from 'vue';
+import { defineAsyncComponent, onMounted, onBeforeUnmount, ref, computed } from 'vue';
 import { HighCode } from 'vue-highlight-code';
 import VueMarkdownIt from 'vue3-markdown-it';
 import 'github-markdown-css';
@@ -68,8 +68,25 @@ const {
   addLog,
   clearLogs,
   viewportWidth,
-  windowWidth,
 } = useDemo(props);
+
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', updateWindowWidth);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', updateWindowWidth);
+  }
+});
 
 const autoEventListeners = computed(() => {
   const listeners = {};
