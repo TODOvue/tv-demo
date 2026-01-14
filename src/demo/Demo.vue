@@ -11,13 +11,14 @@ const Component = defineAsyncComponent(/* webpackChunkName: "Test" */() => impor
 <template>
   <TvDemo
     :component="Component"
+    :manual-emits="['clickButton', 'clickLabel', 'clickSecondaryButton']"
     :variants="demos"
     component-name="TvDemo"
     npm-install="@todovue/tv-demo"
     source-link="https://github.com/TODOvue/tv-demo"
     url-clone="https://github.com/TODOvue/tv-demo.git"
     is-dev-component
-    version="1.3.0"
+    version="1.4.0"
   />
 </template>
 

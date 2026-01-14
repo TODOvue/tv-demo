@@ -99,43 +99,7 @@
   margin-bottom: 1.2em;
 }
 
-.tv-demo-tabs {
-  display: flex;
-  margin-bottom: 10px;
-  gap: 8px;
 
-  button {
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 8px 8px 0 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    &.active::after {
-      opacity: 1;
-    }
-
-    &:active {
-      transform: translateY(1px);
-    }
-  }
-}
 
 .tv-demo {
   * {
@@ -155,12 +119,12 @@
 
   & .tv-demo-description {
     font-size: 1.1rem;
+    padding: 20px 0;
   }
 
   & .tv-demo-component-content {
     display: flex;
     margin: 0 auto;
-    padding: 20px;
     justify-content: center;
     width: 100%;
     max-width: 100%;
@@ -168,7 +132,7 @@
     transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
-  > * {
+  >* {
     max-width: 100%;
   }
 }
@@ -238,23 +202,10 @@
     box-shadow: 0 0 10px variables.$dark-card-bg;
   }
 
-  .tv-demo-tabs {
-    button {
-      background-color: variables.$light-card-bg;
-      color: variables.$light-text;
 
-      &.active {
-        background: color.adjust(variables.$light-card-bg, $lightness: -15%);
-        font-weight: bold;
-      }
 
-      &:hover {
-        background: color.adjust(variables.$light-card-bg, $lightness: -10%);
-      }
-    }
-  }
-
-  & a.tv-demo-links-item, div.tv-demo-links-item {
+  & a.tv-demo-links-item,
+  div.tv-demo-links-item {
     color: inherit;
     text-decoration-color: rgba(96, 165, 250, 0.6);
     text-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
@@ -282,21 +233,7 @@
     box-shadow: 0 0 10px variables.$light-card-bg;
   }
 
-  .tv-demo-tabs {
-    button {
-      background-color: variables.$dark-card-bg;
-      color: variables.$dark-text;
 
-      &.active {
-        background: color.adjust(variables.$dark-card-bg, $lightness: -15%);
-        font-weight: bold;
-      }
-
-      &:hover {
-        background: color.adjust(variables.$dark-card-bg, $lightness: -10%);
-      }
-    }
-  }
 
   & div.tv-demo-links-item,
   & a.tv-demo-links-item {
@@ -375,7 +312,7 @@
         color: inherit;
       }
 
-      & > span {
+      &>span {
         opacity: 0.3;
         font-weight: 300;
       }
@@ -383,7 +320,7 @@
 
 
     &-header {
-      padding: 25px 0;
+      padding-top: 25px;
       display: flex;
       justify-content: space-between;
     }
@@ -495,16 +432,16 @@
     right: 0;
     height: 1px;
     background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(59, 130, 246, 0.5) 50%,
-      transparent 100%);
+        transparent 0%,
+        rgba(59, 130, 246, 0.5) 50%,
+        transparent 100%);
   }
 
   &.dark-mode {
     background: linear-gradient(135deg,
-      color.adjust(variables.$dark-card-bg, $lightness: 2%) 0%,
-      variables.$dark-card-bg 50%,
-      color.adjust(variables.$dark-card-bg, $lightness: 3%) 100%);
+        color.adjust(variables.$dark-card-bg, $lightness: 2%) 0%,
+        variables.$dark-card-bg 50%,
+        color.adjust(variables.$dark-card-bg, $lightness: 3%) 100%);
     color: variables.$dark-text;
 
     .tv-demo-footer-text,
@@ -533,9 +470,9 @@
 
   &.light-mode {
     background: linear-gradient(135deg,
-      color.adjust(variables.$light-card-bg, $lightness: 5%) 0%,
-      variables.$light-card-bg 50%,
-      color.adjust(variables.$light-card-bg, $lightness: 3%) 100%);
+        color.adjust(variables.$light-card-bg, $lightness: 5%) 0%,
+        variables.$light-card-bg 50%,
+        color.adjust(variables.$light-card-bg, $lightness: 3%) 100%);
     color: variables.$light-text;
 
     .tv-demo-footer-text,
@@ -703,7 +640,9 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
 
@@ -722,7 +661,9 @@
 
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -774,21 +715,21 @@
     0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.1),
     0 2px 12px rgba(59, 130, 246, 0.4);
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.1),
     0 0 0 3px rgba(59, 130, 246, 0.2),
     0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   transform: translateX(28px);
   box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.25),
@@ -801,7 +742,7 @@ input:checked + .slider:before {
     0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-input:checked + .slider:hover {
+input:checked+.slider:hover {
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.1),
     0 4px 16px rgba(59, 130, 246, 0.5);
@@ -910,6 +851,7 @@ input:checked + .slider:hover {
   border-radius: 8px;
   height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.85rem;
@@ -1264,19 +1206,121 @@ input:checked + .slider:hover {
   }
 }
 
-.tv-demo-controls-section {
+.tv-demo-tools {
   margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.02);
 }
 
-.tv-demo-controls-section h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
+.dark-mode .tv-demo-tools {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.tv-demo-tools-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  background: rgba(128, 128, 128, 0.05);
+}
+
+.tv-demo-tools-tab {
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: inherit;
+  opacity: 0.7;
+  border-right: 1px solid rgba(128, 128, 128, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(128, 128, 128, 0.05);
+  }
+
+  &.active {
+    opacity: 1;
+    font-weight: 600;
+    background: transparent;
+    box-shadow: inset 0 -2px 0 #3b82f6;
+    color: #3b82f6;
+  }
+}
+
+.dark-mode .tv-demo-tools-tab.active {
+  color: #60a5fa;
+  box-shadow: inset 0 -2px 0 #60a5fa;
+}
+
+.tv-demo-tools-content {
+  padding: 20px;
+}
+
+.tv-demo-tool-pane {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tv-demo-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tv-demo-tool-title {
+  margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
-  opacity: 0.9;
 }
+
+.tv-demo-badge {
+  background: #3b82f6;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 99px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tv-demo-btn-secondary {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(128, 128, 128, 0.6);
+    background: rgba(128, 128, 128, 0.05);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
 
 .tv-demo-controls-grid {
   display: grid;
@@ -1385,6 +1429,10 @@ input:checked + .slider:hover {
 }
 
 @media (max-width: 768px) {
+  .tv-demo-back-row {
+    padding: 10px;
+  }
+
   .tv-demo {
     &-case {
       padding: 10px !important;
@@ -1464,14 +1512,7 @@ input:checked + .slider:hover {
     }
   }
 
-  .tv-demo-tabs {
-    gap: 4px;
 
-    button {
-      padding: 8px 12px;
-      font-size: 0.85rem;
-    }
-  }
 
   .tv-demo-footer {
     &-brand {
@@ -1571,4 +1612,120 @@ input:checked + .slider:hover {
     border-color: #60a5fa;
     color: #60a5fa;
   }
+}
+
+.tv-nested-editor {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+
+  &.is-root {
+    margin-top: -5px;
+  }
+
+  .tv-nested-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+
+    &:hover {
+      background: rgba(128, 128, 128, 0.05);
+    }
+  }
+
+  .tv-nested-label {
+    margin-right: 12px;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+  .tv-nested-input-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    input {
+      font-size: 0.85rem;
+      padding: 4px 8px;
+    }
+  }
+
+  .tv-nested-null {
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  .tv-nested-complex {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .tv-nested-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 0;
+    user-select: none;
+    transition: background 0.2s ease;
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(128, 128, 128, 0.1);
+    }
+
+    &.is-open {
+      background: rgba(128, 128, 128, 0.05);
+    }
+
+    .tv-nested-arrow {
+      margin-right: 8px;
+      font-size: 0.7rem;
+      opacity: 0.6;
+      transition: transform 0.2s ease;
+      display: inline-block;
+      width: 16px;
+      text-align: center;
+      line-height: 1;
+    }
+  }
+
+  .tv-nested-header.is-open .tv-nested-arrow {
+    transform: rotate(90deg);
+  }
+
+  .tv-nested-children {
+    padding-left: 14px;
+    border-left: 1px solid rgba(128, 128, 128, 0.1);
+    margin-left: 7px;
+    margin-top: 4px;
+  }
+}
+
+.dark-mode {
+  .tv-nested-children {
+    border-left-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .tv-nested-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.light-mode {
+  .tv-nested-children {
+    border-left-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .tv-nested-header:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.tv-demo-control-item.is-complex {
+  display: block;
 }

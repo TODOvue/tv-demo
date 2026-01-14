@@ -27,7 +27,6 @@ A flexible, framework-agnostic Vue 3 component catalog for demos, documentation,
 - [Events](#events)
 - [Customization (Styles)](#customization-styles)
 - [SSR Notes](#ssr-notes)
-- [Roadmap](#roadmap)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -153,6 +152,7 @@ import { TvDemo } from '@todovue/tv-demo'
 | readmePath        | String  | `./README.md` | Path to the README file of the component                            | `false`  |
 | showDocumentation | Boolean | `true`        | Show or hide the documentation tab                                  | `false`  |
 | showChangelog     | Boolean | `true`        | Show or hide the changelog tab                                      | `false`  |
+| manualEmits       | Array   | `[]`          | List of event names to listen relative to the component             | `false`  |
 
 ---
 ## Events
@@ -163,6 +163,15 @@ import { TvDemo } from '@todovue/tv-demo'
 Usage:
 ```vue
 <TvDemo @select-demo="onSelectDemo" />
+```
+
+Manual Emits (for async components):
+```vue
+<TvDemo
+  :component="AsyncComponent"
+  :manual-emits="['click', 'submit']"
+  :variants="demos"
+/>
 ```
 
 ---
@@ -195,15 +204,6 @@ You can provide colors for both `dark` and `light` themes, or just one. Defaults
 - Styles are injected automatically when you import the library.
 - Code highlighting works in both Vite and Nuxt.
 - Markdown documentation is supported by placing your `README.md` in the `public/` folder and referencing it via the `readmePath` prop.
-
----
-## Roadmap
-| Item                                 | Status      |
-|--------------------------------------|-------------|
-| More highlight.js themes              | Planned     |
-| Advanced integration examples         | Planned     |
-| Accessibility improvements            | Planned     |
-| Dark mode support                     | Considering |
 
 ---
 ## Development
