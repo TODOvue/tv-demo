@@ -18,8 +18,13 @@ const useDemo = (props) => {
   const viewportHeight = ref(360);
   const viewportWidth = ref('100%');
   const scrollTop = ref(0);
+  const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
+
+  const updateWindowWidth = () => {
+    windowWidth.value = window.innerWidth;
+  };
 
   const variantEntries = computed(() =>
     (props.variants || []).map((variant, index) => ({
@@ -143,6 +148,7 @@ const useDemo = (props) => {
       }
 
       isMounted.value = true;
+      window.addEventListener('resize', updateWindowWidth);
     }
 
     nextTick(updateViewportHeight);
@@ -154,6 +160,9 @@ const useDemo = (props) => {
       resizeObserver = null;
     }
     detachFallbackResizeListener();
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
   });
 
   const fetchReadme = async () => {
@@ -437,6 +446,7 @@ const useDemo = (props) => {
     addLog,
     clearLogs,
     viewportWidth,
+    windowWidth,
   };
 };
 

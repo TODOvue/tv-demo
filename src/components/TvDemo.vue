@@ -68,6 +68,7 @@ const {
   addLog,
   clearLogs,
   viewportWidth,
+  windowWidth,
 } = useDemo(props);
 
 const autoEventListeners = computed(() => {
@@ -220,6 +221,7 @@ const autoEventListeners = computed(() => {
                   Mobile
                 </button>
                 <button
+                  v-if="windowWidth >= 600"
                   type="button"
                   class="tv-demo-viewport-btn"
                   :class="{ active: viewportWidth === '768px' }"
@@ -230,6 +232,7 @@ const autoEventListeners = computed(() => {
                   Tablet
                 </button>
                 <button
+                  v-if="windowWidth >= 1024"
                   type="button"
                   class="tv-demo-viewport-btn"
                   :class="{ active: viewportWidth === '100%' }"
