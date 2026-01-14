@@ -8,6 +8,7 @@ import useDemo from '../composable/useDemo';
 const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
 const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */() => import('./ToUp.vue'));
 const TvPreviewFrame = defineAsyncComponent(/* webpackChunkName: "tvPreviewFrame" */() => import('./TvPreviewFrame.vue'));
+const TvNestedEditor = defineAsyncComponent(/* webpackChunkName: "tvNestedEditor" */() => import('./TvNestedEditor.vue'));
 
 const props = defineProps({
   demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
@@ -338,35 +339,36 @@ const autoEventListeners = computed(() => {
                       </div>
 
                       <div v-if="Object.keys(reactiveProps).length > 0" class="tv-demo-controls-grid">
-                        <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item">
-                          <span class="tv-demo-control-label" :title="key">{{ key }}</span>
-                          <div class="tv-demo-control-input-wrapper">
-                            <label v-if="typeof value === 'boolean'" class="switch small">
-                              <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
-                              <span class="slider round"></span>
-                            </label>
-                            <input
-                              v-else-if="typeof value === 'number'"
-                              v-model.number="reactiveProps[key]"
-                              type="number"
-                              class="tv-demo-input"
-                              :id="`control-${key}`"
-                            />
-                            <input
-                              v-else-if="typeof value === 'string'"
+                        <div v-for="(value, key) in reactiveProps" :key="key" class="tv-demo-control-item" :class="{ 'is-complex': typeof value === 'object' && value !== null }">
+                          <template v-if="typeof value !== 'object' || value === null">
+                             <span class="tv-demo-control-label" :title="key">{{ key }}</span>
+                             <div class="tv-demo-control-input-wrapper">
+                                <label v-if="typeof value === 'boolean'" class="switch small">
+                                  <input type="checkbox" v-model="reactiveProps[key]" :id="`control-${key}`" />
+                                  <span class="slider round"></span>
+                                </label>
+                                <input
+                                  v-else-if="typeof value === 'number'"
+                                  v-model.number="reactiveProps[key]"
+                                  type="number"
+                                  class="tv-demo-input"
+                                  :id="`control-${key}`"
+                                />
+                                <input
+                                  v-else
+                                  v-model="reactiveProps[key]"
+                                  type="text"
+                                  class="tv-demo-input"
+                                  :id="`control-${key}`"
+                                />
+                             </div>
+                          </template>
+                          <template v-else>
+                            <TvNestedEditor
                               v-model="reactiveProps[key]"
-                              type="text"
-                              class="tv-demo-input"
-                              :id="`control-${key}`"
+                              :name="key"
                             />
-                            <textarea
-                              v-else
-                              :value="JSON.stringify(value)"
-                              @change="e => { try { reactiveProps[key] = JSON.parse(e.target.value) } catch {} }"
-                              class="tv-demo-textarea"
-                              rows="1"
-                            ></textarea>
-                          </div>
+                          </template>
                         </div>
                       </div>
                       <div v-else class="tv-demo-empty-state small">

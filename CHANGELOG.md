@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add manual emits support for custom event handling
 - Add TvPreviewFrame component for enhanced component preview functionality
 - Add enhance tool tab functionality and improve event logging UI
+- Add TvNestedEditor component for handling complex reactive properties
 
 ### Changed
 - Refactor tab structure and improve layout for better usability
