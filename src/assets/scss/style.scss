@@ -1386,6 +1386,9 @@ input:checked + .slider:hover {
 }
 
 @media (max-width: 768px) {
+  .tv-demo-back-row {
+    padding: 10px;
+  }
   .tv-demo {
     &-case {
       padding: 10px !important;
