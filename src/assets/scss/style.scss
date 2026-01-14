@@ -119,12 +119,12 @@
 
   & .tv-demo-description {
     font-size: 1.1rem;
+    padding: 20px 0;
   }
 
   & .tv-demo-component-content {
     display: flex;
     margin: 0 auto;
-    padding: 20px;
     justify-content: center;
     width: 100%;
     max-width: 100%;
@@ -320,7 +320,7 @@
 
 
     &-header {
-      padding: 25px 0;
+      padding-top: 25px;
       display: flex;
       justify-content: space-between;
     }
