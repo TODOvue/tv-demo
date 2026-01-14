@@ -58,7 +58,6 @@ const cloneNodeIntoDoc = (node, doc) => {
 const setupHeadObserver = (iframeDoc) => {
   if (headObserver) headObserver.disconnect();
 
-  // Initial copy
   const copyAll = () => {
      Array.from(document.querySelectorAll('link[rel="stylesheet"], link[href*=".css"], style')).forEach(node => {
        const clone = cloneNodeIntoDoc(node, iframeDoc);
@@ -76,7 +75,7 @@ const setupHeadObserver = (iframeDoc) => {
     });
   });
 
-  headObserver.observe(document.head, { childList: true, subtree: false }); // usually styles are direct children of head
+  headObserver.observe(document.head, { childList: true, subtree: false });
 };
 
 const syncBody = (doc) => {
@@ -121,9 +120,9 @@ const setupResizeObserver = (doc) => {
   if (resizeObserver) resizeObserver.disconnect();
   resizeObserver = new ResizeObserver(() => { updateHeight(); });
   if (doc.body) {
-    resizeObserver.observe(doc.body); // Observe body for padding/layout changes
+    resizeObserver.observe(doc.body);
     const appEl = doc.getElementById('app');
-    if (appEl) resizeObserver.observe(appEl); // Observe app content changes
+    if (appEl) resizeObserver.observe(appEl);
   }
 };
 
