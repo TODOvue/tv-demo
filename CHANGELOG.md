@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Enhanced layout controls for improved flexibility.
 - Implemented sidebar compression feature with responsive layout adjustments.
 - Added scroll handling for the variants list and improved viewport calculations.
+- Added scroll-to-top button visibility logic based on scroll position.
 
 ### Fixed
 - Fixed the key binding for selecting variants in the `HighCode` component.

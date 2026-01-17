@@ -24,6 +24,7 @@ const useDemo = (props) => {
   const scrollTop = ref(0);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
+  const showScrollToTop = computed(() => scrollTop.value > 0);
 
   const variantEntries = computed(() =>
     (props.variants || []).map((variant, index) => ({
@@ -508,6 +509,7 @@ const useDemo = (props) => {
     isRtl,
     isGrid,
     isSidebarCompressed,
+    showScrollToTop,
   };
 };
 

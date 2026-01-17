@@ -77,6 +77,7 @@ const {
   isGrid,
   handleVariantsScroll,
   isSidebarCompressed,
+  showScrollToTop,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -189,6 +190,12 @@ const autoEventListeners = computed(() => {
                     <h3>Variants</h3>
                   </div>
                   <div class="tv-demo-sidebar-actions">
+                    <button v-show="!isSidebarCompressed && showScrollToTop" class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                      </svg>
+                    </button>
                      <button
                       class="tv-demo-sidebar-collapse"
                       :aria-label="isSidebarCompressed ? 'Expand sidebar' : 'Collapse sidebar'"
@@ -200,9 +207,6 @@ const autoEventListeners = computed(() => {
                         <polyline points="12 19 5 12 12 5"></polyline>
                       </svg>
                      </button>
-                     <button v-show="!isSidebarCompressed" class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
-                      ⬆️
-                    </button>
                   </div>
                 </div>
                 <div v-show="!isSidebarCompressed" class="tv-demo-sidebar-content-wrapper">
