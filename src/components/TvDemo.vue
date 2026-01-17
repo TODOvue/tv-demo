@@ -124,17 +124,15 @@ const autoEventListeners = computed(() => {
           <div>
             <div class="tv-demo-links">
               <template v-if="sourceLink || npmInstall || urlClone">
-                <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-links-item">
+                <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-btn-secondary is-small" style="text-decoration: none; display: inline-flex; align-items: center;">
                   View source code
                 </a>
-                <span v-if="sourceLink && (npmInstall || urlClone)"> | </span>
-                <div v-if="npmInstall" class="tv-demo-links-item" @click="setClickItem('npm')">
+                <button v-if="npmInstall" class="tv-demo-btn-secondary is-small" @click="setClickItem('npm')">
                   Copy install command
-                </div>
-                <span v-if="npmInstall && urlClone"> | </span>
-                <div v-if="urlClone" class="tv-demo-links-item" @click="setClickItem('clone')">
+                </button>
+                <button v-if="urlClone" class="tv-demo-btn-secondary is-small" @click="setClickItem('clone')">
                   Copy repository clone URL
-                </div>
+                </button>
               </template>
             </div>
           </div>

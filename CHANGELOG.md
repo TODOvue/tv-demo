@@ -11,6 +11,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Enhanced layout responsiveness and adjusted viewport width settings.
 - Adjusted alignment and layout for improved centering.
 
+### Changed
+- Updated button styles and improved link interactions.
+
 ## [1.3.2] - 2026-01-14
 
 ### Fixed
