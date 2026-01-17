@@ -17,9 +17,14 @@ const useDemo = (props) => {
   const variantsListRef = ref(null);
   const viewportHeight = ref(360);
   const viewportWidth = ref('100%');
+  const backgroundType = ref('default');
+  const isRtl = ref(false);
+  const isGrid = ref(false);
+  const isSidebarCompressed = ref(false);
   const scrollTop = ref(0);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
+  const showScrollToTop = computed(() => scrollTop.value > 0);
 
   const variantEntries = computed(() =>
     (props.variants || []).map((variant, index) => ({
@@ -111,12 +116,27 @@ const useDemo = (props) => {
       url.searchParams.delete('variant');
     }
 
+    if (viewportWidth.value && viewportWidth.value !== '100%') {
+      let viewportName = '';
+      if (viewportWidth.value === '375px') viewportName = 'mobile';
+      else if (viewportWidth.value === '768px') viewportName = 'tablet';
+      else if (viewportWidth.value === '1280px') viewportName = 'desktop';
+
+      if (viewportName) {
+        url.searchParams.set('viewport', viewportName);
+      } else {
+        url.searchParams.delete('viewport');
+      }
+    } else {
+      url.searchParams.delete('viewport');
+    }
+
     if (url.href !== window.location.href) {
       window.history.replaceState(window.history.state, '', url.href);
     }
   };
 
-  watch([selectedTab, searchQuery, selectedVariantKey], () => {
+  watch([selectedTab, searchQuery, selectedVariantKey, viewportWidth], () => {
     if (!isMounted.value) return;
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(updateUrl, 300);
@@ -140,6 +160,22 @@ const useDemo = (props) => {
       if (variantParam) {
         const match = variantEntries.value.find((entry) => String(entry.key) === variantParam);
         selectedVariantKey.value = match ? match.key : variantParam;
+      }
+
+      const viewportParam = params.get('viewport');
+      if (viewportParam) {
+        if (viewportParam === 'mobile') viewportWidth.value = '375px';
+        else if (viewportParam === 'tablet') viewportWidth.value = '768px';
+        else if (viewportParam === 'desktop') viewportWidth.value = '1280px';
+      } else {
+        const width = window.innerWidth;
+        if (width < 768) {
+          viewportWidth.value = '375px';
+        } else if (width < 1280) {
+          viewportWidth.value = '768px';
+        } else {
+          viewportWidth.value = '1280px';
+        }
       }
 
       isMounted.value = true;
@@ -247,14 +283,15 @@ const useDemo = (props) => {
     const index = selectedVariantIndex.value;
     if (index < 0) return;
 
-    const start = virtualStartIndex.value + 2;
-    const end = virtualEndIndex.value - 3;
+    const itemTop = index * ITEM_HEIGHT;
+    const itemBottom = itemTop + ITEM_HEIGHT;
+    const viewportTop = scrollTop.value;
+    const viewportBottom = viewportTop + viewportHeight.value;
 
-    if (index < start) {
-      setScrollPosition(Math.max(0, index * ITEM_HEIGHT));
-    } else if (index > end) {
-      const offset = Math.max(0, index - visibleCount.value + 1);
-      setScrollPosition(offset * ITEM_HEIGHT);
+    if (itemTop < viewportTop) {
+      setScrollPosition(itemTop);
+    } else if (itemBottom > viewportBottom) {
+      setScrollPosition(itemBottom - viewportHeight.value);
     }
   };
 
@@ -410,7 +447,7 @@ const useDemo = (props) => {
     await fetchReadme();
     await fetchChangelog();
   });
-  
+
   const activeToolTab = ref('playground');
 
   const resetProps = () => {
@@ -468,6 +505,11 @@ const useDemo = (props) => {
     activeToolTab,
     resetProps,
     copyCode,
+    backgroundType,
+    isRtl,
+    isGrid,
+    isSidebarCompressed,
+    showScrollToTop,
   };
 };
 

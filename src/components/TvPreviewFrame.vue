@@ -26,7 +26,10 @@ const props = defineProps({
   bodyStyle: {
     type: Object,
     default: () => ({})
-  }
+  },
+  isRtl: Boolean,
+  backgroundType: { type: String, default: 'default' },
+  isGrid: Boolean,
 });
 
 const emit = defineEmits([]);
@@ -86,16 +89,57 @@ const syncBody = (doc) => {
 
   doc.body.style.display = 'flex';
   doc.body.style.flexDirection = 'column';
-  doc.body.style.alignItems = 'stretch';
+  doc.body.style.alignItems = 'center';
   doc.body.style.boxSizing = 'border-box';
   doc.body.style.padding = '0';
+  doc.body.dir = props.isRtl ? 'rtl' : 'ltr';
+  doc.body.style.backgroundImage = '';
+  doc.body.style.backgroundColor = '';
+
+  if (props.backgroundType === 'checkered') {
+    doc.body.style.backgroundImage = `
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%)
+    `;
+    doc.body.style.backgroundSize = '20px 20px';
+    doc.body.style.backgroundPosition = '0 0, 0 10px, 10px -10px, -10px 0px';
+    doc.body.style.backgroundColor = '#fff';
+  } else if (props.backgroundType === 'white') {
+    doc.body.style.backgroundColor = '#ffffff';
+  } else if (props.backgroundType === 'dark') {
+    doc.body.style.backgroundColor = '#1a1a1a';
+  }
+
+  const existingGrid = doc.getElementById('tv-preview-grid-overlay');
+  if (existingGrid) existingGrid.remove();
+
+  if (props.isGrid) {
+    const grid = doc.createElement('div');
+    grid.id = 'tv-preview-grid-overlay';
+    grid.style.position = 'fixed';
+    grid.style.top = '0';
+    grid.style.left = '0';
+    grid.style.width = '100vw';
+    grid.style.height = '100vh';
+    grid.style.pointerEvents = 'none';
+    grid.style.zIndex = '9999';
+    grid.style.backgroundImage = `
+      linear-gradient(to right, rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 0, 0, 0.1) 1px, transparent 1px)
+    `;
+    grid.style.backgroundSize = '8px 8px';
+    doc.body.appendChild(grid);
+  }
 };
 
 const syncApp = (doc) => {
   if (!doc) return;
   const appEl = doc.getElementById('app');
   if (appEl) {
-    appEl.style.display = 'grid';
+    appEl.style.display = 'flex';
+    appEl.style.justifyContent = 'center';
     appEl.style.width = '100%';
   }
 };
@@ -206,7 +250,7 @@ onBeforeUnmount(() => {
   }
 });
 
-watch(() => [props.component, props.componentProps, props.viewportWidth, props.bodyClass, props.bodyStyle], () => {
+watch(() => [props.component, props.componentProps, props.viewportWidth, props.bodyClass, props.bodyStyle, props.isRtl, props.backgroundType, props.isGrid], () => {
   updateApp();
 }, { deep: true });
 
@@ -229,6 +273,7 @@ watch(() => [props.component, props.componentProps, props.viewportWidth, props.b
   margin: 0 auto;
   transition: width 0.3s ease;
   background: transparent;
+  flex-shrink: 0;
 }
 
 .tv-preview-frame {

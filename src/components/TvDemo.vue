@@ -35,10 +35,37 @@ const goBack = () => {
   window.history.back();
 };
 
-onMounted(() => {
-  const hasHistory = window.history.length > 1;
+const checkCanGoBack = () => {
+  if (typeof window === 'undefined') return;
   const hasReferrer = typeof document !== 'undefined' && !!document.referrer;
-  canGoBack.value = hasHistory || hasReferrer;
+
+  if (window.navigation && typeof window.navigation.canGoBack === 'boolean') {
+    canGoBack.value = window.navigation.canGoBack || hasReferrer;
+  } else if (window.history.state && typeof window.history.state.position === 'number') {
+    canGoBack.value = window.history.state.position > 0 || hasReferrer;
+  } else {
+    canGoBack.value = hasReferrer;
+  }
+};
+
+onMounted(() => {
+  checkCanGoBack();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', checkCanGoBack);
+    if (window.navigation) {
+      window.navigation.addEventListener('currententrychange', checkCanGoBack);
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('popstate', checkCanGoBack);
+    if (window.navigation) {
+      window.navigation.removeEventListener('currententrychange', checkCanGoBack);
+    }
+    window.removeEventListener('resize', updateWindowWidth);
+  }
 });
 
 const {
@@ -72,6 +99,12 @@ const {
   activeToolTab,
   resetProps,
   copyCode,
+  backgroundType,
+  isRtl,
+  isGrid,
+  handleVariantsScroll,
+  isSidebarCompressed,
+  showScrollToTop,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -117,24 +150,22 @@ const autoEventListeners = computed(() => {
   <div :class="`${theme}-mode tv-demo`" :style="customStyle.body">
     <div class="tv-demo-body" :class="{ [`${theme}-mode`]: !hideBackground }" :style="customStyle.content">
       <div v-if="canGoBack" class="tv-demo-back-row">
-        <button type="button" class="tv-demo-back-button" aria-label="Back" @click="goBack">← Back</button>
+        <button type="button" class="tv-demo-btn-secondary" aria-label="Back" @click="goBack">← Back</button>
       </div>
       <div class="tv-demo-case">
         <div class="tv-demo-header">
           <div>
             <div class="tv-demo-links">
               <template v-if="sourceLink || npmInstall || urlClone">
-                <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-links-item">
+                <a v-if="sourceLink" :href="sourceLink" target="_blank" class="tv-demo-btn-secondary is-small" style="text-decoration: none; display: inline-flex; align-items: center;">
                   View source code
                 </a>
-                <span v-if="sourceLink && (npmInstall || urlClone)"> | </span>
-                <div v-if="npmInstall" class="tv-demo-links-item" @click="setClickItem('npm')">
+                <button v-if="npmInstall" class="tv-demo-btn-secondary is-small" @click="setClickItem('npm')">
                   Copy install command
-                </div>
-                <span v-if="npmInstall && urlClone"> | </span>
-                <div v-if="urlClone" class="tv-demo-links-item" @click="setClickItem('clone')">
+                </button>
+                <button v-if="urlClone" class="tv-demo-btn-secondary is-small" @click="setClickItem('clone')">
                   Copy repository clone URL
-                </div>
+                </button>
               </template>
             </div>
           </div>
@@ -152,25 +183,25 @@ const autoEventListeners = computed(() => {
 
         <div class="tv-demo-tools main-tabs">
           <div class="tv-demo-tools-tabs">
-            <button 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'demo' }" 
+            <button
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'demo' }"
               @click="selectedTab = 'demo'"
             >
               Demo
             </button>
-            <button 
-              v-if="showDocumentation" 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'docs' }" 
+            <button
+              v-if="showDocumentation"
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'docs' }"
               @click="selectedTab = 'docs'"
             >
               Documentation
             </button>
-            <button 
-              v-if="showChangelog" 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'changelog' }" 
+            <button
+              v-if="showChangelog"
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'changelog' }"
               @click="selectedTab = 'changelog'"
             >
               Changelog
@@ -178,69 +209,88 @@ const autoEventListeners = computed(() => {
           </div>
 
           <div class="tv-demo-tools-content main-content">
-            <div v-show="selectedTab === 'demo'" class="tv-demo-layout">
-              <aside class="tv-demo-sidebar" :class="`${theme}-mode`">
+            <div v-show="selectedTab === 'demo'" class="tv-demo-layout" :class="{ 'is-compressed': isSidebarCompressed }">
+              <aside class="tv-demo-sidebar" :class="[`${theme}-mode`, { 'is-compressed': isSidebarCompressed }]">
                 <div class="tv-demo-sidebar-header">
-                  <div>
+                  <div v-show="!isSidebarCompressed">
                     <p class="tv-demo-sidebar-meta">{{ filteredVariantsCount }} / {{ totalVariantsCount }} variants</p>
                     <h3>Variants</h3>
                   </div>
-                  <button class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
-                    ⬆️
-                  </button>
+                  <div class="tv-demo-sidebar-actions">
+                    <button v-show="!isSidebarCompressed && showScrollToTop" class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                      </svg>
+                    </button>
+                     <button
+                      class="tv-demo-sidebar-collapse"
+                      :aria-label="isSidebarCompressed ? 'Expand sidebar' : 'Collapse sidebar'"
+                      :class="{ 'is-rotated': isSidebarCompressed }"
+                      @click="isSidebarCompressed = !isSidebarCompressed"
+                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                      </svg>
+                     </button>
+                  </div>
                 </div>
-                <label class="tv-demo-search" :class="`${theme}-mode`">
-                  <span class="tv-demo-search-icon">🔍</span>
-                  <input
-                    v-model="searchQuery"
-                    type="search"
-                    placeholder="Search variants..."
-                    class="tv-demo-search-input"
-                    aria-label="Search variants"
-                    @keydown.down.prevent="handleVariantsKeydown($event)"
-                  />
-                  <button
-                    v-if="searchQuery"
-                    type="button"
-                    class="tv-demo-search-clear"
-                    aria-label="Clear search"
-                    @click="searchQuery = ''"
-                  >✕</button>
-                </label>
+                <div v-show="!isSidebarCompressed" class="tv-demo-sidebar-content-wrapper">
+                  <label class="tv-demo-search" :class="`${theme}-mode`">
+                    <span class="tv-demo-search-icon">🔍</span>
+                    <input
+                      v-model="searchQuery"
+                      type="search"
+                      placeholder="Search variants..."
+                      class="tv-demo-search-input"
+                      aria-label="Search variants"
+                      @keydown.down.prevent="handleVariantsKeydown($event)"
+                    />
+                    <button
+                      v-if="searchQuery"
+                      type="button"
+                      class="tv-demo-search-clear"
+                      aria-label="Clear search"
+                      @click="searchQuery = ''"
+                    >✕</button>
+                  </label>
 
-                <div
-                  class="tv-demo-variants"
-                  :class="`${theme}-mode`"
-                  role="listbox"
-                  tabindex="0"
-                  aria-label="Available variants"
-                  :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
-                  @keydown="handleVariantsKeydown"
-                  ref="variantsListRef"
-                >
-                  <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
-                    <template v-if="!emptySearchState">
-                      <button
-                        v-for="entry in virtualizedVariants"
-                        :key="entry.key"
-                        :id="`variant-${entry.key}`"
-                        type="button"
-                        class="tv-demo-variant-card"
-                        :class="{ active: entry.key === selectedVariantKey }"
-                        role="option"
-                        :aria-selected="entry.key === selectedVariantKey"
-                        @click="selectVariant(entry.key)"
-                      >
-                        <span class="tv-demo-variant-card-content">
-                          <span class="tv-demo-variant-card-title">{{ entry.variant.title }}</span>
-                          <span class="tv-demo-variant-card-description">{{ entry.variant.description }}</span>
-                        </span>
-                        <span class="tv-demo-variant-card-icon">→</span>
-                      </button>
-                    </template>
-                    <div v-else class="tv-demo-empty-state">
-                      <p>No matches for "{{ searchQuery }}".</p>
-                      <button class="tv-demo-reset" type="button" @click="searchQuery = ''">Clear filter</button>
+                  <div
+                    class="tv-demo-variants"
+                    :class="`${theme}-mode`"
+                    role="listbox"
+                    tabindex="0"
+                    aria-label="Available variants"
+                    :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
+                    @keydown="handleVariantsKeydown"
+                    @scroll="handleVariantsScroll"
+                    ref="variantsListRef"
+                  >
+                    <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
+                      <template v-if="!emptySearchState">
+                        <button
+                          v-for="entry in virtualizedVariants"
+                          :key="entry.key"
+                          :id="`variant-${entry.key}`"
+                          type="button"
+                          class="tv-demo-variant-card"
+                          :class="{ active: entry.key === selectedVariantKey }"
+                          role="option"
+                          :aria-selected="entry.key === selectedVariantKey"
+                          @click="selectVariant(entry.key)"
+                        >
+                          <span class="tv-demo-variant-card-content">
+                            <span class="tv-demo-variant-card-title">{{ entry.variant.title }}</span>
+                            <span class="tv-demo-variant-card-description">{{ entry.variant.description }}</span>
+                          </span>
+                          <span class="tv-demo-variant-card-icon">→</span>
+                        </button>
+                      </template>
+                      <div v-else class="tv-demo-empty-state">
+                        <p>No matches for "{{ searchQuery }}".</p>
+                        <button class="tv-demo-reset" type="button" @click="searchQuery = ''">Clear filter</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -264,7 +314,6 @@ const autoEventListeners = computed(() => {
                       Mobile
                     </button>
                     <button
-                      v-if="windowWidth >= 600"
                       type="button"
                       class="tv-demo-viewport-btn"
                       :class="{ active: viewportWidth === '768px' }"
@@ -275,23 +324,59 @@ const autoEventListeners = computed(() => {
                       Tablet
                     </button>
                     <button
-                      v-if="windowWidth >= 1024"
                       type="button"
                       class="tv-demo-viewport-btn"
-                      :class="{ active: viewportWidth === '100%' }"
-                      @click="viewportWidth = '100%'"
-                      aria-label="Desktop view (100%)"
-                      title="Desktop (100%)"
+                      :class="{ active: viewportWidth === '1280px' }"
+                      @click="viewportWidth = '1280px'"
+                      aria-label="Desktop view (1280px)"
+                      title="Desktop (1280px)"
                     >
                       Desktop
                     </button>
+                    <div class="tv-demo-separator"></div>
+                    <button
+                      type="button"
+                      class="tv-demo-icon-btn"
+                      :class="{ active: isRtl }"
+                      @click="isRtl = !isRtl"
+                      title="Toggle RTL"
+                      aria-label="Toggle RTL"
+                    >
+                      ⇄
+                    </button>
+                    <button
+                      type="button"
+                      class="tv-demo-icon-btn"
+                      :class="{ active: isGrid }"
+                      @click="isGrid = !isGrid"
+                      title="Toggle Grid"
+                      aria-label="Toggle Grid"
+                    >
+                      #
+                    </button>
+                     <div class="tv-demo-dropdown">
+                      <button
+                        type="button"
+                        class="tv-demo-icon-btn"
+                        title="Background Color"
+                        aria-label="Change Background"
+                      >
+                        🎨
+                      </button>
+                      <div class="tv-demo-dropdown-content">
+                        <button @click="backgroundType = 'default'" :class="{ active: backgroundType === 'default' }">Default</button>
+                        <button @click="backgroundType = 'checkered'" :class="{ active: backgroundType === 'checkered' }">Checkered</button>
+                        <button @click="backgroundType = 'white'" :class="{ active: backgroundType === 'white' }">White</button>
+                        <button @click="backgroundType = 'dark'" :class="{ active: backgroundType === 'dark' }">Dark</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <p class="tv-demo-description">
                   {{ variant.description || 'Select a variant from the list to view its details.' }}
                 </p>
 
-                <div class="tv-demo-component-content" :style="{ width: viewportWidth }">
+                <div class="tv-demo-component-content">
                   <TvPreviewFrame
                     v-if="variant && component"
                     :component="component"
@@ -299,6 +384,9 @@ const autoEventListeners = computed(() => {
                     :viewport-width="viewportWidth"
                     :body-class="`${theme}-mode`"
                     :body-style="hideBackground ? {} : customStyle.content"
+                    :is-rtl="isRtl"
+                    :background-type="backgroundType"
+                    :is-grid="isGrid"
                   />
                   <p v-else class="tv-demo-empty-component">No component to render.</p>
                 </div>
@@ -364,7 +452,22 @@ const autoEventListeners = computed(() => {
                              </div>
                           </template>
                           <template v-else>
+                             <div v-if="typeof value === 'string' && (key.toLowerCase().includes('color') || key.toLowerCase().includes('background') || /^#([0-9A-F]{3}){1,2}$/i.test(value))" class="tv-demo-control-input-wrapper color-wrapper">
+                                <input
+                                  type="color"
+                                  v-model="reactiveProps[key]"
+                                  :id="`control-color-${key}`"
+                                  class="tv-demo-color-picker"
+                                />
+                                <input
+                                  v-model="reactiveProps[key]"
+                                  type="text"
+                                  class="tv-demo-input"
+                                  :id="`control-${key}`"
+                                />
+                             </div>
                             <TvNestedEditor
+                              v-else
                               v-model="reactiveProps[key]"
                               :name="key"
                             />
@@ -376,7 +479,7 @@ const autoEventListeners = computed(() => {
                       </div>
                     </div>
 
-                    <div v-show="activeToolTab === 'events'" class="tv-demo-tool-pane">
+                    <div v-if="activeToolTab === 'events'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
                         <h3 class="tv-demo-tool-title">Event Logger</h3>
                         <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-btn-secondary is-small">Clear</button>
@@ -395,7 +498,7 @@ const autoEventListeners = computed(() => {
                       </div>
                     </div>
 
-                    <div v-show="activeToolTab === 'code'" class="tv-demo-tool-pane">
+                    <div v-if="activeToolTab === 'code'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
                         <h3 class="tv-demo-tool-title">Generated Code</h3>
                         <button class="tv-demo-btn-secondary is-small" @click="copyCode(variant.html)">
@@ -403,6 +506,8 @@ const autoEventListeners = computed(() => {
                         </button>
                       </div>
                       <HighCode
+                        v-if="variant.html"
+                        :key="selectedVariantKey"
                         class="tv-demo-code"
                         :codeValue="variant.html"
                         :theme="theme"
@@ -411,6 +516,9 @@ const autoEventListeners = computed(() => {
                         height="auto"
                         :copy="false"
                       />
+                      <div v-else class="tv-demo-empty-state small">
+                        No code available for this variant.
+                      </div>
                     </div>
                   </div>
                 </div>
