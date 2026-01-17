@@ -6,6 +6,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Added viewport handling for responsive layout adjustments.
+
 ### Fixed
 - Fixed the key binding for selecting variants in the `HighCode` component.
 - Enhanced layout responsiveness and adjusted viewport width settings.

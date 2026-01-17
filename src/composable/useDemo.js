@@ -111,12 +111,27 @@ const useDemo = (props) => {
       url.searchParams.delete('variant');
     }
 
+    if (viewportWidth.value && viewportWidth.value !== '100%') {
+      let viewportName = '';
+      if (viewportWidth.value === '375px') viewportName = 'mobile';
+      else if (viewportWidth.value === '768px') viewportName = 'tablet';
+      else if (viewportWidth.value === '1280px') viewportName = 'desktop';
+
+      if (viewportName) {
+        url.searchParams.set('viewport', viewportName);
+      } else {
+        url.searchParams.delete('viewport');
+      }
+    } else {
+      url.searchParams.delete('viewport');
+    }
+
     if (url.href !== window.location.href) {
       window.history.replaceState(window.history.state, '', url.href);
     }
   };
 
-  watch([selectedTab, searchQuery, selectedVariantKey], () => {
+  watch([selectedTab, searchQuery, selectedVariantKey, viewportWidth], () => {
     if (!isMounted.value) return;
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(updateUrl, 300);
@@ -140,6 +155,22 @@ const useDemo = (props) => {
       if (variantParam) {
         const match = variantEntries.value.find((entry) => String(entry.key) === variantParam);
         selectedVariantKey.value = match ? match.key : variantParam;
+      }
+
+      const viewportParam = params.get('viewport');
+      if (viewportParam) {
+        if (viewportParam === 'mobile') viewportWidth.value = '375px';
+        else if (viewportParam === 'tablet') viewportWidth.value = '768px';
+        else if (viewportParam === 'desktop') viewportWidth.value = '1280px';
+      } else {
+        const width = window.innerWidth;
+        if (width < 768) {
+          viewportWidth.value = '375px';
+        } else if (width < 1280) {
+          viewportWidth.value = '768px';
+        } else {
+          viewportWidth.value = '1280px';
+        }
       }
 
       isMounted.value = true;
@@ -410,7 +441,7 @@ const useDemo = (props) => {
     await fetchReadme();
     await fetchChangelog();
   });
-  
+
   const activeToolTab = ref('playground');
 
   const resetProps = () => {
