@@ -75,6 +75,7 @@ const {
   backgroundType,
   isRtl,
   isGrid,
+  handleVariantsScroll,
   isSidebarCompressed,
 } = useDemo(props);
 
@@ -223,7 +224,7 @@ const autoEventListeners = computed(() => {
                       @click="searchQuery = ''"
                     >✕</button>
                   </label>
-  
+
                   <div
                     class="tv-demo-variants"
                     :class="`${theme}-mode`"
@@ -232,6 +233,7 @@ const autoEventListeners = computed(() => {
                     aria-label="Available variants"
                     :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
                     @keydown="handleVariantsKeydown"
+                    @scroll="handleVariantsScroll"
                     ref="variantsListRef"
                   >
                     <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">

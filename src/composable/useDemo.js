@@ -282,14 +282,15 @@ const useDemo = (props) => {
     const index = selectedVariantIndex.value;
     if (index < 0) return;
 
-    const start = virtualStartIndex.value + 2;
-    const end = virtualEndIndex.value - 3;
+    const itemTop = index * ITEM_HEIGHT;
+    const itemBottom = itemTop + ITEM_HEIGHT;
+    const viewportTop = scrollTop.value;
+    const viewportBottom = viewportTop + viewportHeight.value;
 
-    if (index < start) {
-      setScrollPosition(Math.max(0, index * ITEM_HEIGHT));
-    } else if (index > end) {
-      const offset = Math.max(0, index - visibleCount.value + 1);
-      setScrollPosition(offset * ITEM_HEIGHT);
+    if (itemTop < viewportTop) {
+      setScrollPosition(itemTop);
+    } else if (itemBottom > viewportBottom) {
+      setScrollPosition(itemBottom - viewportHeight.value);
     }
   };
 
