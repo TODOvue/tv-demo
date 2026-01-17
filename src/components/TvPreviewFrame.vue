@@ -86,7 +86,7 @@ const syncBody = (doc) => {
 
   doc.body.style.display = 'flex';
   doc.body.style.flexDirection = 'column';
-  doc.body.style.alignItems = 'stretch';
+  doc.body.style.alignItems = 'center';
   doc.body.style.boxSizing = 'border-box';
   doc.body.style.padding = '0';
 };
@@ -95,7 +95,8 @@ const syncApp = (doc) => {
   if (!doc) return;
   const appEl = doc.getElementById('app');
   if (appEl) {
-    appEl.style.display = 'grid';
+    appEl.style.display = 'flex';
+    appEl.style.justifyContent = 'center';
     appEl.style.width = '100%';
   }
 };
