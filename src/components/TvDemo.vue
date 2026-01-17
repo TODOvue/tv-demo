@@ -120,7 +120,7 @@ const autoEventListeners = computed(() => {
   <div :class="`${theme}-mode tv-demo`" :style="customStyle.body">
     <div class="tv-demo-body" :class="{ [`${theme}-mode`]: !hideBackground }" :style="customStyle.content">
       <div v-if="canGoBack" class="tv-demo-back-row">
-        <button type="button" class="tv-demo-back-button" aria-label="Back" @click="goBack">← Back</button>
+        <button type="button" class="tv-demo-btn-secondary" aria-label="Back" @click="goBack">← Back</button>
       </div>
       <div class="tv-demo-case">
         <div class="tv-demo-header">

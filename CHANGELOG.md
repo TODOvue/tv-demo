@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - Updated button styles and improved link interactions.
+- Replaced back button styles and updated class name for consistency.
 
 ## [1.3.2] - 2026-01-14
 
