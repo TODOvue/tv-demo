@@ -35,10 +35,37 @@ const goBack = () => {
   window.history.back();
 };
 
-onMounted(() => {
-  const hasHistory = window.history.length > 1;
+const checkCanGoBack = () => {
+  if (typeof window === 'undefined') return;
   const hasReferrer = typeof document !== 'undefined' && !!document.referrer;
-  canGoBack.value = hasHistory || hasReferrer;
+
+  if (window.navigation && typeof window.navigation.canGoBack === 'boolean') {
+    canGoBack.value = window.navigation.canGoBack || hasReferrer;
+  } else if (window.history.state && typeof window.history.state.position === 'number') {
+    canGoBack.value = window.history.state.position > 0 || hasReferrer;
+  } else {
+    canGoBack.value = hasReferrer;
+  }
+};
+
+onMounted(() => {
+  checkCanGoBack();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', checkCanGoBack);
+    if (window.navigation) {
+      window.navigation.addEventListener('currententrychange', checkCanGoBack);
+    }
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('popstate', checkCanGoBack);
+    if (window.navigation) {
+      window.navigation.removeEventListener('currententrychange', checkCanGoBack);
+    }
+    window.removeEventListener('resize', updateWindowWidth);
+  }
 });
 
 const {
