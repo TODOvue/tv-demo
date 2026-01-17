@@ -918,6 +918,25 @@ input:checked+.slider:hover {
   margin-top: 20px;
   width: 100%;
   max-width: 100%;
+  transition: grid-template-columns 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &.is-compressed {
+    grid-template-columns: 60px 1fr;
+
+    .tv-demo-sidebar {
+      padding: 10px;
+      align-items: center;
+
+      .tv-demo-sidebar-header {
+        margin-bottom: 0;
+        justify-content: center;
+      }
+
+      .tv-demo-sidebar-actions {
+        flex-direction: column;
+      }
+    }
+  }
 }
 
 .tv-demo-sidebar {
@@ -946,6 +965,16 @@ input:checked+.slider:hover {
     margin: 0;
     font-size: 1.3rem;
   }
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+}
+
+.tv-demo-sidebar-actions {
+  display: flex;
+  gap: 8px;
 }
 
 .tv-demo-sidebar-meta {
@@ -961,6 +990,15 @@ input:checked+.slider:hover {
   cursor: pointer;
   font-size: 0.9rem;
   padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, border-color 0.2s;
+  color: white;
+
+  &.is-rotated {
+    transform: rotate(180deg);
+  }
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.6);
@@ -968,6 +1006,7 @@ input:checked+.slider:hover {
 
   .light-mode & {
     border-color: rgba(0, 0, 0, 0.15);
+    color: black;
 
     &:hover {
       border-color: rgba(0, 0, 0, 0.45);
@@ -1398,6 +1437,10 @@ input:checked+.slider:hover {
 @media (max-width: 768px) {
   .tv-demo-layout {
     grid-template-columns: 1fr;
+
+    &.is-compressed {
+      grid-template-columns: 1fr;
+    }
   }
 }
 

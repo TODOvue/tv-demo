@@ -20,6 +20,7 @@ const useDemo = (props) => {
   const backgroundType = ref('default');
   const isRtl = ref(false);
   const isGrid = ref(false);
+  const isSidebarCompressed = ref(false);
   const scrollTop = ref(0);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
@@ -505,6 +506,7 @@ const useDemo = (props) => {
     backgroundType,
     isRtl,
     isGrid,
+    isSidebarCompressed,
   };
 };
 

@@ -75,6 +75,7 @@ const {
   backgroundType,
   isRtl,
   isGrid,
+  isSidebarCompressed,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -179,69 +180,84 @@ const autoEventListeners = computed(() => {
           </div>
 
           <div class="tv-demo-tools-content main-content">
-            <div v-show="selectedTab === 'demo'" class="tv-demo-layout">
-              <aside class="tv-demo-sidebar" :class="`${theme}-mode`">
+            <div v-show="selectedTab === 'demo'" class="tv-demo-layout" :class="{ 'is-compressed': isSidebarCompressed }">
+              <aside class="tv-demo-sidebar" :class="[`${theme}-mode`, { 'is-compressed': isSidebarCompressed }]">
                 <div class="tv-demo-sidebar-header">
-                  <div>
+                  <div v-show="!isSidebarCompressed">
                     <p class="tv-demo-sidebar-meta">{{ filteredVariantsCount }} / {{ totalVariantsCount }} variants</p>
                     <h3>Variants</h3>
                   </div>
-                  <button class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
-                    ⬆️
-                  </button>
+                  <div class="tv-demo-sidebar-actions">
+                     <button
+                      class="tv-demo-sidebar-collapse"
+                      :aria-label="isSidebarCompressed ? 'Expand sidebar' : 'Collapse sidebar'"
+                      :class="{ 'is-rotated': isSidebarCompressed }"
+                      @click="isSidebarCompressed = !isSidebarCompressed"
+                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                      </svg>
+                     </button>
+                     <button v-show="!isSidebarCompressed" class="tv-demo-sidebar-collapse" aria-label="Scroll to top" @click="variantsListRef?.scrollTo({ top: 0, behavior: 'smooth' })">
+                      ⬆️
+                    </button>
+                  </div>
                 </div>
-                <label class="tv-demo-search" :class="`${theme}-mode`">
-                  <span class="tv-demo-search-icon">🔍</span>
-                  <input
-                    v-model="searchQuery"
-                    type="search"
-                    placeholder="Search variants..."
-                    class="tv-demo-search-input"
-                    aria-label="Search variants"
-                    @keydown.down.prevent="handleVariantsKeydown($event)"
-                  />
-                  <button
-                    v-if="searchQuery"
-                    type="button"
-                    class="tv-demo-search-clear"
-                    aria-label="Clear search"
-                    @click="searchQuery = ''"
-                  >✕</button>
-                </label>
-
-                <div
-                  class="tv-demo-variants"
-                  :class="`${theme}-mode`"
-                  role="listbox"
-                  tabindex="0"
-                  aria-label="Available variants"
-                  :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
-                  @keydown="handleVariantsKeydown"
-                  ref="variantsListRef"
-                >
-                  <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
-                    <template v-if="!emptySearchState">
-                      <button
-                        v-for="entry in virtualizedVariants"
-                        :key="entry.key"
-                        :id="`variant-${entry.key}`"
-                        type="button"
-                        class="tv-demo-variant-card"
-                        :class="{ active: entry.key === selectedVariantKey }"
-                        role="option"
-                        :aria-selected="entry.key === selectedVariantKey"
-                        @click="selectVariant(entry.key)"
-                      >
-                        <span class="tv-demo-variant-card-content">
-                          <span class="tv-demo-variant-card-title">{{ entry.variant.title }}</span>
-                          <span class="tv-demo-variant-card-description">{{ entry.variant.description }}</span>
-                        </span>
-                        <span class="tv-demo-variant-card-icon">→</span>
-                      </button>
-                    </template>
-                    <div v-else class="tv-demo-empty-state">
-                      <p>No matches for "{{ searchQuery }}".</p>
-                      <button class="tv-demo-reset" type="button" @click="searchQuery = ''">Clear filter</button>
+                <div v-show="!isSidebarCompressed" class="tv-demo-sidebar-content-wrapper">
+                  <label class="tv-demo-search" :class="`${theme}-mode`">
+                    <span class="tv-demo-search-icon">🔍</span>
+                    <input
+                      v-model="searchQuery"
+                      type="search"
+                      placeholder="Search variants..."
+                      class="tv-demo-search-input"
+                      aria-label="Search variants"
+                      @keydown.down.prevent="handleVariantsKeydown($event)"
+                    />
+                    <button
+                      v-if="searchQuery"
+                      type="button"
+                      class="tv-demo-search-clear"
+                      aria-label="Clear search"
+                      @click="searchQuery = ''"
+                    >✕</button>
+                  </label>
+  
+                  <div
+                    class="tv-demo-variants"
+                    :class="`${theme}-mode`"
+                    role="listbox"
+                    tabindex="0"
+                    aria-label="Available variants"
+                    :aria-activedescendant="selectedVariantKey ? `variant-${selectedVariantKey}` : null"
+                    @keydown="handleVariantsKeydown"
+                    ref="variantsListRef"
+                  >
+                    <div :style="{ paddingTop: `${virtualPaddingTop}px`, paddingBottom: `${virtualPaddingBottom}px` }">
+                      <template v-if="!emptySearchState">
+                        <button
+                          v-for="entry in virtualizedVariants"
+                          :key="entry.key"
+                          :id="`variant-${entry.key}`"
+                          type="button"
+                          class="tv-demo-variant-card"
+                          :class="{ active: entry.key === selectedVariantKey }"
+                          role="option"
+                          :aria-selected="entry.key === selectedVariantKey"
+                          @click="selectVariant(entry.key)"
+                        >
+                          <span class="tv-demo-variant-card-content">
+                            <span class="tv-demo-variant-card-title">{{ entry.variant.title }}</span>
+                            <span class="tv-demo-variant-card-description">{{ entry.variant.description }}</span>
+                          </span>
+                          <span class="tv-demo-variant-card-icon">→</span>
+                        </button>
+                      </template>
+                      <div v-else class="tv-demo-empty-state">
+                        <p>No matches for "{{ searchQuery }}".</p>
+                        <button class="tv-demo-reset" type="button" @click="searchQuery = ''">Clear filter</button>
+                      </div>
                     </div>
                   </div>
                 </div>
