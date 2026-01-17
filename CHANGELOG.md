@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- Fixed the key binding for selecting variants in the `HighCode` component.
+
 ## [1.3.2] - 2026-01-14
 
 ### Fixed

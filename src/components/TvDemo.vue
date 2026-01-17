@@ -403,6 +403,7 @@ const autoEventListeners = computed(() => {
                         </button>
                       </div>
                       <HighCode
+                        :key="selectedVariantKey"
                         class="tv-demo-code"
                         :codeValue="variant.html"
                         :theme="theme"
