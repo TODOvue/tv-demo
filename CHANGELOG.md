@@ -8,6 +8,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Added viewport handling for responsive layout adjustments.
+- Added RTL support and grid layout toggle.
+- Added background color customization options.
+- Enhanced layout controls for improved flexibility.
 
 ### Fixed
 - Fixed the key binding for selecting variants in the `HighCode` component.

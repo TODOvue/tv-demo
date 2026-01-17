@@ -17,6 +17,9 @@ const useDemo = (props) => {
   const variantsListRef = ref(null);
   const viewportHeight = ref(360);
   const viewportWidth = ref('100%');
+  const backgroundType = ref('default');
+  const isRtl = ref(false);
+  const isGrid = ref(false);
   const scrollTop = ref(0);
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
@@ -499,6 +502,9 @@ const useDemo = (props) => {
     activeToolTab,
     resetProps,
     copyCode,
+    backgroundType,
+    isRtl,
+    isGrid,
   };
 };
 

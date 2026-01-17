@@ -72,6 +72,9 @@ const {
   activeToolTab,
   resetProps,
   copyCode,
+  backgroundType,
+  isRtl,
+  isGrid,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -281,6 +284,43 @@ const autoEventListeners = computed(() => {
                     >
                       Desktop
                     </button>
+                    <div class="tv-demo-separator"></div>
+                    <button
+                      type="button"
+                      class="tv-demo-icon-btn"
+                      :class="{ active: isRtl }"
+                      @click="isRtl = !isRtl"
+                      title="Toggle RTL"
+                      aria-label="Toggle RTL"
+                    >
+                      ⇄
+                    </button>
+                    <button
+                      type="button"
+                      class="tv-demo-icon-btn"
+                      :class="{ active: isGrid }"
+                      @click="isGrid = !isGrid"
+                      title="Toggle Grid"
+                      aria-label="Toggle Grid"
+                    >
+                      #
+                    </button>
+                     <div class="tv-demo-dropdown">
+                      <button
+                        type="button"
+                        class="tv-demo-icon-btn"
+                        title="Background Color"
+                        aria-label="Change Background"
+                      >
+                        🎨
+                      </button>
+                      <div class="tv-demo-dropdown-content">
+                        <button @click="backgroundType = 'default'" :class="{ active: backgroundType === 'default' }">Default</button>
+                        <button @click="backgroundType = 'checkered'" :class="{ active: backgroundType === 'checkered' }">Checkered</button>
+                        <button @click="backgroundType = 'white'" :class="{ active: backgroundType === 'white' }">White</button>
+                        <button @click="backgroundType = 'dark'" :class="{ active: backgroundType === 'dark' }">Dark</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <p class="tv-demo-description">
@@ -295,6 +335,9 @@ const autoEventListeners = computed(() => {
                     :viewport-width="viewportWidth"
                     :body-class="`${theme}-mode`"
                     :body-style="hideBackground ? {} : customStyle.content"
+                    :is-rtl="isRtl"
+                    :background-type="backgroundType"
+                    :is-grid="isGrid"
                   />
                   <p v-else class="tv-demo-empty-component">No component to render.</p>
                 </div>
@@ -360,7 +403,22 @@ const autoEventListeners = computed(() => {
                              </div>
                           </template>
                           <template v-else>
+                             <div v-if="typeof value === 'string' && (key.toLowerCase().includes('color') || key.toLowerCase().includes('background') || /^#([0-9A-F]{3}){1,2}$/i.test(value))" class="tv-demo-control-input-wrapper color-wrapper">
+                                <input
+                                  type="color"
+                                  v-model="reactiveProps[key]"
+                                  :id="`control-color-${key}`"
+                                  class="tv-demo-color-picker"
+                                />
+                                <input
+                                  v-model="reactiveProps[key]"
+                                  type="text"
+                                  class="tv-demo-input"
+                                  :id="`control-${key}`"
+                                />
+                             </div>
                             <TvNestedEditor
+                              v-else
                               v-model="reactiveProps[key]"
                               :name="key"
                             />
