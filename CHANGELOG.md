@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Fixed the key binding for selecting variants in the `HighCode` component.
 - Enhanced layout responsiveness and adjusted viewport width settings.
 - Adjusted alignment and layout for improved centering.
+- Fixed `vue-highlight-code` error: Cannot read properties of null in tool panels and adding validation for `variant.html`.
 
 ### Changed
 - Updated button styles and improved link interactions.

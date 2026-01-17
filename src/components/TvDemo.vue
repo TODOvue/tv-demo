@@ -430,7 +430,7 @@ const autoEventListeners = computed(() => {
                       </div>
                     </div>
 
-                    <div v-show="activeToolTab === 'events'" class="tv-demo-tool-pane">
+                    <div v-if="activeToolTab === 'events'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
                         <h3 class="tv-demo-tool-title">Event Logger</h3>
                         <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-btn-secondary is-small">Clear</button>
@@ -449,7 +449,7 @@ const autoEventListeners = computed(() => {
                       </div>
                     </div>
 
-                    <div v-show="activeToolTab === 'code'" class="tv-demo-tool-pane">
+                    <div v-if="activeToolTab === 'code'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
                         <h3 class="tv-demo-tool-title">Generated Code</h3>
                         <button class="tv-demo-btn-secondary is-small" @click="copyCode(variant.html)">
@@ -457,6 +457,7 @@ const autoEventListeners = computed(() => {
                         </button>
                       </div>
                       <HighCode
+                        v-if="variant.html"
                         :key="selectedVariantKey"
                         class="tv-demo-code"
                         :codeValue="variant.html"
@@ -466,6 +467,9 @@ const autoEventListeners = computed(() => {
                         height="auto"
                         :copy="false"
                       />
+                      <div v-else class="tv-demo-empty-state small">
+                        No code available for this variant.
+                      </div>
                     </div>
                   </div>
                 </div>
