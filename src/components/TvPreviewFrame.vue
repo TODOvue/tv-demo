@@ -229,6 +229,7 @@ watch(() => [props.component, props.componentProps, props.viewportWidth, props.b
   margin: 0 auto;
   transition: width 0.3s ease;
   background: transparent;
+  flex-shrink: 0;
 }
 
 .tv-preview-frame {

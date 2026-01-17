@@ -152,25 +152,25 @@ const autoEventListeners = computed(() => {
 
         <div class="tv-demo-tools main-tabs">
           <div class="tv-demo-tools-tabs">
-            <button 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'demo' }" 
+            <button
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'demo' }"
               @click="selectedTab = 'demo'"
             >
               Demo
             </button>
-            <button 
-              v-if="showDocumentation" 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'docs' }" 
+            <button
+              v-if="showDocumentation"
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'docs' }"
               @click="selectedTab = 'docs'"
             >
               Documentation
             </button>
-            <button 
-              v-if="showChangelog" 
-              class="tv-demo-tools-tab" 
-              :class="{ active: selectedTab === 'changelog' }" 
+            <button
+              v-if="showChangelog"
+              class="tv-demo-tools-tab"
+              :class="{ active: selectedTab === 'changelog' }"
               @click="selectedTab = 'changelog'"
             >
               Changelog
@@ -264,7 +264,6 @@ const autoEventListeners = computed(() => {
                       Mobile
                     </button>
                     <button
-                      v-if="windowWidth >= 600"
                       type="button"
                       class="tv-demo-viewport-btn"
                       :class="{ active: viewportWidth === '768px' }"
@@ -275,13 +274,12 @@ const autoEventListeners = computed(() => {
                       Tablet
                     </button>
                     <button
-                      v-if="windowWidth >= 1024"
                       type="button"
                       class="tv-demo-viewport-btn"
-                      :class="{ active: viewportWidth === '100%' }"
-                      @click="viewportWidth = '100%'"
-                      aria-label="Desktop view (100%)"
-                      title="Desktop (100%)"
+                      :class="{ active: viewportWidth === '1280px' }"
+                      @click="viewportWidth = '1280px'"
+                      aria-label="Desktop view (1280px)"
+                      title="Desktop (1280px)"
                     >
                       Desktop
                     </button>
@@ -291,7 +289,7 @@ const autoEventListeners = computed(() => {
                   {{ variant.description || 'Select a variant from the list to view its details.' }}
                 </p>
 
-                <div class="tv-demo-component-content" :style="{ width: viewportWidth }">
+                <div class="tv-demo-component-content">
                   <TvPreviewFrame
                     v-if="variant && component"
                     :component="component"

@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 - Fixed the key binding for selecting variants in the `HighCode` component.
+- Enhanced layout responsiveness and adjusted viewport width settings.
 
 ## [1.3.2] - 2026-01-14
 
