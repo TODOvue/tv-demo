@@ -2,6 +2,9 @@ import Default from './demos/default.vue?raw'
 import IsDevComponent from './demos/isDevComponent.vue?raw';
 import HideBackground from './demos/hideBackground.vue?raw';
 import DemoStyle from './demos/demoStyle.vue?raw';
+import MultipleOptionsSetup from './demos/multipleOptionsSetup.vue?raw';
+import MultipleOptions from './demos/multipleOptions.vue?raw';
+import MultipleOptionsTypeScript from './demos/multipleOptionsTypeScript.vue?raw';
 
 const _style = {
   dark: {
@@ -44,5 +47,26 @@ export const demos = [
     propsData: { demoStyle: _style },
     description: 'This is a demo display for TODOvue components. Use this area to showcase the component\'s usage, props, variants, and live behavior in isolation.',
     html: DemoStyle
+  },
+  {
+    id: 5,
+    title: 'Multiple Code Variants',
+    propsData: {},
+    description: 'This demo showcases the support for multiple code variants (Vue 3 Setup, Vue 3 Options, Vue 2, TS).',
+    html: Default,
+    code: [
+      {
+        type: 'Vue 3 Setup',
+        content: MultipleOptionsSetup
+      },
+      {
+        type: 'Vue 3 Options',
+        content: MultipleOptions
+      },
+      {
+        type: 'TypeScript',
+        content: MultipleOptionsTypeScript
+      }
+    ]
   }
 ]

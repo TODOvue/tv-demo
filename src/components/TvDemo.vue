@@ -107,6 +107,9 @@ const {
   showScrollToTop,
   isInstallDropdownOpen,
   toggleInstallDropdown,
+  selectedCodeType,
+  availableCodeTypes,
+  currentCode,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -522,16 +525,29 @@ const autoEventListeners = computed(() => {
 
                     <div v-if="activeToolTab === 'code'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
-                        <h3 class="tv-demo-tool-title">Generated Code</h3>
-                        <button class="tv-demo-btn-secondary is-small" @click="copyCode(variant.html)">
+                        <div class="tv-demo-code-header">
+                          <h3 class="tv-demo-tool-title">Generated Code</h3>
+                          <div v-if="availableCodeTypes.length > 1" class="tv-demo-code-switcher">
+                            <button
+                              v-for="type in availableCodeTypes"
+                              :key="type"
+                              class="tv-demo-code-tab"
+                              :class="{ active: selectedCodeType === type }"
+                              @click="selectedCodeType = type"
+                            >
+                              {{ type }}
+                            </button>
+                          </div>
+                        </div>
+                        <button class="tv-demo-btn-secondary is-small" @click="copyCode(currentCode)">
                           Copy Code
                         </button>
                       </div>
                       <HighCode
-                        v-if="variant.html"
-                        :key="selectedVariantKey"
+                        v-if="currentCode"
                         class="tv-demo-code"
-                        :codeValue="variant.html"
+                        :key="selectedCodeType"
+                        :codeValue="currentCode"
                         :theme="theme"
                         lang="html"
                         codeLines
