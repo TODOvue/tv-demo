@@ -115,7 +115,7 @@
   border-radius: 0 5px 5px 5px;
   min-width: 0;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
 
   & .tv-demo-description {
     font-size: 1.1rem;
@@ -1581,20 +1581,9 @@ input:checked+.slider:hover {
   display: flex;
   gap: 8px;
   align-items: center;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-  max-width: 100%;
-  scrollbar-width: thin;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(128, 128, 128, 0.3);
-    border-radius: 4px;
-  }
+  flex-wrap: wrap;
+  overflow: visible;
+  position: relative;
 
   >* {
     flex-shrink: 0;
@@ -1661,6 +1650,19 @@ input:checked+.slider:hover {
 
   .color-wrapper {
     align-items: center;
+  }
+
+  .theme-dropdown {
+    @media (max-width: 768px) {
+      position: static;
+      .tv-demo-dropdown-content {
+        right: 0;
+        left: auto;
+        top: 100%;
+        margin-top: 8px;
+        width: 200px;
+      }
+    }
   }
 }
 
@@ -1851,8 +1853,8 @@ input:checked+.slider:hover {
     position: absolute;
     right: 0;
     top: calc(100% + 4px);
-    min-width: 100%;
-    width: 100%;
+    width: max-content;
+    min-width: 150px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 6px;
     z-index: 100;

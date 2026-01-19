@@ -107,6 +107,8 @@ const {
   showScrollToTop,
   isInstallDropdownOpen,
   toggleInstallDropdown,
+  isThemeDropdownOpen,
+  toggleThemeDropdown,
   selectedCodeType,
   availableCodeTypes,
   currentCode,
@@ -380,20 +382,21 @@ const autoEventListeners = computed(() => {
                     >
                       #
                     </button>
-                     <div class="tv-demo-dropdown">
+                     <div class="tv-demo-dropdown theme-dropdown click-mode" :class="{ 'is-open': isThemeDropdownOpen }">
                       <button
                         type="button"
                         class="tv-demo-icon-btn"
                         title="Background Color"
                         aria-label="Change Background"
+                        @click.stop="toggleThemeDropdown"
                       >
                         🎨
                       </button>
                       <div class="tv-demo-dropdown-content">
-                        <button @click="backgroundType = 'default'" :class="{ active: backgroundType === 'default' }">Default</button>
-                        <button @click="backgroundType = 'checkered'" :class="{ active: backgroundType === 'checkered' }">Checkered</button>
-                        <button @click="backgroundType = 'white'" :class="{ active: backgroundType === 'white' }">White</button>
-                        <button @click="backgroundType = 'dark'" :class="{ active: backgroundType === 'dark' }">Dark</button>
+                        <button @click="backgroundType = 'default'; toggleThemeDropdown()" :class="{ active: backgroundType === 'default' }">Default</button>
+                        <button @click="backgroundType = 'checkered'; toggleThemeDropdown()" :class="{ active: backgroundType === 'checkered' }">Checkered</button>
+                        <button @click="backgroundType = 'white'; toggleThemeDropdown()" :class="{ active: backgroundType === 'white' }">White</button>
+                        <button @click="backgroundType = 'dark'; toggleThemeDropdown()" :class="{ active: backgroundType === 'dark' }">Dark</button>
                       </div>
                     </div>
                   </div>
