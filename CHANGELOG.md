@@ -4,6 +4,16 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] - 2026-01-19
+
+### Added
+- Implement install command dropdown with multiple package manager options.
+- Added support for multiple code variants with dynamic source switching.
+- Added dynamic language support for code variants.
+
+### Fixed
+- Improved horizontal scrolling support and custom scrollbar styling.
+
 ## [1.4.0] - 2026-01-16
 
 ### Added
@@ -222,6 +232,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.1]: https://github.com/TODOvue/tv-demo/pull/46/files
 [1.4.0]: https://github.com/TODOvue/tv-demo/pull/45/files
 [1.3.2]: https://github.com/TODOvue/tv-demo/pull/44/files
 [1.3.1]: https://github.com/TODOvue/tv-demo/pull/43/files

@@ -416,10 +416,22 @@ const useDemo = (props) => {
   const setClickItem = (item) => {
     let commandToCopy = '';
 
-    if (item === 'npm') {
-      commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
-    } else {
-      commandToCopy = `git clone ${props.urlClone}`;
+    switch (item) {
+      case 'npm':
+        commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        break;
+      case 'yarn':
+        commandToCopy = `yarn add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        break;
+      case 'pnpm':
+        commandToCopy = `pnpm add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        break;
+      case 'bun':
+        commandToCopy = `bun add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        break;
+      default:
+        commandToCopy = `git clone ${props.urlClone}`;
+        break;
     }
 
     navigator.clipboard.writeText(commandToCopy)
@@ -435,6 +447,29 @@ const useDemo = (props) => {
     const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     toasts.value.push({ id, message, type, duration });
   };
+
+  const isInstallDropdownOpen = ref(false);
+
+  const toggleInstallDropdown = () => {
+    isInstallDropdownOpen.value = !isInstallDropdownOpen.value;
+  };
+
+  const closeInstallDropdown = () => {
+    if (isInstallDropdownOpen.value) {
+      isInstallDropdownOpen.value = false;
+    }
+  };
+
+  onMounted(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('click', (e) => {
+        const dropdown = document.querySelector('.install-dropdown');
+        if (dropdown && !dropdown.contains(e.target)) {
+          closeInstallDropdown();
+        }
+      });
+    }
+  });
 
   const removeToast = (id) => {
     const index = toasts.value.findIndex(toast => toast.id === id);
@@ -463,8 +498,44 @@ const useDemo = (props) => {
     addToast('Props reset to default', 'success', 2000);
   };
 
+  const selectedCodeType = ref('Vue 3 Setup');
+
+  const availableCodeTypes = computed(() => {
+    if (variant.value?.code && Array.isArray(variant.value.code)) {
+      return variant.value.code.map(c => c.type);
+    }
+    return [];
+  });
+
+  const currentCode = computed(() => {
+    if (variant.value?.code && Array.isArray(variant.value.code)) {
+      const match = variant.value.code.find(c => c.type === selectedCodeType.value);
+      return match ? match.content : '';
+    }
+    return variant.value?.html || '';
+  });
+
+  const currentLang = computed(() => {
+    if (variant.value?.code && Array.isArray(variant.value.code)) {
+      const match = variant.value.code.find(c => c.type === selectedCodeType.value);
+      return match?.lang || 'html';
+    }
+    return 'html';
+  });
+
+  watch(
+    () => availableCodeTypes.value,
+    (types) => {
+      if (types.length > 0 && !types.includes(selectedCodeType.value)) {
+        selectedCodeType.value = types[0];
+      }
+    },
+    { immediate: true }
+  );
+
   const copyCode = (code) => {
-    navigator.clipboard.writeText(code)
+    const textToCopy = code || currentCode.value;
+    navigator.clipboard.writeText(textToCopy)
       .then(() => {
         addToast('Code copied to clipboard', 'success', 2000);
       })
@@ -510,6 +581,12 @@ const useDemo = (props) => {
     isGrid,
     isSidebarCompressed,
     showScrollToTop,
+    isInstallDropdownOpen,
+    toggleInstallDropdown,
+    selectedCodeType,
+    availableCodeTypes,
+    currentCode,
+    currentLang,
   };
 };
 
