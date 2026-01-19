@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - Implement install command dropdown with multiple package manager options.
 
+### Fixed
+- Improved horizontal scrolling support and custom scrollbar styling.
+
 ## [1.4.0] - 2026-01-16
 
 ### Added

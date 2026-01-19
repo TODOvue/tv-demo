@@ -413,6 +413,8 @@
       width: 100% !important;
       height: auto !important;
       padding: 20px 0;
+      overflow-x: auto;
+      max-width: 100%;
     }
   }
 }
@@ -1581,6 +1583,28 @@ input:checked+.slider:hover {
   display: flex;
   gap: 8px;
   align-items: center;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  /* Space for scrollbar if visible */
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  /* Ensure it doesn't overflow parent */
+  scrollbar-width: thin;
+  /* Firefox */
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+  }
+
+  /* Prevent children from shrinking */
+  >* {
+    flex-shrink: 0;
+  }
 
   .tv-demo-separator {
     width: 1px;
