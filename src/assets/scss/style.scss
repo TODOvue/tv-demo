@@ -115,7 +115,7 @@
   border-radius: 0 5px 5px 5px;
   min-width: 0;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
 
   & .tv-demo-description {
     font-size: 1.1rem;
@@ -1581,25 +1581,9 @@ input:checked+.slider:hover {
   display: flex;
   gap: 8px;
   align-items: center;
-  overflow-x: auto;
-
-  @media (min-width: 768px) {
-    overflow: visible;
-  }
-
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-  max-width: 100%;
-  scrollbar-width: thin;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(128, 128, 128, 0.3);
-    border-radius: 4px;
-  }
+  flex-wrap: wrap;
+  overflow: visible;
+  position: relative;
 
   >* {
     flex-shrink: 0;
@@ -1666,6 +1650,19 @@ input:checked+.slider:hover {
 
   .color-wrapper {
     align-items: center;
+  }
+
+  .theme-dropdown {
+    @media (max-width: 768px) {
+      position: static;
+      .tv-demo-dropdown-content {
+        right: 0;
+        left: auto;
+        top: 100%;
+        margin-top: 8px;
+        width: 200px;
+      }
+    }
   }
 }
 
@@ -1870,26 +1867,10 @@ input:checked+.slider:hover {
     backdrop-filter: blur(12px);
     background: rgba(255, 255, 255, 0.95);
 
-    @media (max-width: 768px) {
-      position: fixed;
-      top: auto;
-      bottom: 20px;
-      right: 20px;
-      left: auto;
-      transform: translateY(10px);
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(128, 128, 128, 0.2);
-      min-width: 200px;
-    }
-
     .dark-mode & {
       background: variables.$dark-card-bg;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       border-color: rgba(128, 128, 128, 0.3);
-
-      @media (max-width: 768px) {
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
-      }
     }
 
     button {
