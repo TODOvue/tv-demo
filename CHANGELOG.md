@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] - 2026-01-17
+
+### Added
+- Implement install command dropdown with multiple package manager options.
+
 ## [1.4.0] - 2026-01-16
 
 ### Added
