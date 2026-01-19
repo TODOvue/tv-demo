@@ -1583,12 +1583,9 @@ input:checked+.slider:hover {
   align-items: center;
   overflow-x: auto;
   padding-bottom: 4px;
-  /* Space for scrollbar if visible */
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
-  /* Ensure it doesn't overflow parent */
   scrollbar-width: thin;
-  /* Firefox */
 
   &::-webkit-scrollbar {
     height: 4px;
@@ -1599,7 +1596,6 @@ input:checked+.slider:hover {
     border-radius: 4px;
   }
 
-  /* Prevent children from shrinking */
   >* {
     flex-shrink: 0;
   }
