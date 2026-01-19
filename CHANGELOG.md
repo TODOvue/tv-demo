@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Implement install command dropdown with multiple package manager options.
+- Added support for multiple code variants with dynamic source switching.
 
 ### Fixed
 - Improved horizontal scrolling support and custom scrollbar styling.
