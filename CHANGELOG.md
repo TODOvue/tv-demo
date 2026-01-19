@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - Updated the release workflow to enable automated publishing to GitHub Packages.
+- Implemented a theme selection dropdown to allow user-driven UI customization.
+
+### Changed
+- Applied responsive styles to ensure the layout adapts correctly to various screen sizes.
 
 ## [1.4.1] - 2026-01-19
 

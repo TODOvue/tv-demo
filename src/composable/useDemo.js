@@ -460,12 +460,29 @@ const useDemo = (props) => {
     }
   };
 
+  const isThemeDropdownOpen = ref(false);
+
+  const toggleThemeDropdown = () => {
+    isThemeDropdownOpen.value = !isThemeDropdownOpen.value;
+  };
+
+  const closeThemeDropdown = () => {
+    if (isThemeDropdownOpen.value) {
+      isThemeDropdownOpen.value = false;
+    }
+  };
+
   onMounted(() => {
     if (typeof window !== 'undefined') {
       window.addEventListener('click', (e) => {
         const dropdown = document.querySelector('.install-dropdown');
         if (dropdown && !dropdown.contains(e.target)) {
           closeInstallDropdown();
+        }
+
+        const themeDropdown = document.querySelector('.tv-demo-dropdown.theme-dropdown');
+        if (themeDropdown && !themeDropdown.contains(e.target)) {
+          closeThemeDropdown();
         }
       });
     }
@@ -583,6 +600,8 @@ const useDemo = (props) => {
     showScrollToTop,
     isInstallDropdownOpen,
     toggleInstallDropdown,
+    isThemeDropdownOpen,
+    toggleThemeDropdown,
     selectedCodeType,
     availableCodeTypes,
     currentCode,

@@ -1582,6 +1582,11 @@ input:checked+.slider:hover {
   gap: 8px;
   align-items: center;
   overflow-x: auto;
+
+  @media (min-width: 768px) {
+    overflow: visible;
+  }
+
   padding-bottom: 4px;
   -webkit-overflow-scrolling: touch;
   max-width: 100%;
@@ -1851,8 +1856,8 @@ input:checked+.slider:hover {
     position: absolute;
     right: 0;
     top: calc(100% + 4px);
-    min-width: 100%;
-    width: 100%;
+    width: max-content;
+    min-width: 150px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 6px;
     z-index: 100;
@@ -1865,10 +1870,26 @@ input:checked+.slider:hover {
     backdrop-filter: blur(12px);
     background: rgba(255, 255, 255, 0.95);
 
+    @media (max-width: 768px) {
+      position: fixed;
+      top: auto;
+      bottom: 20px;
+      right: 20px;
+      left: auto;
+      transform: translateY(10px);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(128, 128, 128, 0.2);
+      min-width: 200px;
+    }
+
     .dark-mode & {
       background: variables.$dark-card-bg;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       border-color: rgba(128, 128, 128, 0.3);
+
+      @media (max-width: 768px) {
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+      }
     }
 
     button {
