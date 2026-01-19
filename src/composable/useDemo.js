@@ -515,6 +515,14 @@ const useDemo = (props) => {
     return variant.value?.html || '';
   });
 
+  const currentLang = computed(() => {
+    if (variant.value?.code && Array.isArray(variant.value.code)) {
+      const match = variant.value.code.find(c => c.type === selectedCodeType.value);
+      return match?.lang || 'html';
+    }
+    return 'html';
+  });
+
   watch(
     () => availableCodeTypes.value,
     (types) => {
@@ -578,6 +586,7 @@ const useDemo = (props) => {
     selectedCodeType,
     availableCodeTypes,
     currentCode,
+    currentLang,
   };
 };
 

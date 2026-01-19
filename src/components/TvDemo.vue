@@ -110,6 +110,7 @@ const {
   selectedCodeType,
   availableCodeTypes,
   currentCode,
+  currentLang,
 } = useDemo(props);
 
 const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -549,7 +550,7 @@ const autoEventListeners = computed(() => {
                         :key="selectedCodeType"
                         :codeValue="currentCode"
                         :theme="theme"
-                        lang="html"
+                        :lang="currentLang"
                         codeLines
                         height="auto"
                         :copy="false"
