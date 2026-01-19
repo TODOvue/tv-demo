@@ -547,17 +547,17 @@ const autoEventListeners = computed(() => {
                           Copy Code
                         </button>
                       </div>
-                      <HighCode
-                        v-if="currentCode"
-                        class="tv-demo-code"
-                        :key="selectedCodeType"
-                        :codeValue="currentCode"
-                        :theme="theme"
-                        :lang="currentLang"
-                        codeLines
-                        height="auto"
-                        :copy="false"
-                      />
+                        <HighCode
+                          v-if="currentCode"
+                          class="tv-demo-code"
+                          :key="`${selectedCodeType}-${selectedVariantKey}`"
+                          :codeValue="currentCode"
+                          :theme="theme"
+                          :lang="currentLang"
+                          codeLines
+                          height="auto"
+                          :copy="false"
+                        />
                       <div v-else class="tv-demo-empty-state small">
                         No code available for this variant.
                       </div>
