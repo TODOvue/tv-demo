@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Enhanced the responsiveness of the theme dropdown for improved mobile usability.
 - Optimized the installation dropdown layout to ensure compatibility with smaller screen sizes.
 
+### Removed
+- Streamlined the GitHub Packages publishing process by removing unnecessary workflow steps.
+
 ## [1.4.3] - 2026-01-19
 
 ### Fixed
