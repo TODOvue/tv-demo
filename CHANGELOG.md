@@ -4,6 +4,17 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.4] - 2026-01-20
+
+### Fixed
+- Enhanced the responsiveness of the theme dropdown for improved mobile usability.
+- Optimized the installation dropdown layout to ensure compatibility with smaller screen sizes.
+- Improved the responsiveness of `TvDemo` components to ensure optimal display across various device sizes.
+- Enhanced overflow handling to prevent layout breakage and ensure content remains accessible within constrained containers.
+
+### Removed
+- Streamlined the GitHub Packages publishing process by removing unnecessary workflow steps.
+
 ## [1.4.3] - 2026-01-19
 
 ### Fixed
@@ -246,6 +257,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.4]: https://github.com/TODOvue/tv-demo/pull/49/files
 [1.4.3]: https://github.com/TODOvue/tv-demo/pull/48/files
 [1.4.2]: https://github.com/TODOvue/tv-demo/pull/47/files
 [1.4.1]: https://github.com/TODOvue/tv-demo/pull/46/files

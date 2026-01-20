@@ -1575,6 +1575,26 @@ input:checked+.slider:hover {
       font-size: 1.2rem;
     }
   }
+
+  .tv-demo-code {
+    padding: 10px 0;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+    display: block;
+  }
+
+  .tv-demo-tools-content {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    display: block;
+  }
+
+  .tv-demo-logs-container {
+    overflow-x: auto;
+  }
 }
 
 .tv-demo-viewport-controls {
@@ -1655,6 +1675,7 @@ input:checked+.slider:hover {
   .theme-dropdown {
     @media (max-width: 768px) {
       position: static;
+
       .tv-demo-dropdown-content {
         right: 0;
         left: auto;
@@ -1846,6 +1867,10 @@ input:checked+.slider:hover {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+  }
+
+  &.install-dropdown .tv-demo-dropdown-content {
+    width: 100%;
   }
 
   &-content {
