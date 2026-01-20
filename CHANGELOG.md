@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Fixed
 - Enhanced the responsiveness of the theme dropdown for improved mobile usability.
 - Optimized the installation dropdown layout to ensure compatibility with smaller screen sizes.
+- Improved the responsiveness of `TvDemo` components to ensure optimal display across various device sizes.
+- Enhanced overflow handling to prevent layout breakage and ensure content remains accessible within constrained containers.
 
 ### Removed
 - Streamlined the GitHub Packages publishing process by removing unnecessary workflow steps.

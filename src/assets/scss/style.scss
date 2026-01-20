@@ -1575,6 +1575,26 @@ input:checked+.slider:hover {
       font-size: 1.2rem;
     }
   }
+
+  .tv-demo-code {
+    padding: 10px 0;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+    display: block;
+  }
+
+  .tv-demo-tools-content {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    display: block;
+  }
+
+  .tv-demo-logs-container {
+    overflow-x: auto;
+  }
 }
 
 .tv-demo-viewport-controls {
