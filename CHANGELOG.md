@@ -4,6 +4,14 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.5] - 2026-01-23
+
+### Changed
+- Updated the release workflow to utilize GitHub App tokens for improved authentication
+- Streamlined the automated version bumping process. 
+- Simplified the installation process for the TvDemo plugin.
+- Updated package exports to improve module accessibility and integration.
+
 ## [1.4.4] - 2026-01-20
 
 ### Fixed
