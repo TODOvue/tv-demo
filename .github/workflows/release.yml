@@ -16,6 +16,7 @@ jobs:
       actions: write
       id-token: write
       packages: write
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -51,7 +52,7 @@ jobs:
           git tag v$(node -p "require('./package.json').version")
           git push origin main --tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Build package
         run: npm run build
