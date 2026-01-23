@@ -11,6 +11,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Streamlined the automated version bumping process. 
 - Simplified the installation process for the TvDemo plugin.
 - Updated package exports to improve module accessibility and integration.
+- Enhanced the visual styling across all themes for improved consistency.
+- Simplified the internal structure of theme components to reduce complexity and improve maintainability.
 
 ## [1.4.4] - 2026-01-20
 
