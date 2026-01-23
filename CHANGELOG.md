@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Updated package exports to improve module accessibility and integration.
 - Enhanced the visual styling across all themes for improved consistency.
 - Simplified the internal structure of theme components to reduce complexity and improve maintainability.
+- Refined button styling to ensure visual consistency across the interface.
+- Enhanced component responsiveness to provide a more seamless experience across various screen sizes.
 
 ## [1.4.4] - 2026-01-20
 
