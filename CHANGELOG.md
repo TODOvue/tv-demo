@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Simplified the internal structure of theme components to reduce complexity and improve maintainability.
 - Refined button styling to ensure visual consistency across the interface.
 - Enhanced component responsiveness to provide a more seamless experience across various screen sizes.
+- Updated the project ignore list to include additional configuration files and directories.
 
 ## [1.4.4] - 2026-01-20
 
