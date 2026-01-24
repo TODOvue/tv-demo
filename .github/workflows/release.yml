@@ -31,6 +31,7 @@ jobs:
         with:
           token: ${{ steps.generate_token.outputs.token }}
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -55,17 +56,22 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "TODOvue-release-bot[bot]"
-          git config --global user.email "TODOvue-release-bot[bot]@users.noreply.github.com"
+          git config user.name "TODOvue-release-bot[bot]"
+          git config user.email "TODOvue-release-bot[bot]@users.noreply.github.com"
+          git config url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/".insteadOf "https://github.com/"
 
       - name: Bump version and push
         id: bump
         run: |
           npm version $BUMP_TYPE -m "chore(release): 🔥 v%s [skip ci]"
-          echo "NEW_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
           git push origin main --follow-tags
         env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GIT_AUTHOR_NAME: "TODOvue-release-bot[bot]"
+          GIT_AUTHOR_EMAIL: "TODOvue-release-bot[bot]@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "TODOvue-release-bot[bot]"
+          GIT_COMMITTER_EMAIL: "TODOvue-release-bot[bot]@users.noreply.github.com"
 
       - name: Build package
         run: npm run build
