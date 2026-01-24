@@ -1,17 +1,17 @@
+import { App, Plugin } from 'vue'
 import TvDemo from './components/TvDemo.vue'
 import './style.scss'
-import 'highlight.js/styles/monokai.css';
-import 'vue-highlight-code/dist/style.css';
+import 'highlight.js/styles/monokai.css'
+import 'vue-highlight-code/dist/style.css'
 
-(TvDemo as any).install = (app: any) => {
+type SFCWithInstall<T> = T & Plugin
+
+const TvDemoPlugin: SFCWithInstall<typeof TvDemo> = TvDemo as any
+
+TvDemoPlugin.install = (app: App) => {
   app.component('TvDemo', TvDemo)
 }
 
-export const TvDemoPlugin = {
-  install(app: any) {
-    app.component('TvDemo', TvDemo)
-  }
-}
-
 export { TvDemo }
-export default TvDemo
+
+export default TvDemoPlugin

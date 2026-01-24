@@ -200,7 +200,7 @@ const autoEventListeners = computed(() => {
 
           <div>
             <div class="tv-demo-theme">
-              <span style="font-size: 0.9rem; opacity: 0.8;">Theme</span>
+              <span>Theme</span>
               <label class="switch">
                 <input type="checkbox" :checked="theme === 'dark'" @change="toggleTheme" />
                 <span class="slider round"></span>
