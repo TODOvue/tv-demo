@@ -10,6 +10,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Update `vue` to `^3.5.26`.
 - Update `sass` to `^1.97.3`.
 
+### Changed
+- Updated the demo entry point to utilize the new path for the Demo.vue component.
+
 ## [1.4.5] - 2026-01-23
 
 ### Changed
@@ -276,6 +279,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.6]: https://github.com/TODOvue/tv-demo/pull/51/files
 [1.4.5]: https://github.com/TODOvue/tv-demo/pull/50/files
 [1.4.4]: https://github.com/TODOvue/tv-demo/pull/49/files
 [1.4.3]: https://github.com/TODOvue/tv-demo/pull/48/files

@@ -33,8 +33,10 @@
       "import": "./dist/tv-demo.es.js",
       "require": "./dist/tv-demo.cjs.js"
     },
-    "./demo": "./src/App.vue",
-    "./style.css": "./dist/tv-demo.css"
+    "./style.css": "./dist/tv-demo.css",
+    "./demo": {
+      "import": "./src/demo/Demo.vue"
+    }
   },
   "main": "dist/tv-demo.cjs.js",
   "module": "dist/tv-demo.es.js",
