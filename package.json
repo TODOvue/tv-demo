@@ -59,7 +59,7 @@
     "dist/*.css"
   ],
   "peerDependencies": {
-    "vue": "^3.5.25",
+    "vue": "^3.5.26",
     "vue-highlight-code": "^0.2.0",
     "vue3-markdown-it": "^1.0.10"
   },
@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
-    "sass": "^1.97.2",
+    "sass": "^1.97.3",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vue-highlight-code": "^0.2.0",

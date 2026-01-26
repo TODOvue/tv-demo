@@ -4,6 +4,12 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.6] - 2026-01-26
+
+### Dependencies
+- Update `vue` to `^3.5.26`.
+- Update `sass` to `^1.97.3`.
+
 ## [1.4.5] - 2026-01-23
 
 ### Changed
