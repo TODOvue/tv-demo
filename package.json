@@ -42,9 +42,10 @@
   "module": "dist/tv-demo.es.js",
   "types": "dist/tv-demo.d.ts",
   "files": [
-    "dist",
+    "CHANGELOG.md",
     "LICENSE",
     "README.md",
+    "dist",
     "src"
   ],
   "engines": {
@@ -53,7 +54,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:demo": "cp README.md public/ && cp CHANGELOG.md public/ && VITE_BUILD_TARGET=demo vite build",
     "verify:dist": "node scripts/verify-dist.mjs"
   },
   "sideEffects": [
