@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Added 
 - Integrated demonstration context to resolve file paths for `README.md` and `CHANGELOG.md`.
 
+### Changed
+- Included `CHANGELOG.md` in the project files list.
+
+### Removed
+- Deleted the `build:demo` script from the configuration.
+
 ## [1.4.10] - 2026-01-26
 
 ### Changed
@@ -308,6 +314,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.11]: https://github.com/TODOvue/tv-demo/pull/56/files
 [1.4.10]: https://github.com/TODOvue/tv-demo/pull/55/files
 [1.4.9]: https://github.com/TODOvue/tv-demo/pull/54/files
 [1.4.8]: https://github.com/TODOvue/tv-demo/pull/53/files
