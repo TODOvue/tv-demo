@@ -4,6 +4,14 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.9] - 2026-01-26
+
+### Removed
+- Removed alias resolution for the src directory.
+
+### Added
+- Included the src/components directory in the package.json files list to ensure component source files are bundled in the package distribution.
+
 ## [1.4.8] - 2026-01-26
 
 ### Changed
@@ -290,6 +298,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.9]: https://github.com/TODOvue/tv-demo/pull/54/files
 [1.4.8]: https://github.com/TODOvue/tv-demo/pull/53/files
 [1.4.7]: https://github.com/TODOvue/tv-demo/pull/52/files
 [1.4.6]: https://github.com/TODOvue/tv-demo/pull/51/files
