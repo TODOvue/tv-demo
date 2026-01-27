@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.9] - 2026-01-26
+
+### Removed
+- Removed alias resolution for the src directory.
+
 ## [1.4.8] - 2026-01-26
 
 ### Changed
