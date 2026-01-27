@@ -4,6 +4,12 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.8] - 2026-01-26
+
+### Changed
+- Refactored component imports to utilize path aliases for improved codebase maintainability.
+- Enhanced the Vite configuration to optimize the development and build processes.
+
 ## [1.4.7] - 2026-01-26
 
 ### Changed
@@ -284,6 +290,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.4.8]: https://github.com/TODOvue/tv-demo/pull/53/files
 [1.4.7]: https://github.com/TODOvue/tv-demo/pull/52/files
 [1.4.6]: https://github.com/TODOvue/tv-demo/pull/51/files
 [1.4.5]: https://github.com/TODOvue/tv-demo/pull/50/files
