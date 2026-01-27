@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.11] - 2026-01-27
+
+### Added 
+- Integrated demonstration context to resolve file paths for `README.md` and `CHANGELOG.md`.
+
 ## [1.4.10] - 2026-01-26
 
 ### Changed

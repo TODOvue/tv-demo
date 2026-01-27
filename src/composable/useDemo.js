@@ -1,4 +1,4 @@
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect, inject } from 'vue';
 
 const ITEM_HEIGHT = 72;
 const OVERSCAN_COUNT = 6;
@@ -25,6 +25,8 @@ const useDemo = (props) => {
   let resizeObserver = null;
   let fallbackResizeListenerAttached = false;
   const showScrollToTop = computed(() => scrollTop.value > 0);
+
+  const demoContext = inject('TV_DEMO_CONTEXT', null);
 
   const variantEntries = computed(() =>
     (props.variants || []).map((variant, index) => ({
@@ -194,7 +196,12 @@ const useDemo = (props) => {
 
   const fetchReadme = async () => {
     try {
-      const response = await fetch(props.readmePath);
+      let url = props.readmePath;
+      if (demoContext && demoContext.resolvePath) {
+        url = demoContext.resolvePath(props.componentName, 'readme', props.readmePath);
+      }
+      
+      const response = await fetch(url);
       if (!response.ok) throw new Error('README.md not found');
       readmeContent.value = await response.text();
     } catch (error) {
@@ -204,7 +211,12 @@ const useDemo = (props) => {
 
   const fetchChangelog = async () => {
     try {
-      const response = await fetch(props.changelogPath);
+      let url = props.changelogPath;
+      if (demoContext && demoContext.resolvePath) {
+        url = demoContext.resolvePath(props.componentName, 'changelog', props.changelogPath);
+      }
+
+      const response = await fetch(url);
       if (!response.ok) throw new Error('CHANGELOG.md not found');
       changelogContent.value = await response.text();
     } catch (error) {
