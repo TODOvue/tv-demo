@@ -45,7 +45,8 @@
     "dist",
     "LICENSE",
     "README.md",
-    "src/demo"
+    "src/demo",
+    "src/components"
   ],
   "engines": {
     "node": ">=20.19.0"
