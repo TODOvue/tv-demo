@@ -16,12 +16,11 @@ A flexible, framework-agnostic Vue 3 component catalog for demos, documentation,
 
 > Demo: https://ui.todovue.blog/demo/
 
----
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start (SPA)](#quick-start-spa)
-- [Nuxt 3 / SSR Usage](#nuxt-3--ssr-usage)
+- [Nuxt 4 / SSR Usage](#nuxt-4--ssr-usage)
 - [Component Registration Options](#component-registration-options)
 - [Props](#props)
 - [Events](#events)
@@ -31,16 +30,14 @@ A flexible, framework-agnostic Vue 3 component catalog for demos, documentation,
 - [Contributing](#contributing)
 - [License](#license)
 
----
 ## Features
 - Visual catalog for Vue 3 components with live variants.
 - SPA and SSR (Nuxt 3) compatible.
 - Automatic import of global and highlight.js styles (no manual CSS import needed).
-- Interactive code highlighting and markdown documentation support.
+- Interactive code highlighting and Markdown documentation support.
 - Modular structure, easy to extend.
 - Tree-shake friendly and ready for modern bundlers.
 
----
 ## Installation
 Using npm:
 ```bash
@@ -55,7 +52,6 @@ Using pnpm:
 pnpm add @todovue/tv-demo
 ```
 
----
 ## Usage of Styles
 
 ### Vue/Vite (SPA)
@@ -82,7 +78,6 @@ export default defineNuxtConfig({
 })
 ```
 
----
 ## Quick Start (SPA)
 Global registration (main.js / main.ts):
 ```js
@@ -105,8 +100,7 @@ import { TvDemo } from '@todovue/tv-demo'
 </template>
 ```
 
----
-## Nuxt 3 / SSR Usage
+## Nuxt 4 / SSR Usage
 Create a plugin file: `plugins/tv-demo.client.ts` (or without suffix for SSR, it's safe):
 ```ts
 import { defineNuxtPlugin } from '#app'
@@ -127,7 +121,6 @@ import { TvDemo } from '@todovue/tv-demo'
 </script>
 ```
 
----
 ## Component Registration Options
 | Approach                                                    | When to use                                    |
 |-------------------------------------------------------------|------------------------------------------------|
@@ -135,7 +128,6 @@ import { TvDemo } from '@todovue/tv-demo'
 | Local named import `{ TvDemo }`                             | Isolated/code-split contexts                   |
 | Direct default import `import TvDemo from ...`              | Single use or manual registration              |
 
----
 ## Props
 | Name              | Type    | Default       | Description                                                         | Required |
 |-------------------|---------|---------------|---------------------------------------------------------------------|----------|
@@ -154,7 +146,6 @@ import { TvDemo } from '@todovue/tv-demo'
 | showChangelog     | Boolean | `true`        | Show or hide the changelog tab                                      | `false`  |
 | manualEmits       | Array   | `[]`          | List of event names to listen relative to the component             | `false`  |
 
----
 ## Events
 | Event name      | Description                                 |
 |-----------------|---------------------------------------------|
@@ -174,7 +165,6 @@ Manual Emits (for async components):
 />
 ```
 
----
 ## Customization (Styles)
 - All global and highlight.js styles are injected automatically.
 - You can override styles by passing the `demoStyle` prop:
@@ -198,14 +188,12 @@ Use in your component:
 ```
 You can provide colors for both `dark` and `light` themes, or just one. Defaults are used if not provided.
 
----
 ## SSR Notes
 - No direct DOM (`window` / `document`) access in the source code—safe for SSR.
 - Styles are injected automatically when you import the library.
 - Code highlighting works in both Vite and Nuxt.
 - Markdown documentation is supported by placing your `README.md` in the `public/` folder and referencing it via the `readmePath` prop.
 
----
 ## Development
 ```bash
 git clone https://github.com/TODOvue/tv-demo.git
@@ -216,14 +204,11 @@ yarn build   # build library
 ```
 The local demo is served with Vite using `index.html` and examples in `src/demo`.
 
----
 ## Contributing
 PRs and issues are welcome. See [CONTRIBUTING.md](../CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md).
 
----
 ## License
 MIT © TODOvue
 
----
 ### Attributions
 Crafted for the TODOvue component ecosystem
