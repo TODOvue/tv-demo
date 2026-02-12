@@ -4,6 +4,11 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [unreleased]
+
+### Changed
+- Adjusted component positioning and styling to improve overall appearance
+
 ## [1.4.11] - 2026-01-27
 
 ### Added 

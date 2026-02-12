@@ -29,11 +29,12 @@ const removeToast = (id) => {
 <style scoped lang="scss">
 .toast-container {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   pointer-events: none;
 
   & > * {
@@ -43,10 +44,10 @@ const removeToast = (id) => {
 
 @media (max-width: 640px) {
   .toast-container {
-    top: 10px;
-    right: 10px;
-    left: 10px;
-    align-items: center;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    align-items: stretch;
   }
 }
 </style>

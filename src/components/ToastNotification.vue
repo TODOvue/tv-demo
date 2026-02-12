@@ -79,6 +79,8 @@ const getIconColor = () => {
 </template>
 
 <style scoped lang="scss">
+@use '../assets/scss/variables.scss';
+
 @keyframes slideInRight {
   from {
     transform: translateX(400px);
@@ -105,17 +107,14 @@ const getIconColor = () => {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 320px;
-  max-width: 450px;
+  width: min(420px, calc(100vw - 32px));
   padding: 14px 16px;
   margin-bottom: 12px;
-  border-radius: 12px;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   backdrop-filter: blur(12px);
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   opacity: 0;
   transform: translateX(400px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -179,7 +178,9 @@ const getIconColor = () => {
   margin: 0;
   font-size: 14px;
   font-weight: 500;
-  color: #ffffff;
+  color: #e2e8f0;
+  font-family: variables.$font-text;
+  letter-spacing: 0.01em;
   line-height: 1.4;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -192,8 +193,8 @@ const getIconColor = () => {
   width: 24px;
   height: 24px;
   border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(148, 163, 184, 0.16);
+  color: rgba(226, 232, 240, 0.7);
   border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
@@ -202,35 +203,49 @@ const getIconColor = () => {
   flex-shrink: 0;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.9);
-    transform: scale(1.1);
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: translateY(1px);
   }
 }
 
-/* Light theme support */
-.light-mode .toast-notification {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 245, 0.98) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
+.dark-mode .toast-notification {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.25);
 
   .toast-message {
-    color: #1f2937;
+    color: #e2e8f0;
   }
 
   .toast-close {
-    background: rgba(0, 0, 0, 0.05);
-    color: rgba(0, 0, 0, 0.5);
+    background: rgba(148, 163, 184, 0.16);
+    color: rgba(226, 232, 240, 0.7);
 
     &:hover {
-      background: rgba(0, 0, 0, 0.1);
-      color: rgba(0, 0, 0, 0.8);
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+    }
+  }
+}
+
+.light-mode .toast-notification {
+  background: rgba(248, 250, 252, 0.9);
+  border-color: rgba(71, 85, 105, 0.2);
+
+  .toast-message {
+    color: #1e293b;
+  }
+
+  .toast-close {
+    background: rgba(100, 116, 139, 0.12);
+    color: rgba(30, 41, 59, 0.65);
+
+    &:hover {
+      background: rgba(30, 64, 175, 0.12);
+      color: #1d4ed8;
     }
   }
 }
