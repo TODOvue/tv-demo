@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Adjusted component positioning and styling to improve overall appearance
 - Simplified type declarations for improved readability and maintainability
 - Converted all components from JavaScript to TypeScript to leverage static typing and catch errors at compile time
+- Migrated entire codebase from JavaScript to TypeScript
+- Updated configuration files (including `tsconfig.json`, build scripts, and linting rules) to support TypeScript compilation
 
 ### Added
 - Added TypeScript type definitions for components to ensure type safety and clearer usage
@@ -33,6 +35,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Add `vitest` to `devDependencies` for linting support `^4.0.18` version.
 - Add `vue-eslint-parser` to `devDependencies` for linting support `^9.4.3` version.
 - Add `vue-tsc` to `devDependencies` for linting support `^3.2.4` version.
+- Add `jiti` to `devDependencies` for linting support `^2.6.1` version.
 - Update `vue` to `^3.5.26` in `peerDependencies`.
 - Update `github-markdown-css` to `^5.9.0` in `dependencies`.
 - Update `"@vitejs/plugin-vue` to `^6.0.4` in `devDependencies`.

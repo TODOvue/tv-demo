@@ -1,9 +1,9 @@
-import js from '@eslint/js';
-import stylistic from '@stylistic/eslint-plugin';
-import globals from 'globals';
-import pluginVue from 'eslint-plugin-vue';
-import tseslint from 'typescript-eslint';
-import vueParser from 'vue-eslint-parser';
+import js from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
+import globals from 'globals'
+import pluginVue from 'eslint-plugin-vue'
+import tseslint from 'typescript-eslint'
+import vueParser from 'vue-eslint-parser'
 
 export default [
   {
@@ -51,4 +51,4 @@ export default [
       },
     },
   },
-];
+]
