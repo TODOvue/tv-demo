@@ -41,5 +41,18 @@ export default defineConfig({
         api: "modern-compiler"
       }
     }
+  },
+  test: {
+    globals: true,
+    environment: "happy-dom",
+    setupFiles: ["./src/test/setup.ts"],
+    include: ["src/**/*.test.ts"],
+    exclude: ["dist", "dist-demo", "node_modules"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html", "lcov"],
+      reportsDirectory: "./coverage",
+      exclude: ["src/test/**", "**/*.d.ts", "**/*.scss", "**/*.css"]
+    }
   }
 });

@@ -15,6 +15,8 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Added TypeScript type definitions for components to ensure type safety and clearer usage
 - Added lint configuration to enforce code quality and consistency
 - Introduced explicit type interfaces and generics for component props, state, and events to enhance type safety and developer experience
+- Added unit tests for demo components to validate rendering and interaction logic
+- Added unit tests for utility functions to verify correct behavior and edge-case handling
 
 ### Removed
 - Removed unused emits from components
