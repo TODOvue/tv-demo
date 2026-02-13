@@ -74,6 +74,19 @@ const complexModel = computed<NestedValue[] | Record<string, NestedValue>>(() =>
   return []
 })
 
+interface NestedEditorEntry {
+  key: string | number
+  value: NestedValue
+}
+
+const editorEntries = computed<NestedEditorEntry[]>(() => {
+  if (Array.isArray(complexModel.value)) {
+    return complexModel.value.map((value, key) => ({ key, value }))
+  }
+
+  return Object.entries(complexModel.value).map(([key, value]) => ({ key, value }))
+})
+
 const modelArrayLength = computed(() => (Array.isArray(complexModel.value) ? complexModel.value.length : 0))
 </script>
 
@@ -125,12 +138,12 @@ const modelArrayLength = computed(() => (Array.isArray(complexModel.value) ? com
 
       <div v-if="isOpen" class="tv-nested-children">
         <TvNestedEditor
-          v-for="(value, key) in complexModel"
-          :key="key"
-          :name="key"
-          :model-value="value"
+          v-for="entry in editorEntries"
+          :key="entry.key"
+          :name="entry.key"
+          :model-value="entry.value"
           :depth="depth + 1"
-          @update:modelValue="onChildUpdate(key, $event)"
+          @update:modelValue="onChildUpdate(entry.key, $event)"
         />
       </div>
     </div>
