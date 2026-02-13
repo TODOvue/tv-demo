@@ -350,7 +350,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
-[1.5.0]: https://github.com/TODOvue/tv-demo/pull/56/files
+[1.5.0]: https://github.com/TODOvue/tv-demo/pull/57/files
 [1.4.11]: https://github.com/TODOvue/tv-demo/pull/56/files
 [1.4.10]: https://github.com/TODOvue/tv-demo/pull/55/files
 [1.4.9]: https://github.com/TODOvue/tv-demo/pull/54/files
