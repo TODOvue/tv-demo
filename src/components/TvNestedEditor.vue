@@ -47,15 +47,6 @@ const onChildUpdate = (key, value) => {
   newValue[key] = value;
   emit('update:modelValue', newValue);
 };
-
-const parseJson = (e) => {
-  try {
-    const val = JSON.parse(e.target.value);
-    emit('update:modelValue', val);
-  } catch (err) {
-    console.error(err)
-  }
-};
 </script>
 
 <template>

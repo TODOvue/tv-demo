@@ -32,7 +32,7 @@ const props = defineProps({
   isGrid: Boolean,
 });
 
-const emit = defineEmits([]);
+defineEmits([]);
 
 const iframeRef = ref(null);
 let appInstance = null;

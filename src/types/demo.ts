@@ -1,10 +1,10 @@
-export type ThemeMode = 'dark' | 'light';
-export type ToastType = 'success' | 'error' | 'warning' | 'info';
-export type DemoTab = 'demo' | 'docs' | 'changelog';
-export type ToolTab = 'playground' | 'events' | 'code';
-export type ViewportWidth = '100%' | '375px' | '768px' | '1280px';
-export type BackgroundType = 'default' | 'checkered' | 'white' | 'dark';
-export type VariantKey = string | number;
+export type ThemeMode = 'dark' | 'light'
+export type ToastType = 'success' | 'error' | 'warning' | 'info'
+export type DemoTab = 'demo' | 'docs' | 'changelog'
+export type ToolTab = 'playground' | 'events' | 'code'
+export type ViewportWidth = '100%' | '375px' | '768px' | '1280px'
+export type BackgroundType = 'default' | 'checkered' | 'white' | 'dark'
+export type VariantKey = string | number
 
 export interface DemoStylePalette {
   backgroundBody?: string;
@@ -23,7 +23,7 @@ export interface DemoCodeVariant {
   lang?: string;
 }
 
-export type DemoPropsData = Record<string, unknown>;
+export type DemoPropsData = Record<string, unknown>
 
 export interface DemoVariant {
   id?: VariantKey;

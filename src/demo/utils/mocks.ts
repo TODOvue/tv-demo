@@ -1,11 +1,11 @@
-import Default from './demos/default.vue?raw';
-import IsDevComponent from './demos/isDevComponent.vue?raw';
-import HideBackground from './demos/hideBackground.vue?raw';
-import DemoStyle from './demos/demoStyle.vue?raw';
-import MultipleOptionsSetup from './demos/multipleOptionsSetup.vue?raw';
-import MultipleOptions from './demos/multipleOptions.vue?raw';
-import MultipleOptionsTypeScript from './demos/multipleOptionsTypeScript.vue?raw';
-import type { DemoStyleConfig, DemoVariant } from '../../types/demo';
+import Default from './demos/default.vue?raw'
+import IsDevComponent from './demos/isDevComponent.vue?raw'
+import HideBackground from './demos/hideBackground.vue?raw'
+import DemoStyle from './demos/demoStyle.vue?raw'
+import MultipleOptionsSetup from './demos/multipleOptionsSetup.vue?raw'
+import MultipleOptions from './demos/multipleOptions.vue?raw'
+import MultipleOptionsTypeScript from './demos/multipleOptionsTypeScript.vue?raw'
+import type { DemoStyleConfig, DemoVariant } from '../../types/demo'
 
 const style: DemoStyleConfig = {
   dark: {
@@ -18,7 +18,7 @@ const style: DemoStyleConfig = {
     backgroundContent: '#f5f5f5',
     color: '#000000',
   },
-};
+}
 
 export const demos: DemoVariant[] = [
   {
@@ -78,4 +78,4 @@ export const demos: DemoVariant[] = [
       },
     ],
   },
-];
+]

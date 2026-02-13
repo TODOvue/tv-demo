@@ -8,9 +8,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - Adjusted component positioning and styling to improve overall appearance
+- Simplified type declarations for improved readability and maintainability
 
 ### Added
 - Added TypeScript type definitions for components to ensure type safety and clearer usage
+- Added lint configuration to enforce code quality and consistency
+
+### Removed
+- Removed unused emits from components
 
 ## [1.4.11] - 2026-01-27
 

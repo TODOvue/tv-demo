@@ -54,6 +54,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "lint:ts": "npm run typecheck",
+    "lint:eslint": "eslint .",
+    "lint:eslint:fix": "eslint . --fix",
+    "lint:fix": "npm run lint:eslint:fix && npm run lint:ts",
+    "lint": "npm run lint:eslint && npm run lint:ts",
     "verify:dist": "node scripts/verify-dist.mjs"
   },
   "sideEffects": [
@@ -70,10 +76,18 @@
     "github-markdown-css": "^5.8.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@stylistic/eslint-plugin": "^2.13.0",
     "@vitejs/plugin-vue": "^6.0.3",
+    "eslint": "^9.21.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^15.15.0",
     "sass": "^1.97.3",
+    "typescript-eslint": "^8.24.1",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^3.2.4",
     "vue-highlight-code": "^0.2.0",
     "vue3-markdown-it": "^1.0.10"
   }
