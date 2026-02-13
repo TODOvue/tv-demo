@@ -21,6 +21,22 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Removed
 - Removed unused emits from components
 
+### Dependencies
+- Add `"@eslint/js` to `devDependencies` for JavaScript linting support `^9.21.0` version.
+- Add `@stylistic/eslint-plugin` to `devDependencies` for linting support `^2.13.0` version.
+- Add `@vitest/coverage-v8` to `devDependencies` for linting support `^4.0.18` version.
+- Add `@vue/test-utils` to `devDependencies` for linting support `^2.4.6` version.
+- Add `eslint-plugin-vue` to `devDependencies` for linting support `^9.32.0` version.
+- Add `globals` to `devDependencies` for linting support `^15.15.0` version.
+- Add `happy-dom` to `devDependencies` for linting support `^20.6.1` version.
+- Add `typescript-eslint` to `devDependencies` for linting support `^8.24.1` version.
+- Add `vitest` to `devDependencies` for linting support `^4.0.18` version.
+- Add `vue-eslint-parser` to `devDependencies` for linting support `^9.4.3` version.
+- Add `vue-tsc` to `devDependencies` for linting support `^3.2.4` version.
+- Update `vue` to `^3.5.26` in `peerDependencies`.
+- Update `github-markdown-css` to `^5.9.0` in `dependencies`.
+- Update `"@vitejs/plugin-vue` to `^6.0.4` in `devDependencies`.
+
 ## [1.4.11] - 2026-01-27
 
 ### Added 

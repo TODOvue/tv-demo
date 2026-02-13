@@ -70,17 +70,17 @@
     "dist/*.css"
   ],
   "peerDependencies": {
-    "vue": "^3.5.26",
+    "vue": "^3.5.28",
     "vue-highlight-code": "^0.2.0",
     "vue3-markdown-it": "^1.0.10"
   },
   "dependencies": {
-    "github-markdown-css": "^5.8.1"
+    "github-markdown-css": "^5.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@stylistic/eslint-plugin": "^2.13.0",
-    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/coverage-v8": "^4.0.18",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.21.0",
