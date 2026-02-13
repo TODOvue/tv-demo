@@ -1,45 +1,65 @@
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect, inject } from 'vue';
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect } from 'vue';
+import type {
+  BackgroundType,
+  DemoContext,
+  DemoEventLog,
+  DemoStylePalette,
+  DemoTab,
+  DemoToast,
+  DemoVariant,
+  DemoVariantEntry,
+  ThemeMode,
+  ToastType,
+  ToolTab,
+  UseDemoProps,
+  VariantKey,
+  ViewportWidth,
+} from '../types/demo';
 
 const ITEM_HEIGHT = 72;
 const OVERSCAN_COUNT = 6;
+const VALID_TABS: DemoTab[] = ['demo', 'docs', 'changelog'];
 
-const getVariantKey = (variant, index) => variant?.id ?? variant?.title ?? `variant-${index}`;
-const getSearchableText = (variant = {}) => `${variant.title ?? ''} ${variant.description ?? ''}`.toLowerCase();
+const getVariantKey = (variant: DemoVariant, index: number): VariantKey =>
+  variant?.id ?? variant?.title ?? `variant-${index}`;
 
-const useDemo = (props) => {
-  const theme = ref('dark');
-  const toasts = ref([]);
+const getSearchableText = (variant: DemoVariant = {}): string =>
+  `${variant.title ?? ''} ${variant.description ?? ''}`.toLowerCase();
+
+const useDemo = (props: UseDemoProps) => {
+  const theme = ref<ThemeMode>('dark');
+  const toasts = ref<DemoToast[]>([]);
   const readmeContent = ref('');
   const changelogContent = ref('');
-  const selectedTab = ref('demo');
+  const selectedTab = ref<DemoTab>('demo');
   const searchQuery = ref('');
-  const selectedVariantKey = ref(null);
-  const variantsListRef = ref(null);
+  const selectedVariantKey = ref<VariantKey | null>(null);
+  const variantsListRef = ref<HTMLElement | null>(null);
   const viewportHeight = ref(360);
-  const viewportWidth = ref('100%');
-  const backgroundType = ref('default');
+  const viewportWidth = ref<ViewportWidth>('100%');
+  const backgroundType = ref<BackgroundType>('default');
   const isRtl = ref(false);
   const isGrid = ref(false);
   const isSidebarCompressed = ref(false);
   const scrollTop = ref(0);
-  let resizeObserver = null;
+  let resizeObserver: ResizeObserver | null = null;
   let fallbackResizeListenerAttached = false;
   const showScrollToTop = computed(() => scrollTop.value > 0);
 
-  const demoContext = inject('TV_DEMO_CONTEXT', null);
+  const demoContext = inject<DemoContext | null>('TV_DEMO_CONTEXT', null);
 
-  const variantEntries = computed(() =>
+  const variantEntries = computed<DemoVariantEntry[]>(() =>
     (props.variants || []).map((variant, index) => ({
       variant,
       index,
       key: getVariantKey(variant, index),
       searchableText: getSearchableText(variant),
-    }))
+    })),
   );
 
   const totalVariantsCount = computed(() => variantEntries.value.length);
 
-  const filteredEntries = computed(() => {
+  const filteredEntries = computed<DemoVariantEntry[]>(() => {
     const term = searchQuery.value.trim().toLowerCase();
     if (!term) return variantEntries.value;
     return variantEntries.value.filter((entry) => entry.searchableText.includes(term));
@@ -47,14 +67,15 @@ const useDemo = (props) => {
 
   const filteredVariantsCount = computed(() => filteredEntries.value.length);
   const emptySearchState = computed(
-    () => Boolean(searchQuery.value.trim()) && filteredEntries.value.length === 0
+    () => Boolean(searchQuery.value.trim()) && filteredEntries.value.length === 0,
   );
 
   const updateViewportHeight = () => {
-    viewportHeight.value = variantsListRef.value?.clientHeight || viewportHeight.value;
+    viewportHeight.value = variantsListRef.value?.clientHeight ?? viewportHeight.value;
   };
 
   const detachFallbackResizeListener = () => {
+    if (typeof window === 'undefined') return;
     if (fallbackResizeListenerAttached) {
       window.removeEventListener('resize', updateViewportHeight);
       fallbackResizeListenerAttached = false;
@@ -84,16 +105,16 @@ const useDemo = (props) => {
             }
           });
           resizeObserver.observe(el);
-        } else if (!fallbackResizeListenerAttached) {
+        } else if (!fallbackResizeListenerAttached && typeof window !== 'undefined') {
           window.addEventListener('resize', updateViewportHeight);
           fallbackResizeListenerAttached = true;
         }
       });
-    }
+    },
   );
 
   const isMounted = ref(false);
-  let debounceTimer = null;
+  let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   const updateUrl = () => {
     if (typeof window === 'undefined') return;
@@ -112,8 +133,8 @@ const useDemo = (props) => {
       url.searchParams.delete('search');
     }
 
-    if (selectedVariantKey.value) {
-      url.searchParams.set('variant', selectedVariantKey.value);
+    if (selectedVariantKey.value !== null) {
+      url.searchParams.set('variant', String(selectedVariantKey.value));
     } else {
       url.searchParams.delete('variant');
     }
@@ -140,20 +161,22 @@ const useDemo = (props) => {
 
   watch([selectedTab, searchQuery, selectedVariantKey, viewportWidth], () => {
     if (!isMounted.value) return;
-    clearTimeout(debounceTimer);
+    if (debounceTimer) clearTimeout(debounceTimer);
     debounceTimer = setTimeout(updateUrl, 300);
   });
 
   onMounted(() => {
     const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
+    if (storedTheme === 'light' || storedTheme === 'dark') {
       theme.value = storedTheme;
     }
 
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get('tab');
-      if (tabParam) selectedTab.value = tabParam;
+      if (tabParam && VALID_TABS.includes(tabParam as DemoTab)) {
+        selectedTab.value = tabParam as DemoTab;
+      }
 
       const searchParam = params.get('search');
       if (searchParam) searchQuery.value = searchParam;
@@ -186,40 +209,68 @@ const useDemo = (props) => {
     nextTick(updateViewportHeight);
   });
 
+  const handleWindowClick = (event: MouseEvent) => {
+    const targetNode = event.target;
+    if (!(targetNode instanceof Node)) return;
+
+    const installDropdown = document.querySelector('.install-dropdown');
+    if (installDropdown && !installDropdown.contains(targetNode)) {
+      closeInstallDropdown();
+    }
+
+    const themeDropdown = document.querySelector('.tv-demo-dropdown.theme-dropdown');
+    if (themeDropdown && !themeDropdown.contains(targetNode)) {
+      closeThemeDropdown();
+    }
+  };
+
+  onMounted(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('click', handleWindowClick);
+    }
+  });
+
   onBeforeUnmount(() => {
     if (resizeObserver) {
       resizeObserver.disconnect();
       resizeObserver = null;
+    }
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+      debounceTimer = null;
+    }
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('click', handleWindowClick);
     }
     detachFallbackResizeListener();
   });
 
   const fetchReadme = async () => {
     try {
-      let url = props.readmePath;
-      if (demoContext && demoContext.resolvePath) {
-        url = demoContext.resolvePath(props.componentName, 'readme', props.readmePath);
+      let url = props.readmePath ?? './README.md';
+      if (demoContext?.resolvePath) {
+        url = demoContext.resolvePath(props.componentName, 'readme', props.readmePath) ?? url;
       }
-      
+
       const response = await fetch(url);
       if (!response.ok) throw new Error('README.md not found');
       readmeContent.value = await response.text();
-    } catch (error) {
+    } catch {
       readmeContent.value = 'Documentation not found.';
     }
   };
 
   const fetchChangelog = async () => {
     try {
-      let url = props.changelogPath;
-      if (demoContext && demoContext.resolvePath) {
-        url = demoContext.resolvePath(props.componentName, 'changelog', props.changelogPath);
+      let url = props.changelogPath ?? './CHANGELOG.md';
+      if (demoContext?.resolvePath) {
+        url = demoContext.resolvePath(props.componentName, 'changelog', props.changelogPath) ?? url;
       }
 
       const response = await fetch(url);
       if (!response.ok) throw new Error('CHANGELOG.md not found');
       changelogContent.value = await response.text();
-    } catch (error) {
+    } catch {
       changelogContent.value = 'Changelog not found.';
     }
   };
@@ -238,10 +289,13 @@ const useDemo = (props) => {
       }
 
       if (!entries.some((entry) => entry.key === selectedVariantKey.value)) {
-        selectedVariantKey.value = entries[0].key;
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          selectedVariantKey.value = firstEntry.key;
+        }
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   watch(
@@ -253,12 +307,15 @@ const useDemo = (props) => {
       }
 
       if (!entries.some((entry) => entry.key === selectedVariantKey.value)) {
-        selectedVariantKey.value = entries[0].key;
+        const firstEntry = entries[0];
+        if (firstEntry) {
+          selectedVariantKey.value = firstEntry.key;
+        }
       }
-    }
+    },
   );
 
-  const setScrollPosition = (value) => {
+  const setScrollPosition = (value: number) => {
     if (!variantsListRef.value) return;
     variantsListRef.value.scrollTop = value;
     scrollTop.value = value;
@@ -269,25 +326,25 @@ const useDemo = (props) => {
   });
 
   const selectedVariantIndex = computed(() =>
-    filteredEntries.value.findIndex((entry) => entry.key === selectedVariantKey.value)
+    filteredEntries.value.findIndex((entry) => entry.key === selectedVariantKey.value),
   );
 
   const visibleCount = computed(() => Math.max(1, Math.ceil(viewportHeight.value / ITEM_HEIGHT)));
   const virtualStartIndex = computed(() =>
-    Math.max(0, Math.floor(scrollTop.value / ITEM_HEIGHT) - OVERSCAN_COUNT)
+    Math.max(0, Math.floor(scrollTop.value / ITEM_HEIGHT) - OVERSCAN_COUNT),
   );
   const virtualEndIndex = computed(() =>
     Math.min(
       filteredEntries.value.length,
       virtualStartIndex.value + visibleCount.value + OVERSCAN_COUNT * 2,
-    )
+    ),
   );
   const virtualizedVariants = computed(() =>
-    filteredEntries.value.slice(virtualStartIndex.value, virtualEndIndex.value)
+    filteredEntries.value.slice(virtualStartIndex.value, virtualEndIndex.value),
   );
   const virtualPaddingTop = computed(() => virtualStartIndex.value * ITEM_HEIGHT);
   const virtualPaddingBottom = computed(() =>
-    Math.max(0, (filteredEntries.value.length - virtualEndIndex.value) * ITEM_HEIGHT)
+    Math.max(0, (filteredEntries.value.length - virtualEndIndex.value) * ITEM_HEIGHT),
   );
 
   const ensureActiveVisible = () => {
@@ -309,7 +366,7 @@ const useDemo = (props) => {
 
   watch(selectedVariantKey, ensureActiveVisible);
 
-  const variant = computed(() => {
+  const variant = computed<DemoVariant>(() => {
     if (emptySearchState.value) {
       return {};
     }
@@ -323,33 +380,36 @@ const useDemo = (props) => {
     return entry?.variant || {};
   });
 
-  const reactiveProps = ref({});
+  const reactiveProps = ref<Record<string, unknown>>({});
 
   watch(
     () => variant.value,
     (newVariant) => {
       if (newVariant?.propsData) {
         try {
-          reactiveProps.value = JSON.parse(JSON.stringify(newVariant.propsData));
-        } catch (e) {
+          reactiveProps.value = JSON.parse(JSON.stringify(newVariant.propsData)) as Record<
+            string,
+            unknown
+          >;
+        } catch {
           reactiveProps.value = { ...newVariant.propsData };
         }
       } else {
         reactiveProps.value = {};
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
-  const eventLogs = ref([]);
+  const eventLogs = ref<DemoEventLog[]>([]);
 
-  const addLog = (eventName, payload) => {
+  const addLog = (eventName: string, payload: unknown) => {
     const timestamp = new Date().toLocaleTimeString();
     eventLogs.value.unshift({
       id: Date.now() + Math.random(),
       timestamp,
       eventName,
-      payload
+      payload,
     });
     if (eventLogs.value.length > 50) {
       eventLogs.value = eventLogs.value.slice(0, 50);
@@ -367,20 +427,25 @@ const useDemo = (props) => {
     clearLogs(false);
   });
 
-  const handleVariantsScroll = (event) => {
-    scrollTop.value = event.target.scrollTop;
+  const handleVariantsScroll = (event: Event) => {
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
+    scrollTop.value = target.scrollTop;
   };
 
-  const moveSelectionBy = (delta) => {
+  const moveSelectionBy = (delta: number) => {
     const entries = filteredEntries.value;
     if (!entries.length) return;
 
     const baseIndex = selectedVariantIndex.value < 0 ? 0 : selectedVariantIndex.value;
     const nextIndex = Math.min(entries.length - 1, Math.max(0, baseIndex + delta));
-    selectedVariantKey.value = entries[nextIndex].key;
+    const nextEntry = entries[nextIndex];
+    if (nextEntry) {
+      selectedVariantKey.value = nextEntry.key;
+    }
   };
 
-  const handleVariantsKeydown = (event) => {
+  const handleVariantsKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
@@ -393,13 +458,19 @@ const useDemo = (props) => {
       case 'Home':
         event.preventDefault();
         if (filteredEntries.value.length) {
-          selectedVariantKey.value = filteredEntries.value[0].key;
+          const firstEntry = filteredEntries.value[0];
+          if (firstEntry) {
+            selectedVariantKey.value = firstEntry.key;
+          }
         }
         break;
       case 'End':
         event.preventDefault();
         if (filteredEntries.value.length) {
-          selectedVariantKey.value = filteredEntries.value[filteredEntries.value.length - 1].key;
+          const lastEntry = filteredEntries.value[filteredEntries.value.length - 1];
+          if (lastEntry) {
+            selectedVariantKey.value = lastEntry.key;
+          }
         }
         break;
       default:
@@ -407,56 +478,59 @@ const useDemo = (props) => {
     }
   };
 
-  const selectVariant = (key) => {
+  const selectVariant = (key: VariantKey) => {
     selectedVariantKey.value = key;
   };
 
   const customStyle = computed(() => {
-    const style = theme.value === 'dark' ? props.demoStyle?.dark : props.demoStyle?.light;
+    const activeStyle: DemoStylePalette | undefined =
+      theme.value === 'dark' ? props.demoStyle?.dark : props.demoStyle?.light;
+
     return {
       body: {
-        backgroundColor: style?.backgroundBody || '',
-        color: style?.color || '',
+        backgroundColor: activeStyle?.backgroundBody || '',
+        color: activeStyle?.color || '',
       },
       content: {
-        backgroundColor: style?.backgroundContent || '',
-        color: style?.color || '',
+        backgroundColor: activeStyle?.backgroundContent || '',
+        color: activeStyle?.color || '',
       },
     };
   });
 
-  const setClickItem = (item) => {
+  const setClickItem = (item: 'npm' | 'yarn' | 'pnpm' | 'bun' | 'clone' | string) => {
     let commandToCopy = '';
 
     switch (item) {
       case 'npm':
-        commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        commandToCopy = `npm install ${props.isDevComponent ? '-D ' : ''}${props.npmInstall ?? ''}`;
         break;
       case 'yarn':
-        commandToCopy = `yarn add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        commandToCopy = `yarn add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall ?? ''}`;
         break;
       case 'pnpm':
-        commandToCopy = `pnpm add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        commandToCopy = `pnpm add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall ?? ''}`;
         break;
       case 'bun':
-        commandToCopy = `bun add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall}`;
+        commandToCopy = `bun add ${props.isDevComponent ? '-D ' : ''}${props.npmInstall ?? ''}`;
         break;
       default:
-        commandToCopy = `git clone ${props.urlClone}`;
+        commandToCopy = `git clone ${props.urlClone ?? ''}`;
         break;
     }
 
-    navigator.clipboard.writeText(commandToCopy)
+    navigator.clipboard
+      .writeText(commandToCopy)
       .then(() => {
         addToast(`Copied to clipboard: ${commandToCopy}`, 'success', 2000);
       })
-      .catch(err => {
-        addToast(`Failed to copy: ${err}`, 'error', 2000);
+      .catch((err: unknown) => {
+        addToast(`Failed to copy: ${String(err)}`, 'error', 2000);
       });
   };
 
-  const addToast = (message, type = 'success', duration = 3000) => {
-    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const addToast = (message: string, type: ToastType = 'success', duration = 3000) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     toasts.value.push({ id, message, type, duration });
   };
 
@@ -484,41 +558,30 @@ const useDemo = (props) => {
     }
   };
 
-  onMounted(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('click', (e) => {
-        const dropdown = document.querySelector('.install-dropdown');
-        if (dropdown && !dropdown.contains(e.target)) {
-          closeInstallDropdown();
-        }
-
-        const themeDropdown = document.querySelector('.tv-demo-dropdown.theme-dropdown');
-        if (themeDropdown && !themeDropdown.contains(e.target)) {
-          closeThemeDropdown();
-        }
-      });
-    }
-  });
-
-  const removeToast = (id) => {
-    const index = toasts.value.findIndex(toast => toast.id === id);
+  const removeToast = (id: string) => {
+    const index = toasts.value.findIndex((toast) => toast.id === id);
     if (index > -1) {
       toasts.value.splice(index, 1);
     }
   };
 
-  watchEffect(async () => {
-    await fetchReadme();
-    await fetchChangelog();
+  watchEffect(() => {
+    void (async () => {
+      await fetchReadme();
+      await fetchChangelog();
+    })();
   });
 
-  const activeToolTab = ref('playground');
+  const activeToolTab = ref<ToolTab>('playground');
 
   const resetProps = () => {
     if (variant.value?.propsData) {
       try {
-        reactiveProps.value = JSON.parse(JSON.stringify(variant.value.propsData));
-      } catch (e) {
+        reactiveProps.value = JSON.parse(JSON.stringify(variant.value.propsData)) as Record<
+          string,
+          unknown
+        >;
+      } catch {
         reactiveProps.value = { ...variant.value.propsData };
       }
     } else {
@@ -529,24 +592,24 @@ const useDemo = (props) => {
 
   const selectedCodeType = ref('Vue 3 Setup');
 
-  const availableCodeTypes = computed(() => {
+  const availableCodeTypes = computed<string[]>(() => {
     if (variant.value?.code && Array.isArray(variant.value.code)) {
-      return variant.value.code.map(c => c.type);
+      return variant.value.code.map((item) => item.type);
     }
     return [];
   });
 
-  const currentCode = computed(() => {
+  const currentCode = computed<string>(() => {
     if (variant.value?.code && Array.isArray(variant.value.code)) {
-      const match = variant.value.code.find(c => c.type === selectedCodeType.value);
+      const match = variant.value.code.find((item) => item.type === selectedCodeType.value);
       return match ? match.content : '';
     }
     return variant.value?.html || '';
   });
 
-  const currentLang = computed(() => {
+  const currentLang = computed<string>(() => {
     if (variant.value?.code && Array.isArray(variant.value.code)) {
-      const match = variant.value.code.find(c => c.type === selectedCodeType.value);
+      const match = variant.value.code.find((item) => item.type === selectedCodeType.value);
       return match?.lang || 'html';
     }
     return 'html';
@@ -556,20 +619,24 @@ const useDemo = (props) => {
     () => availableCodeTypes.value,
     (types) => {
       if (types.length > 0 && !types.includes(selectedCodeType.value)) {
-        selectedCodeType.value = types[0];
+        const firstType = types[0];
+        if (firstType) {
+          selectedCodeType.value = firstType;
+        }
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
-  const copyCode = (code) => {
+  const copyCode = (code?: string) => {
     const textToCopy = code || currentCode.value;
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
         addToast('Code copied to clipboard', 'success', 2000);
       })
-      .catch((err) => {
-        addToast(`Failed to copy: ${err}`, 'error', 2000);
+      .catch((err: unknown) => {
+        addToast(`Failed to copy: ${String(err)}`, 'error', 2000);
       });
   };
 

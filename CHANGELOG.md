@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Adjusted component positioning and styling to improve overall appearance
 
+### Added
+- Added TypeScript type definitions for components to ensure type safety and clearer usage
+
 ## [1.4.11] - 2026-01-27
 
 ### Added 
