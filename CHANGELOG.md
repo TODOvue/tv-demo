@@ -4,6 +4,42 @@ All notable changes to `@todovue/tv-demo` will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-02-12
+
+### Changed
+- Adjusted component positioning and styling to improve overall appearance
+- Simplified type declarations for improved readability and maintainability
+- Converted all components from JavaScript to TypeScript to leverage static typing and catch errors at compile time
+- Migrated entire codebase from JavaScript to TypeScript
+- Updated configuration files (including `tsconfig.json`, build scripts, and linting rules) to support TypeScript compilation
+
+### Added
+- Added TypeScript type definitions for components to ensure type safety and clearer usage
+- Added lint configuration to enforce code quality and consistency
+- Introduced explicit type interfaces and generics for component props, state, and events to enhance type safety and developer experience
+- Added unit tests for demo components to validate rendering and interaction logic
+- Added unit tests for utility functions to verify correct behavior and edge-case handling
+
+### Removed
+- Removed unused emits from components
+
+### Dependencies
+- Add `"@eslint/js` to `devDependencies` for JavaScript linting support `^9.21.0` version.
+- Add `@stylistic/eslint-plugin` to `devDependencies` for linting support `^2.13.0` version.
+- Add `@vitest/coverage-v8` to `devDependencies` for linting support `^4.0.18` version.
+- Add `@vue/test-utils` to `devDependencies` for linting support `^2.4.6` version.
+- Add `eslint-plugin-vue` to `devDependencies` for linting support `^9.32.0` version.
+- Add `globals` to `devDependencies` for linting support `^15.15.0` version.
+- Add `happy-dom` to `devDependencies` for linting support `^20.6.1` version.
+- Add `typescript-eslint` to `devDependencies` for linting support `^8.24.1` version.
+- Add `vitest` to `devDependencies` for linting support `^4.0.18` version.
+- Add `vue-eslint-parser` to `devDependencies` for linting support `^9.4.3` version.
+- Add `vue-tsc` to `devDependencies` for linting support `^3.2.4` version.
+- Add `jiti` to `devDependencies` for linting support `^2.6.1` version.
+- Update `vue` to `^3.5.26` in `peerDependencies`.
+- Update `github-markdown-css` to `^5.9.0` in `dependencies`.
+- Update `"@vitejs/plugin-vue` to `^6.0.4` in `devDependencies`.
+
 ## [1.4.11] - 2026-01-27
 
 ### Added 
@@ -314,6 +350,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - Integrated `vue-highlight-code` for live code display.
 - Responsive layout for desktop and mobile screens.
 
+[1.5.0]: https://github.com/TODOvue/tv-demo/pull/57/files
 [1.4.11]: https://github.com/TODOvue/tv-demo/pull/56/files
 [1.4.10]: https://github.com/TODOvue/tv-demo/pull/55/files
 [1.4.9]: https://github.com/TODOvue/tv-demo/pull/54/files

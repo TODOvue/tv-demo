@@ -1,15 +1,14 @@
-<script setup>
-import ToastNotification from './ToastNotification.vue';
+<script setup lang="ts">
+import ToastNotification from './ToastNotification.vue'
+import type { ToastContainerEmits, ToastContainerProps } from '../types/components'
 
-defineProps({
-  toasts: { type: Array, required: true },
-});
+defineProps<ToastContainerProps>()
 
-const emit = defineEmits(['removeToast']);
+const emit = defineEmits<ToastContainerEmits>()
 
-const removeToast = (id) => {
-  emit('removeToast', id);
-};
+const removeToast = (id: string) => {
+  emit('removeToast', id)
+}
 </script>
 
 <template>
@@ -29,11 +28,12 @@ const removeToast = (id) => {
 <style scoped lang="scss">
 .toast-container {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   pointer-events: none;
 
   & > * {
@@ -43,10 +43,10 @@ const removeToast = (id) => {
 
 @media (max-width: 640px) {
   .toast-container {
-    top: 10px;
-    right: 10px;
-    left: 10px;
-    align-items: center;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    align-items: stretch;
   }
 }
 </style>

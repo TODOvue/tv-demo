@@ -1,72 +1,89 @@
-<script setup>
-import { defineAsyncComponent, onMounted, onBeforeUnmount, ref, computed } from 'vue';
-import { HighCode } from 'vue-highlight-code';
-import VueMarkdownIt from 'vue3-markdown-it';
-import 'github-markdown-css';
+<script setup lang="ts">
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+import { HighCode } from 'vue-highlight-code'
+import VueMarkdownIt from 'vue3-markdown-it'
+import 'github-markdown-css'
 
-import useDemo from '../composable/useDemo';
-const ToastContainer = defineAsyncComponent(/* webpackChunkName: "toastContainer" */() => import('./ToastContainer.vue'));
-const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */() => import('./ToUp.vue'));
-const TvPreviewFrame = defineAsyncComponent(/* webpackChunkName: "tvPreviewFrame" */() => import('./TvPreviewFrame.vue'));
-const TvNestedEditor = defineAsyncComponent(/* webpackChunkName: "tvNestedEditor" */() => import('./TvNestedEditor.vue'));
+import useDemo from '../composable/useDemo'
+import type {
+  AutoEventListeners,
+  NestedValue,
+  TvDemoProps,
+  WindowWithNavigation,
+} from '../types/components'
 
-const props = defineProps({
-  demoStyle: { type: Object, default: () => ({ body: {}, content: {} }) },
-  hideBackground: Boolean,
-  component: Object,
-  variants: Array,
-  componentName: { type: String, default: 'Component Demo' },
-  sourceLink: { type: String, default: null },
-  urlClone: { type: String, default: null },
-  npmInstall: { type: String, default: null },
-  isDevComponent: { type: Boolean, default: false },
-  version: { type: String, default: '0.0.0' },
-  readmePath: { type: String, default: "./README.md" },
-  changelogPath: { type: String, default: "./CHANGELOG.md" },
-  showDocumentation: { type: Boolean, default: true },
-  showChangelog: { type: Boolean, default: true },
-  manualEmits: { type: Array, default: () => [] },
-});
+const ToastContainer = defineAsyncComponent(
+  /* webpackChunkName: "toastContainer" */ () => import('./ToastContainer.vue'),
+)
+const ToUp = defineAsyncComponent(/* webpackChunkName: "toUp" */ () => import('./ToUp.vue'))
+const TvPreviewFrame = defineAsyncComponent(
+  /* webpackChunkName: "tvPreviewFrame" */ () => import('./TvPreviewFrame.vue'),
+)
+const TvNestedEditor = defineAsyncComponent(
+  /* webpackChunkName: "tvNestedEditor" */ () => import('./TvNestedEditor.vue'),
+)
 
-const canGoBack = ref(false);
+const props = withDefaults(defineProps<TvDemoProps>(), {
+  demoStyle: () => ({}),
+  hideBackground: false,
+  component: undefined,
+  variants: () => [],
+  componentName: 'Component Demo',
+  sourceLink: null,
+  urlClone: null,
+  npmInstall: null,
+  isDevComponent: false,
+  version: '0.0.0',
+  readmePath: './README.md',
+  changelogPath: './CHANGELOG.md',
+  showDocumentation: true,
+  showChangelog: true,
+  manualEmits: () => [],
+})
+
+const canGoBack = ref(false)
 
 const goBack = () => {
-  if (typeof window === 'undefined') return;
-  window.history.back();
-};
+  if (typeof window === 'undefined') return
+  window.history.back()
+}
 
 const checkCanGoBack = () => {
-  if (typeof window === 'undefined') return;
-  const hasReferrer = typeof document !== 'undefined' && !!document.referrer;
+  if (typeof window === 'undefined') return
+  const hasReferrer = typeof document !== 'undefined' && !!document.referrer
+  const win = window as WindowWithNavigation
+  const navigation = win.navigation
 
-  if (window.navigation && typeof window.navigation.canGoBack === 'boolean') {
-    canGoBack.value = window.navigation.canGoBack || hasReferrer;
+  if (navigation && typeof navigation.canGoBack === 'boolean') {
+    canGoBack.value = navigation.canGoBack || hasReferrer
   } else if (window.history.state && typeof window.history.state.position === 'number') {
-    canGoBack.value = window.history.state.position > 0 || hasReferrer;
+    canGoBack.value = window.history.state.position > 0 || hasReferrer
   } else {
-    canGoBack.value = hasReferrer;
+    canGoBack.value = hasReferrer
   }
-};
+}
 
 onMounted(() => {
-  checkCanGoBack();
+  checkCanGoBack()
   if (typeof window !== 'undefined') {
-    window.addEventListener('popstate', checkCanGoBack);
-    if (window.navigation) {
-      window.navigation.addEventListener('currententrychange', checkCanGoBack);
+    window.addEventListener('popstate', checkCanGoBack)
+    const navigation = (window as WindowWithNavigation).navigation
+    if (navigation?.addEventListener) {
+      navigation.addEventListener('currententrychange', checkCanGoBack)
     }
   }
-});
+})
 
 onBeforeUnmount(() => {
   if (typeof window !== 'undefined') {
-    window.removeEventListener('popstate', checkCanGoBack);
-    if (window.navigation) {
-      window.navigation.removeEventListener('currententrychange', checkCanGoBack);
+    window.removeEventListener('popstate', checkCanGoBack)
+    const navigation = (window as WindowWithNavigation).navigation
+    if (navigation?.removeEventListener) {
+      navigation.removeEventListener('currententrychange', checkCanGoBack)
     }
-    window.removeEventListener('resize', updateWindowWidth);
+    window.removeEventListener('resize', updateWindowWidth)
   }
-});
+})
 
 const {
   customStyle,
@@ -113,45 +130,60 @@ const {
   availableCodeTypes,
   currentCode,
   currentLang,
-} = useDemo(props);
+} = useDemo(props)
 
-const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200);
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200)
 
 const updateWindowWidth = () => {
-  windowWidth.value = window.innerWidth;
-};
+  windowWidth.value = window.innerWidth
+}
 
 onMounted(() => {
   if (typeof window !== 'undefined') {
-    window.addEventListener('resize', updateWindowWidth);
+    window.addEventListener('resize', updateWindowWidth)
   }
-});
+})
 
 onBeforeUnmount(() => {
   if (typeof window !== 'undefined') {
-    window.removeEventListener('resize', updateWindowWidth);
+    window.removeEventListener('resize', updateWindowWidth)
   }
-});
+})
 
-const autoEventListeners = computed(() => {
-  const listeners = {};
-  const componentEmits = props.component && props.component.emits
-    ? (Array.isArray(props.component.emits)
-      ? props.component.emits
-      : Object.keys(props.component.emits))
-    : [];
+const autoEventListeners = computed<AutoEventListeners>(() => {
+  const listeners: AutoEventListeners = {}
+  const componentWithEmits = props.component as { emits?: string[] | Record<string, unknown> } | undefined
+  const componentEmits = componentWithEmits?.emits
+    ? (Array.isArray(componentWithEmits.emits)
+      ? componentWithEmits.emits
+      : Object.keys(componentWithEmits.emits))
+    : []
 
-  const allEmits = [...new Set([...componentEmits, ...props.manualEmits])];
+  const allEmits = [...new Set([...componentEmits, ...props.manualEmits])]
 
   if (allEmits.length > 0) {
-    allEmits.forEach(event => {
-      listeners[`on${event.charAt(0).toUpperCase() + event.slice(1)}`] = (payload) => {
-        addLog(event, payload);
-      };
-    });
+    allEmits.forEach((event) => {
+      const eventName = String(event)
+      listeners[`on${eventName.charAt(0).toUpperCase() + eventName.slice(1)}`] = (
+        payload?: unknown,
+      ) => {
+        addLog(eventName, payload)
+      }
+    })
   }
-  return listeners;
-});
+  return listeners
+})
+
+const handleClearLogs = () => {
+  clearLogs()
+}
+
+const getNestedModelValue = (key: string): NestedValue =>
+  reactiveProps.value[key] as NestedValue
+
+const setNestedModelValue = (key: string, value: NestedValue) => {
+  reactiveProps.value[key] = value
+}
 </script>
 
 <template>
@@ -497,8 +529,9 @@ const autoEventListeners = computed(() => {
                              </div>
                             <TvNestedEditor
                               v-else
-                              v-model="reactiveProps[key]"
+                              :model-value="getNestedModelValue(key)"
                               :name="key"
+                              @update:modelValue="setNestedModelValue(key, $event)"
                             />
                           </template>
                         </div>
@@ -511,7 +544,7 @@ const autoEventListeners = computed(() => {
                     <div v-if="activeToolTab === 'events'" class="tv-demo-tool-pane">
                       <div class="tv-demo-toolbar">
                         <h3 class="tv-demo-tool-title">Event Logger</h3>
-                        <button v-if="eventLogs.length > 0" @click="clearLogs" class="tv-demo-btn-secondary is-small">Clear</button>
+                        <button v-if="eventLogs.length > 0" @click="handleClearLogs" class="tv-demo-btn-secondary is-small">Clear</button>
                       </div>
                       <div class="tv-demo-logs-container">
                         <div v-if="eventLogs.length === 0" class="tv-demo-logs-empty">
