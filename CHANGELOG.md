@@ -9,10 +9,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Adjusted component positioning and styling to improve overall appearance
 - Simplified type declarations for improved readability and maintainability
+- Converted all components from JavaScript to TypeScript to leverage static typing and catch errors at compile time
 
 ### Added
 - Added TypeScript type definitions for components to ensure type safety and clearer usage
 - Added lint configuration to enforce code quality and consistency
+- Introduced explicit type interfaces and generics for component props, state, and events to enhance type safety and developer experience
 
 ### Removed
 - Removed unused emits from components

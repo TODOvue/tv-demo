@@ -1,64 +1,63 @@
-<script setup>
-import { ref, onMounted } from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import type { ToastNotificationEmits, ToastNotificationProps } from '../types/components'
 
-const props = defineProps({
-  id: { type: String, required: true },
-  message: { type: String, required: true },
-  type: { type: String, default: 'success' },
-  duration: { type: Number, default: 3000 },
-});
+const props = withDefaults(defineProps<ToastNotificationProps>(), {
+  type: 'success',
+  duration: 3000,
+})
 
-const emit = defineEmits(['remove']);
+const emit = defineEmits<ToastNotificationEmits>()
 
-const isVisible = ref(false);
-const isLeaving = ref(false);
+const isVisible = ref(false)
+const isLeaving = ref(false)
 
 onMounted(() => {
   setTimeout(() => {
-    isVisible.value = true;
-  }, 10);
+    isVisible.value = true
+  }, 10)
 
   setTimeout(() => {
-    closeToast();
-  }, props.duration);
-});
+    closeToast()
+  }, props.duration)
+})
 
 const closeToast = () => {
-  isLeaving.value = true;
+  isLeaving.value = true
   setTimeout(() => {
-    emit('remove', props.id);
-  }, 300);
-};
+    emit('remove', props.id)
+  }, 300)
+}
 
-const getIcon = () => {
+const getIcon = (): string => {
   switch (props.type) {
     case 'success':
-      return '✓';
+      return '✓'
     case 'error':
-      return '✕';
+      return '✕'
     case 'warning':
-      return '⚠';
+      return '⚠'
     case 'info':
-      return 'ℹ';
+      return 'ℹ'
     default:
-      return '✓';
+      return '✓'
   }
-};
+}
 
-const getIconColor = () => {
+const getIconColor = (): string => {
   switch (props.type) {
     case 'success':
-      return '#22c55e';
+      return '#22c55e'
     case 'error':
-      return '#ef4444';
+      return '#ef4444'
     case 'warning':
-      return '#f59e0b';
+      return '#f59e0b'
     case 'info':
-      return '#3b82f6';
+      return '#3b82f6'
     default:
-      return '#22c55e';
+      return '#22c55e'
   }
-};
+}
 </script>
 
 <template>

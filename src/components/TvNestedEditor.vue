@@ -1,52 +1,80 @@
-<script setup>
-import { computed, ref } from 'vue';
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import type {
+  NestedValue,
+  TvNestedEditorEmits,
+  TvNestedEditorProps,
+} from '../types/components'
 
-const props = defineProps({
-  modelValue: {
-    type: [Object, Array, String, Number, Boolean, null],
-    default: undefined
-  },
-  name: {
-    type: [String, Number],
-    required: true
-  },
-  depth: {
-    type: Number,
-    default: 0
-  }
-});
+const props = withDefaults(defineProps<TvNestedEditorProps>(), {
+  modelValue: undefined,
+  depth: 0,
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<TvNestedEditorEmits>()
 
-const isOpen = ref(false);
+const isOpen = ref(false)
 
-const type = computed(() => {
-  if (props.modelValue === null) return 'null';
-  if (Array.isArray(props.modelValue)) return 'array';
-  return typeof props.modelValue;
-});
+type NestedValueType = 'string' | 'number' | 'boolean' | 'null' | 'undefined' | 'array' | 'object'
 
-const isPrimitive = computed(() => {
-  return ['string', 'number', 'boolean', 'null', 'undefined'].includes(type.value);
-});
+const type = computed<NestedValueType>(() => {
+  if (props.modelValue === null) return 'null'
+  if (Array.isArray(props.modelValue)) return 'array'
+  const rawType = typeof props.modelValue
+  return rawType === 'object' ? 'object' : (rawType as NestedValueType)
+})
+
+const isPrimitive = computed(() => ['string', 'number', 'boolean', 'null', 'undefined'].includes(type.value))
 
 const toggle = () => {
   if (!isPrimitive.value) {
-    isOpen.value = !isOpen.value;
+    isOpen.value = !isOpen.value
   }
-};
+}
 
-const updateValue = (value) => {
-  emit('update:modelValue', value);
-};
+const updateValue = (value: NestedValue) => {
+  emit('update:modelValue', value)
+}
 
-const onChildUpdate = (key, value) => {
-  const newValue = Array.isArray(props.modelValue)
-    ? [...props.modelValue]
-    : { ...props.modelValue };
-  newValue[key] = value;
-  emit('update:modelValue', newValue);
-};
+const onBooleanChange = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  updateValue(Boolean(target?.checked))
+}
+
+const onNumberInput = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  updateValue(Number(target?.value ?? 0))
+}
+
+const onTextInput = (event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  updateValue(target?.value ?? '')
+}
+
+const onChildUpdate = (key: string | number, value: NestedValue) => {
+  if (Array.isArray(props.modelValue)) {
+    const nextValue = [...props.modelValue]
+    nextValue[Number(key)] = value
+    emit('update:modelValue', nextValue)
+    return
+  }
+
+  const baseObject =
+    props.modelValue && typeof props.modelValue === 'object' ? props.modelValue : {}
+  emit('update:modelValue', { ...(baseObject as Record<string, NestedValue>), [String(key)]: value })
+}
+
+const complexModel = computed<NestedValue[] | Record<string, NestedValue>>(() => {
+  if (Array.isArray(props.modelValue)) {
+    return props.modelValue
+  }
+  if (props.modelValue && typeof props.modelValue === 'object') {
+    return props.modelValue as Record<string, NestedValue>
+  }
+  return []
+})
+
+const modelArrayLength = computed(() => (Array.isArray(complexModel.value) ? complexModel.value.length : 0))
 </script>
 
 <template>
@@ -57,8 +85,8 @@ const onChildUpdate = (key, value) => {
         <label v-if="type === 'boolean'" class="switch small">
           <input
             type="checkbox"
-            :checked="modelValue"
-            @change="updateValue($event.target.checked)"
+            :checked="Boolean(modelValue)"
+            @change="onBooleanChange"
           />
           <span class="slider round"></span>
         </label>
@@ -67,7 +95,7 @@ const onChildUpdate = (key, value) => {
           v-else-if="type === 'number'"
           type="number"
           :value="modelValue"
-          @input="updateValue(Number($event.target.value))"
+          @input="onNumberInput"
           class="tv-demo-input"
         />
 
@@ -75,7 +103,7 @@ const onChildUpdate = (key, value) => {
           v-else-if="type === 'string'"
           type="text"
           :value="modelValue"
-          @input="updateValue($event.target.value)"
+          @input="onTextInput"
           class="tv-demo-input"
         />
 
@@ -91,13 +119,13 @@ const onChildUpdate = (key, value) => {
         <span class="tv-nested-arrow">▶</span>
         <span class="tv-nested-label">
           {{ name }}
-          <span class="tv-nested-type">{{ type === 'array' ? `Array[${modelValue.length}]` : 'Object' }}</span>
+          <span class="tv-nested-type">{{ type === 'array' ? `Array[${modelArrayLength}]` : 'Object' }}</span>
         </span>
       </div>
 
       <div v-if="isOpen" class="tv-nested-children">
         <TvNestedEditor
-          v-for="(value, key) in modelValue"
+          v-for="(value, key) in complexModel"
           :key="key"
           :name="key"
           :model-value="value"

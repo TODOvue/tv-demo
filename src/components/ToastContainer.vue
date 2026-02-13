@@ -1,15 +1,14 @@
-<script setup>
-import ToastNotification from './ToastNotification.vue';
+<script setup lang="ts">
+import ToastNotification from './ToastNotification.vue'
+import type { ToastContainerEmits, ToastContainerProps } from '../types/components'
 
-defineProps({
-  toasts: { type: Array, required: true },
-});
+defineProps<ToastContainerProps>()
 
-const emit = defineEmits(['removeToast']);
+const emit = defineEmits<ToastContainerEmits>()
 
-const removeToast = (id) => {
-  emit('removeToast', id);
-};
+const removeToast = (id: string) => {
+  emit('removeToast', id)
+}
 </script>
 
 <template>

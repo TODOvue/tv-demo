@@ -1,16 +1,12 @@
-<script setup>
-defineProps({
-  variant: {
-    type: String,
-    default: 'default',
-  },
-  isDevComponent: {
-    type: Boolean,
-    default: false,
-  }
+<script setup lang="ts">
+import type { TestEmits, TestProps } from '../types/components'
+
+withDefaults(defineProps<TestProps>(), {
+  variant: 'default',
+  isDevComponent: false,
 })
 
-const emit = defineEmits(["clickButton", "clickLabel", "clickSecondaryButton"]);
+const emit = defineEmits<TestEmits>()
 </script>
 
 <template>
