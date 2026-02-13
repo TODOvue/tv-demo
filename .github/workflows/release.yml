@@ -1,23 +1,69 @@
-name: Publish to npm and Deploy
+name: CI, Release and Deploy
 
 on:
   pull_request:
-    types:
-      - closed
+  push:
     branches:
-      - main
+      - '**'
 
 jobs:
-  release:
-    if: github.event.pull_request.merged == true
+  lint:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test:run
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+      - test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build package
+        run: npm run build
+
+  version:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    outputs:
+      new_version: ${{ steps.bump.outputs.new_version }}
     permissions:
       contents: write
-      actions: write
-      id-token: write
-      packages: write
-      pull-requests: write
-
     steps:
       - name: Generate token from GitHub App
         id: generate_token
@@ -25,62 +71,91 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ steps.generate_token.outputs.token }}
+          ref: main
           fetch-depth: 0
           persist-credentials: true
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: https://registry.npmjs.org/
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Determine version bump
-        id: version_type
         run: |
-          if [[ "${{ github.event.pull_request.title }}" == *"major"* ]]; then
-            echo "BUMP_TYPE=major" >> $GITHUB_ENV
-          elif [[ "${{ github.event.pull_request.title }}" == *"minor"* ]]; then
-            echo "BUMP_TYPE=minor" >> $GITHUB_ENV
+          LAST_COMMIT_MSG="$(git log -1 --pretty=%B)"
+          if [[ "$LAST_COMMIT_MSG" == *"major"* ]]; then
+            echo "BUMP_TYPE=major" >> "$GITHUB_ENV"
+          elif [[ "$LAST_COMMIT_MSG" == *"minor"* ]]; then
+            echo "BUMP_TYPE=minor" >> "$GITHUB_ENV"
           else
-            echo "BUMP_TYPE=patch" >> $GITHUB_ENV
+            echo "BUMP_TYPE=patch" >> "$GITHUB_ENV"
           fi
-
       - name: Configure Git
         run: |
           git config user.name "TODOvue-release[bot]"
           git config user.email "TODOvue-release[bot]@users.noreply.github.com"
-          git config url."https://x-access-token:${{ steps.generate_token.outputs.token }}@github.com/".insteadOf "https://github.com/"
-
-      - name: Bump version and push
+      - name: Bump version and push commit
         id: bump
         run: |
-          npm version $BUMP_TYPE -m "chore(release): 🔥 v%s [skip ci]"
+          npm version "$BUMP_TYPE" --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
-          git push origin main --follow-tags
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          git add package.json package-lock.json
+          git commit -m "chore(release): v$NEW_VERSION [skip ci]"
+          git push origin main
         env:
-          GIT_AUTHOR_NAME: "TODOvue-release[bot]"
-          GIT_AUTHOR_EMAIL: "TODOvue-release[bot]@users.noreply.github.com"
-          GIT_COMMITTER_NAME: "TODOvue-release[bot]"
-          GIT_COMMITTER_EMAIL: "TODOvue-release[bot]@users.noreply.github.com"
+          GIT_AUTHOR_NAME: TODOvue-release[bot]
+          GIT_AUTHOR_EMAIL: TODOvue-release[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: TODOvue-release[bot]
+          GIT_COMMITTER_EMAIL: TODOvue-release[bot]@users.noreply.github.com
 
-      - name: Build package
-        run: npm run build
+  tag:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - version
+    permissions:
+      contents: write
+    steps:
+      - name: Generate token from GitHub App
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Configure Git
+        run: |
+          git config user.name "TODOvue-release[bot]"
+          git config user.email "TODOvue-release[bot]@users.noreply.github.com"
+      - name: Create and push tag
+        run: |
+          git tag "v${{ needs.version.outputs.new_version }}"
+          git push origin "v${{ needs.version.outputs.new_version }}"
 
-      - name: Publish to npm
-        run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - tag
+      - version
+    permissions:
+      contents: write
+    steps:
+      - name: Generate token from GitHub App
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Create GitHub Release
         uses: actions/github-script@v7
         with:
@@ -89,9 +164,33 @@ jobs:
             await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: `v${{ steps.bump.outputs.NEW_VERSION }}`,
-              name: `v${{ steps.bump.outputs.NEW_VERSION }}`,
+              tag_name: `v${{ needs.version.outputs.new_version }}`,
+              name: `v${{ needs.version.outputs.new_version }}`,
               body: 'For stable releases, please refer to [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.',
               draft: false,
               prerelease: false
             });
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs:
+      - release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Deploy package to npm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
